@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Debt Payoff Calculator – Free Snowball vs Avalanche (Private)</title>
-  <meta name="description" content="Free private debt payoff calculator. Compare snowball vs avalanche, drag an extra-payment slider, see progress %, interest saved, and share your debt-free date. All data stays in your browser." />
+  <meta name="description" content="Free private debt payoff calculator with gamification. Track streaks, earn badges, level up while comparing snowball vs avalanche. All data stays in your browser." />
   <meta name="keywords" content="debt payoff calculator, debt snowball, debt avalanche, extra payment calculator, debt free date" />
   <meta property="og:title" content="Debt Payoff Calculator – See Your Exact Debt-Free Date" />
-  <meta property="og:description" content="Instantly compare strategies, drag extra payments, and see how much interest you can save. 100% private." />
+  <meta property="og:description" content="Instantly compare strategies, drag extra payments, earn badges and keep your streak. 100% private." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,10 +17,56 @@
     .card { @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6; }
     input:focus, select:focus { outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25); }
     input[type=range] { accent-color: #4f46e5; }
+    .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
+    .badge-earned { @apply bg-amber-100 text-amber-800; }
+    .badge-locked { @apply bg-slate-100 text-slate-400; }
+    @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+    .pop-in { animation: pop 0.35s ease-out; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen">
   <div class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+
+    <!-- Gamification Bar -->
+    <div id="game-bar" class="card mb-6 flex flex-wrap items-center justify-between gap-4 bg-gradient-to-r from-indigo-50 to-violet-50 border-indigo-100">
+      <div class="flex items-center gap-4">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-indigo-700" id="streak-count">0</div>
+          <div class="text-xs text-slate-500">Day Streak</div>
+        </div>
+        <div class="h-8 w-px bg-indigo-200"></div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-violet-700" id="level-display">1</div>
+          <div class="text-xs text-slate-500">Level</div>
+        </div>
+        <div class="h-8 w-px bg-indigo-200"></div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-amber-600" id="xp-display">0</div>
+          <div class="text-xs text-slate-500">XP</div>
+        </div>
+      </div>
+      <div class="flex-1 min-w-[140px]">
+        <div class="flex justify-between text-xs text-slate-500 mb-1">
+          <span>Level progress</span>
+          <span id="xp-next">100 XP to next</span>
+        </div>
+        <div class="w-full bg-white rounded-full h-2.5 border border-indigo-100">
+          <div id="xp-bar" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-500" style="width:0%"></div>
+        </div>
+      </div>
+      <button id="checkin-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition shadow-sm">
+        Daily Check-in
+      </button>
+    </div>
+
+    <!-- Achievements Panel (collapsed by default on mobile) -->
+    <div class="card mb-6">
+      <button id="toggle-achievements" class="w-full flex items-center justify-between text-left">
+        <h2 class="text-lg font-semibold text-indigo-700">Achievements</h2>
+        <span class="text-sm text-slate-400" id="ach-count">0 / 8 unlocked</span>
+      </button>
+      <div id="achievements-list" class="mt-4 flex flex-wrap gap-2"></div>
+    </div>
 
     <header class="text-center mb-8 md:mb-10">
       <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 tracking-tight mb-3">Debt Payoff Calculator</h1>
@@ -114,7 +160,151 @@
     </footer>
   </div>
 
+  <!-- Toast for achievements -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-50"></div>
+
   <script>
+    // ========== GAME STATE ==========
+    const GAME_KEY = 'debtPayoffGame';
+    const defaultGame = {
+      xp: 0,
+      level: 1,
+      streak: 0,
+      lastCheckin: null,
+      achievements: {},
+      totalCalcs: 0,
+      maxExtraUsed: 0,
+      compared: false
+    };
+
+    function loadGame() {
+      try {
+        const raw = localStorage.getItem(GAME_KEY);
+        if (raw) return { ...defaultGame, ...JSON.parse(raw) };
+      } catch (e) {}
+      return { ...defaultGame };
+    }
+
+    function saveGame(g) {
+      localStorage.setItem(GAME_KEY, JSON.stringify(g));
+    }
+
+    let game = loadGame();
+
+    const ACHIEVEMENTS = [
+      { id: 'first_calc', name: 'First Steps', desc: 'Run your first calculation', xp: 25 },
+      { id: 'compare', name: 'Strategist', desc: 'Compare Snowball vs Avalanche', xp: 40 },
+      { id: 'extra_100', name: 'Booster', desc: 'Use $100+ extra payment', xp: 30 },
+      { id: 'extra_300', name: 'Aggressive', desc: 'Use $300+ extra payment', xp: 50 },
+      { id: 'streak_3', name: 'Consistent', desc: '3-day check-in streak', xp: 60 },
+      { id: 'streak_7', name: 'Week Warrior', desc: '7-day check-in streak', xp: 120 },
+      { id: 'level_5', name: 'Rising', desc: 'Reach Level 5', xp: 80 },
+      { id: 'calcs_10', name: 'Explorer', desc: 'Run 10 calculations', xp: 70 }
+    ];
+
+    function xpForLevel(level) {
+      return level * 100;
+    }
+
+    function addXP(amount, reason) {
+      game.xp += amount;
+      let leveled = false;
+      while (game.xp >= xpForLevel(game.level)) {
+        game.xp -= xpForLevel(game.level);
+        game.level += 1;
+        leveled = true;
+      }
+      saveGame(game);
+      renderGameUI();
+      if (leveled) {
+        showToast(`Level up! You are now Level ${game.level}`);
+        unlockAchievement('level_5');
+      }
+      if (reason) showToast(`+${amount} XP — ${reason}`);
+    }
+
+    function unlockAchievement(id) {
+      if (game.achievements[id]) return;
+      const ach = ACHIEVEMENTS.find(a => a.id === id);
+      if (!ach) return;
+      game.achievements[id] = Date.now();
+      saveGame(game);
+      renderAchievements();
+      addXP(ach.xp, ach.name);
+      showToast(`Achievement unlocked: ${ach.name}`);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.remove('opacity-0');
+      t.classList.add('opacity-100', 'pop-in');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        t.classList.remove('opacity-100');
+        t.classList.add('opacity-0');
+      }, 2800);
+    }
+
+    function renderGameUI() {
+      document.getElementById('streak-count').textContent = game.streak;
+      document.getElementById('level-display').textContent = game.level;
+      document.getElementById('xp-display').textContent = game.xp;
+      const needed = xpForLevel(game.level);
+      const pct = Math.min(100, Math.round((game.xp / needed) * 100));
+      document.getElementById('xp-bar').style.width = pct + '%';
+      document.getElementById('xp-next').textContent = (needed - game.xp) + ' XP to next';
+
+      // Check-in button state
+      const today = new Date().toDateString();
+      const btn = document.getElementById('checkin-btn');
+      if (game.lastCheckin === today) {
+        btn.textContent = 'Checked in today';
+        btn.disabled = true;
+        btn.classList.add('opacity-60', 'cursor-not-allowed');
+      } else {
+        btn.textContent = 'Daily Check-in';
+        btn.disabled = false;
+        btn.classList.remove('opacity-60', 'cursor-not-allowed');
+      }
+    }
+
+    function renderAchievements() {
+      const list = document.getElementById('achievements-list');
+      let unlocked = 0;
+      list.innerHTML = ACHIEVEMENTS.map(a => {
+        const earned = !!game.achievements[a.id];
+        if (earned) unlocked++;
+        return `<span class="badge ${earned ? 'badge-earned' : 'badge-locked'}" title="${a.desc}">
+          ${earned ? '✓' : '○'} ${a.name}
+        </span>`;
+      }).join('');
+      document.getElementById('ach-count').textContent = `${unlocked} / ${ACHIEVEMENTS.length} unlocked`;
+    }
+
+    function doCheckin() {
+      const today = new Date().toDateString();
+      if (game.lastCheckin === today) return;
+
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toDateString();
+
+      if (game.lastCheckin === yesterdayStr) {
+        game.streak += 1;
+      } else {
+        game.streak = 1;
+      }
+      game.lastCheckin = today;
+      saveGame(game);
+      renderGameUI();
+      addXP(15, 'Daily check-in');
+
+      if (game.streak >= 3) unlockAchievement('streak_3');
+      if (game.streak >= 7) unlockAchievement('streak_7');
+    }
+
+    // ========== CALCULATOR (existing + hooks) ==========
     let chartInstance = null;
     let lastResults = null;
 
@@ -237,7 +427,6 @@
         progressCard.classList.add('hidden');
         return;
       }
-      // Simple visual: months remaining inverse as “progress felt”
       const maxMonths = 120;
       const pct = Math.max(0, Math.min(100, Math.round((1 - result.months / maxMonths) * 100)));
       progressCard.classList.remove('hidden');
@@ -260,6 +449,21 @@
       resultsSection.classList.remove('hidden');
       resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       lastResults = { snow, aval, mode };
+
+      // Gamification hooks
+      game.totalCalcs += 1;
+      if (game.totalCalcs === 1) unlockAchievement('first_calc');
+      if (game.totalCalcs >= 10) unlockAchievement('calcs_10');
+      if (mode === 'compare') {
+        game.compared = true;
+        unlockAchievement('compare');
+      }
+      const extra = parseFloat(extraSlider.value) || 0;
+      if (extra > game.maxExtraUsed) game.maxExtraUsed = extra;
+      if (extra >= 100) unlockAchievement('extra_100');
+      if (extra >= 300) unlockAchievement('extra_300');
+      saveGame(game);
+      addXP(10, 'Calculation');
 
       if (mode === 'compare' && snow && aval) {
         comparisonSummary.innerHTML = renderSingle(snow, 'Snowball', 'border-indigo-400') + renderSingle(aval, 'Avalanche', 'border-emerald-400');
@@ -355,7 +559,7 @@
       }
     }
 
-    // Live slider
+    // Events
     extraSlider.addEventListener('input', () => {
       extraDisplay.textContent = '$' + extraSlider.value;
       if (!resultsSection.classList.contains('hidden')) runCalc();
@@ -373,15 +577,16 @@
 
     document.getElementById('add-debt').addEventListener('click', () => debtsContainer.appendChild(createDebtRow()));
     document.getElementById('calculate').addEventListener('click', runCalc);
+    document.getElementById('checkin-btn').addEventListener('click', doCheckin);
 
     document.getElementById('save-debts').addEventListener('click', () => {
       localStorage.setItem('debtPayoffDebts', JSON.stringify(getDebtsFromUI()));
       localStorage.setItem('debtPayoffExtra', extraSlider.value);
-      alert('Saved in your browser.');
+      showToast('Debts saved in your browser');
     });
 
     document.getElementById('clear-all').addEventListener('click', () => {
-      if (confirm('Clear everything?')) {
+      if (confirm('Clear debts and results? (Gamification progress is kept)')) {
         debtsContainer.innerHTML = '';
         debtsContainer.appendChild(createDebtRow());
         debtsContainer.appendChild(createDebtRow());
@@ -395,7 +600,7 @@
     document.getElementById('share-btn').addEventListener('click', () => {
       const text = 'I just calculated my debt-free date with this free private calculator.';
       if (navigator.share) navigator.share({ title: 'Debt Payoff Calculator', text, url: location.href }).catch(()=>{});
-      else navigator.clipboard.writeText(location.href).then(() => alert('Link copied!'));
+      else navigator.clipboard.writeText(location.href).then(() => showToast('Link copied!'));
     });
 
     document.getElementById('copy-summary').addEventListener('click', () => {
@@ -404,10 +609,13 @@
         ? (lastResults.snow.totalInterest <= lastResults.aval.totalInterest ? lastResults.snow : lastResults.aval)
         : (lastResults.snow || lastResults.aval);
       const text = `Debt-free date: ${formatDate(r.debtFreeDate)}\nMonths: ${r.months}\nTotal interest: ${formatCurrency(r.totalInterest)}\nCalculated with a free private tool.`;
-      navigator.clipboard.writeText(text).then(() => alert('Summary copied — paste anywhere.'));
+      navigator.clipboard.writeText(text).then(() => showToast('Summary copied'));
     });
 
     // Init
+    renderGameUI();
+    renderAchievements();
+
     (function load() {
       const saved = localStorage.getItem('debtPayoffDebts');
       const extra = localStorage.getItem('debtPayoffExtra');
