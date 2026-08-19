@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debt Payoff Calculator – Free Snowball & Avalanche Tool</title>
+  <meta name="description" content="Free private debt payoff calculator. Compare snowball vs avalanche, see exact debt-free date, interest savings, and month-by-month plan. All data stays in your browser." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; }
+    .card { @apply bg-white rounded-xl shadow-md p-5 border border-gray-100; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 mb-2">Debt Payoff Calculator</h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">Enter your debts once. Instantly see your debt-free date, total interest, and how much faster you get free with extra payments. <strong>Everything stays in your browser.</strong></p>
+    </header>
+
+    <!-- Input Section -->
+    <section class="card mb-6">
+      <h2 class="text-xl font-semibold mb-4 text-indigo-600">Your Debts</h2>
+      <div id="debts-container" class="space-y-3 mb-4">
+        <!-- Debt rows will be inserted here -->
+      </div>
+      <button id="add-debt" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg font-medium hover:bg-indigo-200 transition">+ Add Debt</button>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Extra Monthly Payment ($)</label>
+          <input type="number" id="extra-payment" value="100" min="0" step="10" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Strategy</label>
+          <select id="strategy" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <option value="snowball">Snowball (lowest balance first)</option>
+            <option value="avalanche">Avalanche (highest APR first)</option>
+            <option value="compare">Compare Both</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button id="calculate" class="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">Calculate Payoff</button>
+        <button id="save-debts" class="bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg font-medium hover:bg-gray-300 transition">Save Debts</button>
+        <button id="clear-all" class="text-red-600 px-4 py-2.5 rounded-lg font-medium hover:bg-red-50 transition">Clear All</button>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="hidden space-y-6">
+      <div class="card">
+        <h2 class="text-xl font-semibold mb-4 text-indigo-600">Your Results</h2>
+        <div id="summary" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"></div>
+        <canvas id="debt-chart" height="120"></canvas>
+      </div>
+
+      <div class="card">
+        <h3 class="text-lg font-semibold mb-3">Month-by-Month Schedule</h3>
+        <div id="schedule" class="overflow-x-auto text-sm"></div>
+      </div>
+
+      <!-- Placeholder for future affiliates / ads -->
+      <div class="card bg-indigo-50 border-indigo-100">
+        <p class="text-sm text-indigo-800"><strong>Next step idea:</strong> Once debts start dropping, park the freed-up money in a high-yield savings account. (Affiliate spots will go here.)</p>
+      </div>
+    </section>
+
+    <footer class="mt-12 text-center text-sm text-gray-500">
+      <p>100% private • No data leaves your device • Free forever</p>
+      <p class="mt-1">Built for passive income via domain-only model</p>
+    </footer>
+  </div>
+
+  <script>
+    // ========== STATE ==========
+    let debts = [];
+    let chartInstance = null;
+
+    // ========== DOM ==========
+    const debtsContainer = document.getElementById('debts-container');
+    const addDebtBtn = document.getElementById('add-debt');
+    const calculateBtn = document.getElementById('calculate');
+    const saveBtn = document.getElementById('save-debts');
+    const clearBtn = document.getElementById('clear-all');
+    const resultsSection = document.getElementById('results');
+    const summaryEl = document.getElementById('summary');
+    const scheduleEl = document.getElementById('schedule');
+
+    // ========== HELPERS ==========
+    function createDebtRow(debt = { name: '', balance: '', apr: '', minPayment: '' }, index) {
+      const div = document.createElement('div');
+      div.className = 'grid grid-cols-1 md:grid-cols-5 gap-2 items-end debt-row';
+      div.innerHTML = `
+        <div>
+          <label class="text-xs text-gray-500">Name</label>
+          <input type="text" placeholder="Credit Card" value="${debt.name}" class="debt-name w-full border rounded-lg px-2 py-1.5 text-sm" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-500">Balance ($)</label>
+          <input type="number" placeholder="5000" value="${debt.balance}" class="debt-balance w-full border rounded-lg px-2 py-1.5 text-sm" min="0" step="0.01" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-500">APR (%)</label>
+          <input type="number" placeholder="19.9" value="${debt.apr}" class="debt-apr w-full border rounded-lg px-2 py-1.5 text-sm" min="0" step="0.1" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-500">Min Payment ($)</label>
+          <input type="number" placeholder="150" value="${debt.minPayment}" class="debt-min w-full border rounded-lg px-2 py-1.5 text-sm" min="0" step="0.01" />
+        </div>
+        <div>
+          <button class="remove-debt text-red-500 hover:text-red-700 text-sm font-medium px-2 py-1.5">Remove</button>
+        </div>
+      `;
+      div.querySelector('.remove-debt').addEventListener('click', () => {
+        div.remove();
+      });
+      return div;
+    }
+
+    function getDebtsFromUI() {
+      const rows = document.querySelectorAll('.debt-row');
+      const list = [];
+      rows.forEach(row => {
+        const name = row.querySelector('.debt-name').value.trim() || 'Debt';
+        const balance = parseFloat(row.querySelector('.debt-balance').value) || 0;
+        const apr = parseFloat(row.querySelector('.debt-apr').value) || 0;
+        const minPayment = parseFloat(row.querySelector('.debt-min').value) || 0;
+        if (balance > 0) {
+          list.push({ name, balance, apr, minPayment, originalBalance: balance });
+        }
+      });
+      return list;
+    }
+
+    // ========== CORE CALCULATION ==========
+    function calculatePayoff(debtList, extra, strategy) {
+      // Deep copy
+      let debts = debtList.map(d => ({ ...d, balance: d.balance }));
+      const totalExtra = extra;
+
+      // Sort
+      if (strategy === 'snowball') {
+        debts.sort((a, b) => a.balance - b.balance);
+      } else if (strategy === 'avalanche') {
+        debts.sort((a, b) => b.apr - a.apr);
+      }
+
+      let month = 0;
+      let totalInterest = 0;
+      const history = []; // { month, totalBalance, payments: [] }
+      const maxMonths = 600; // safety
+
+      while (debts.some(d => d.balance > 0.01) && month < maxMonths) {
+        month++;
+        let remainingExtra = totalExtra;
+        let monthInterest = 0;
+        const monthPayments = [];
+
+        // Apply interest first
+        debts.forEach(d => {
+          if (d.balance > 0) {
+            const interest = d.balance * (d.apr / 100 / 12);
+            d.balance += interest;
+            monthInterest += interest;
+            totalInterest += interest;
+          }
+        });
+
+        // Pay minimums
+        debts.forEach(d => {
+          if (d.balance > 0) {
+            const pay = Math.min(d.minPayment, d.balance);
+            d.balance -= pay;
+            monthPayments.push({ name: d.name, amount: pay });
+          }
+        });
+
+        // Apply extra to first debt with balance (after sort order)
+        for (let d of debts) {
+          if (d.balance > 0.01 && remainingExtra > 0) {
+            const pay = Math.min(remainingExtra, d.balance);
+            d.balance -= pay;
+            remainingExtra -= pay;
+            // add to existing payment entry or create
+            const existing = monthPayments.find(p => p.name === d.name);
+            if (existing) existing.amount += pay;
+            else monthPayments.push({ name: d.name, amount: pay });
+            break; // only one target at a time for classic methods
+          }
+        }
+
+        // Clean tiny balances
+        debts.forEach(d => { if (d.balance < 0.01) d.balance = 0; });
+
+        const totalBal = debts.reduce((sum, d) => sum + d.balance, 0);
+        history.push({
+          month,
+          totalBalance: totalBal,
+          interest: monthInterest,
+          payments: monthPayments
+        });
+
+        if (totalBal < 0.01) break;
+      }
+
+      return {
+        months: month,
+        totalInterest: totalInterest,
+        history,
+        debtFreeDate: addMonths(new Date(), month)
+      };
+    }
+
+    function addMonths(date, months) {
+      const d = new Date(date);
+      d.setMonth(d.getMonth() + months);
+      return d;
+    }
+
+    function formatCurrency(n) {
+      return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function formatDate(d) {
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    }
+
+    // ========== RENDER ==========
+    function renderResults(result, strategyLabel) {
+      resultsSection.classList.remove('hidden');
+
+      summaryEl.innerHTML = `
+        <div class="bg-indigo-50 rounded-lg p-4 text-center">
+          <div class="text-sm text-indigo-600">Debt-Free Date</div>
+          <div class="text-2xl font-bold text-indigo-800">${formatDate(result.debtFreeDate)}</div>
+        </div>
+        <div class="bg-green-50 rounded-lg p-4 text-center">
+          <div class="text-sm text-green-600">Total Interest</div>
+          <div class="text-2xl font-bold text-green-800">${formatCurrency(result.totalInterest)}</div>
+        </div>
+        <div class="bg-purple-50 rounded-lg p-4 text-center">
+          <div class="text-sm text-purple-600">Months to Freedom</div>
+          <div class="text-2xl font-bold text-purple-800">${result.months}</div>
+        </div>
+      `;
+
+      // Chart
+      const ctx = document.getElementById('debt-chart').getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: result.history.map(h => 'M' + h.month),
+          datasets: [{
+            label: 'Remaining Debt',
+            data: result.history.map(h => h.totalBalance),
+            borderColor: '#4f46e5',
+            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { callback: v => '$' + v.toLocaleString() } }
+          }
+        }
+      });
+
+      // Schedule (first 12 months or all if short)
+      let scheduleHtml = `<table class="w-full text-left"><thead><tr class="border-b"><th class="py-2 pr-4">Month</th><th class="py-2 pr-4">Remaining</th><th class="py-2">Interest that month</th></tr></thead><tbody>`;
+      const show = result.history.slice(0, 24);
+      show.forEach(h => {
+        scheduleHtml += `<tr class="border-b border-gray-100"><td class="py-1.5 pr-4">${h.month}</td><td class="py-1.5 pr-4">${formatCurrency(h.totalBalance)}</td><td class="py-1.5">${formatCurrency(h.interest)}</td></tr>`;
+      });
+      if (result.history.length > 24) {
+        scheduleHtml += `<tr><td colspan="3" class="py-2 text-gray-500">... and ${result.history.length - 24} more months</td></tr>`;
+      }
+      scheduleHtml += `</tbody></table>`;
+      scheduleEl.innerHTML = scheduleHtml;
+    }
+
+    // ========== EVENTS ==========
+    addDebtBtn.addEventListener('click', () => {
+      debtsContainer.appendChild(createDebtRow());
+    });
+
+    calculateBtn.addEventListener('click', () => {
+      const debtList = getDebtsFromUI();
+      if (debtList.length === 0) {
+        alert('Please add at least one debt with a balance.');
+        return;
+      }
+      const extra = parseFloat(document.getElementById('extra-payment').value) || 0;
+      const strategy = document.getElementById('strategy').value;
+
+      if (strategy === 'compare') {
+        // For MVP we just run snowball and show it; full compare can be expanded later
+        const result = calculatePayoff(debtList, extra, 'snowball');
+        renderResults(result, 'Snowball');
+      } else {
+        const result = calculatePayoff(debtList, extra, strategy);
+        renderResults(result, strategy);
+      }
+    });
+
+    saveBtn.addEventListener('click', () => {
+      const debtList = getDebtsFromUI();
+      localStorage.setItem('debtPayoffDebts', JSON.stringify(debtList));
+      alert('Debts saved locally in your browser.');
+    });
+
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Clear all debts?')) {
+        debtsContainer.innerHTML = '';
+        debtsContainer.appendChild(createDebtRow());
+        localStorage.removeItem('debtPayoffDebts');
+        resultsSection.classList.add('hidden');
+      }
+    });
+
+    // ========== INIT ==========
+    function loadSaved() {
+      const saved = localStorage.getItem('debtPayoffDebts');
+      if (saved) {
+        try {
+          const list = JSON.parse(saved);
+          list.forEach(d => debtsContainer.appendChild(createDebtRow(d)));
+          return;
+        } catch (e) {}
+      }
+      // Default one empty row
+      debtsContainer.appendChild(createDebtRow());
+    }
+
+    loadSaved();
+  </script>
+</body>
+</html>
