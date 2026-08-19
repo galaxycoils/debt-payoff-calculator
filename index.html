@@ -3,81 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Debt Payoff Calculator – Free Snowball & Avalanche Tool</title>
-  <meta name="description" content="Free private debt payoff calculator. Compare snowball vs avalanche, see exact debt-free date, interest savings, and month-by-month plan. All data stays in your browser." />
+  <title>Debt Payoff Calculator – Free Snowball vs Avalanche Tool (Private & Instant)</title>
+  <meta name="description" content="Free private debt payoff calculator. Compare debt snowball vs avalanche side-by-side. See exact debt-free date, total interest saved, month-by-month plan and charts. All calculations stay in your browser." />
+  <meta name="keywords" content="debt payoff calculator, debt snowball, debt avalanche, debt free date, interest savings calculator, free debt tool" />
+  <meta property="og:title" content="Debt Payoff Calculator – Snowball vs Avalanche" />
+  <meta property="og:description" content="Instantly compare strategies, see your debt-free date and how much interest you can save. 100% private." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; }
-    .card { @apply bg-white rounded-xl shadow-md p-5 border border-gray-100; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6; }
+    input:focus, select:focus { outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25); }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen">
-  <div class="max-w-5xl mx-auto px-4 py-8">
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+  <div class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+
     <!-- Header -->
-    <header class="text-center mb-8">
-      <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 mb-2">Debt Payoff Calculator</h1>
-      <p class="text-gray-600 max-w-2xl mx-auto">Enter your debts once. Instantly see your debt-free date, total interest, and how much faster you get free with extra payments. <strong>Everything stays in your browser.</strong></p>
+    <header class="text-center mb-8 md:mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 tracking-tight mb-3">Debt Payoff Calculator</h1>
+      <p class="text-slate-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+        Enter your debts once. Instantly compare <strong>Snowball</strong> vs <strong>Avalanche</strong>, see your exact debt-free date, total interest, and how much you can save with extra payments.
+        <span class="block mt-1 text-sm text-indigo-600 font-medium">Everything runs privately in your browser — nothing is ever sent to a server.</span>
+      </p>
     </header>
 
     <!-- Input Section -->
     <section class="card mb-6">
-      <h2 class="text-xl font-semibold mb-4 text-indigo-600">Your Debts</h2>
-      <div id="debts-container" class="space-y-3 mb-4">
-        <!-- Debt rows will be inserted here -->
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold text-indigo-700">Your Debts</h2>
+        <span class="text-xs text-slate-400">Add as many as you need</span>
       </div>
-      <button id="add-debt" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg font-medium hover:bg-indigo-200 transition">+ Add Debt</button>
 
-      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div id="debts-container" class="space-y-3 mb-4"></div>
+
+      <button id="add-debt" class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl text-sm font-medium hover:bg-indigo-100 transition">
+        <span class="text-lg leading-none">+</span> Add Debt
+      </button>
+
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium mb-1">Extra Monthly Payment ($)</label>
-          <input type="number" id="extra-payment" value="100" min="0" step="10" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Extra Monthly Payment ($)</label>
+          <input type="number" id="extra-payment" value="100" min="0" step="10"
+                 class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm bg-white" />
+          <p class="text-xs text-slate-400 mt-1">Any amount above your minimums</p>
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">Strategy</label>
-          <select id="strategy" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-            <option value="snowball">Snowball (lowest balance first)</option>
-            <option value="avalanche">Avalanche (highest APR first)</option>
-            <option value="compare">Compare Both</option>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Strategy</label>
+          <select id="strategy" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm bg-white">
+            <option value="compare">Compare Both (Recommended)</option>
+            <option value="snowball">Snowball only (lowest balance first)</option>
+            <option value="avalanche">Avalanche only (highest APR first)</option>
           </select>
         </div>
       </div>
 
       <div class="mt-6 flex flex-wrap gap-3">
-        <button id="calculate" class="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">Calculate Payoff</button>
-        <button id="save-debts" class="bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg font-medium hover:bg-gray-300 transition">Save Debts</button>
-        <button id="clear-all" class="text-red-600 px-4 py-2.5 rounded-lg font-medium hover:bg-red-50 transition">Clear All</button>
+        <button id="calculate" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-sm">
+          Calculate Payoff
+        </button>
+        <button id="save-debts" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-medium text-sm transition">
+          Save Debts
+        </button>
+        <button id="clear-all" class="text-red-600 hover:bg-red-50 px-4 py-2.5 rounded-xl font-medium text-sm transition">
+          Clear All
+        </button>
       </div>
     </section>
 
-    <!-- Results Section -->
+    <!-- Results -->
     <section id="results" class="hidden space-y-6">
+
+      <!-- Comparison Summary Cards -->
+      <div id="comparison-summary" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+      <!-- Winner / Savings Banner -->
+      <div id="winner-banner" class="hidden card bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-100"></div>
+
+      <!-- Charts -->
       <div class="card">
-        <h2 class="text-xl font-semibold mb-4 text-indigo-600">Your Results</h2>
-        <div id="summary" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"></div>
-        <canvas id="debt-chart" height="120"></canvas>
+        <h2 class="text-lg font-semibold text-indigo-700 mb-4">Remaining Debt Over Time</h2>
+        <canvas id="debt-chart" height="140"></canvas>
       </div>
 
+      <!-- Detailed Schedule -->
       <div class="card">
-        <h3 class="text-lg font-semibold mb-3">Month-by-Month Schedule</h3>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-semibold text-indigo-700">Month-by-Month Schedule</h3>
+          <button id="share-btn" class="text-sm bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg hover:bg-indigo-100 transition font-medium">
+            Share Result
+          </button>
+        </div>
         <div id="schedule" class="overflow-x-auto text-sm"></div>
       </div>
 
-      <!-- Placeholder for future affiliates / ads -->
-      <div class="card bg-indigo-50 border-indigo-100">
-        <p class="text-sm text-indigo-800"><strong>Next step idea:</strong> Once debts start dropping, park the freed-up money in a high-yield savings account. (Affiliate spots will go here.)</p>
+      <!-- Monetization / Next Steps -->
+      <div class="card bg-indigo-50/70 border-indigo-100">
+        <h3 class="font-semibold text-indigo-800 mb-2">What to do with the money you free up</h3>
+        <p class="text-sm text-indigo-900/80 mb-3">Once a debt is paid off, the payment that used to go there becomes available. Smart next steps:</p>
+        <ul class="text-sm text-indigo-900/90 space-y-1.5 list-disc list-inside">
+          <li>Park it in a <strong>high-yield savings account</strong> while you decide</li>
+          <li>Accelerate the next debt even faster</li>
+          <li>Consider a low-interest consolidation option if it improves your rate</li>
+        </ul>
+        <p class="text-xs text-indigo-600/70 mt-3">Affiliate links and AdSense units will appear here once approved — they never interrupt the calculator.</p>
       </div>
     </section>
 
-    <footer class="mt-12 text-center text-sm text-gray-500">
-      <p>100% private • No data leaves your device • Free forever</p>
-      <p class="mt-1">Built for passive income via domain-only model</p>
+    <footer class="mt-12 mb-6 text-center text-sm text-slate-400">
+      <p>100% private • Calculations never leave your device • Free forever</p>
+      <p class="mt-1">Built as a domain-only passive income tool</p>
     </footer>
   </div>
 
   <script>
     // ========== STATE ==========
-    let debts = [];
     let chartInstance = null;
 
     // ========== DOM ==========
@@ -87,37 +129,37 @@
     const saveBtn = document.getElementById('save-debts');
     const clearBtn = document.getElementById('clear-all');
     const resultsSection = document.getElementById('results');
-    const summaryEl = document.getElementById('summary');
+    const comparisonSummary = document.getElementById('comparison-summary');
+    const winnerBanner = document.getElementById('winner-banner');
     const scheduleEl = document.getElementById('schedule');
+    const shareBtn = document.getElementById('share-btn');
 
     // ========== HELPERS ==========
-    function createDebtRow(debt = { name: '', balance: '', apr: '', minPayment: '' }, index) {
+    function createDebtRow(debt = { name: '', balance: '', apr: '', minPayment: '' }) {
       const div = document.createElement('div');
-      div.className = 'grid grid-cols-1 md:grid-cols-5 gap-2 items-end debt-row';
+      div.className = 'grid grid-cols-1 sm:grid-cols-5 gap-2 items-end debt-row bg-slate-50/50 p-3 rounded-xl';
       div.innerHTML = `
         <div>
-          <label class="text-xs text-gray-500">Name</label>
-          <input type="text" placeholder="Credit Card" value="${debt.name}" class="debt-name w-full border rounded-lg px-2 py-1.5 text-sm" />
+          <label class="text-xs text-slate-500 mb-0.5 block">Name</label>
+          <input type="text" placeholder="Credit Card" value="${debt.name || ''}" class="debt-name w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm bg-white" />
         </div>
         <div>
-          <label class="text-xs text-gray-500">Balance ($)</label>
-          <input type="number" placeholder="5000" value="${debt.balance}" class="debt-balance w-full border rounded-lg px-2 py-1.5 text-sm" min="0" step="0.01" />
+          <label class="text-xs text-slate-500 mb-0.5 block">Balance ($)</label>
+          <input type="number" placeholder="5000" value="${debt.balance || ''}" class="debt-balance w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm bg-white" min="0" step="0.01" />
         </div>
         <div>
-          <label class="text-xs text-gray-500">APR (%)</label>
-          <input type="number" placeholder="19.9" value="${debt.apr}" class="debt-apr w-full border rounded-lg px-2 py-1.5 text-sm" min="0" step="0.1" />
+          <label class="text-xs text-slate-500 mb-0.5 block">APR (%)</label>
+          <input type="number" placeholder="19.9" value="${debt.apr || ''}" class="debt-apr w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm bg-white" min="0" step="0.01" />
         </div>
         <div>
-          <label class="text-xs text-gray-500">Min Payment ($)</label>
-          <input type="number" placeholder="150" value="${debt.minPayment}" class="debt-min w-full border rounded-lg px-2 py-1.5 text-sm" min="0" step="0.01" />
+          <label class="text-xs text-slate-500 mb-0.5 block">Min Payment ($)</label>
+          <input type="number" placeholder="150" value="${debt.minPayment || ''}" class="debt-min w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm bg-white" min="0" step="0.01" />
         </div>
-        <div>
-          <button class="remove-debt text-red-500 hover:text-red-700 text-sm font-medium px-2 py-1.5">Remove</button>
+        <div class="flex sm:justify-end">
+          <button class="remove-debt text-red-500 hover:text-red-700 text-sm font-medium px-2 py-1.5 rounded-lg hover:bg-red-50 transition">Remove</button>
         </div>
       `;
-      div.querySelector('.remove-debt').addEventListener('click', () => {
-        div.remove();
-      });
+      div.querySelector('.remove-debt').addEventListener('click', () => div.remove());
       return div;
     }
 
@@ -130,37 +172,38 @@
         const apr = parseFloat(row.querySelector('.debt-apr').value) || 0;
         const minPayment = parseFloat(row.querySelector('.debt-min').value) || 0;
         if (balance > 0) {
-          list.push({ name, balance, apr, minPayment, originalBalance: balance });
+          list.push({ name, balance, apr, minPayment });
         }
       });
       return list;
     }
 
-    // ========== CORE CALCULATION ==========
+    // ========== CORE CALCULATION (more robust) ==========
     function calculatePayoff(debtList, extra, strategy) {
-      // Deep copy
-      let debts = debtList.map(d => ({ ...d, balance: d.balance }));
-      const totalExtra = extra;
+      let debts = debtList.map(d => ({
+        name: d.name,
+        balance: Math.max(0, d.balance),
+        apr: Math.max(0, d.apr),
+        minPayment: Math.max(0, d.minPayment)
+      }));
 
-      // Sort
       if (strategy === 'snowball') {
-        debts.sort((a, b) => a.balance - b.balance);
+        debts.sort((a, b) => a.balance - b.balance || b.apr - a.apr);
       } else if (strategy === 'avalanche') {
-        debts.sort((a, b) => b.apr - a.apr);
+        debts.sort((a, b) => b.apr - a.apr || a.balance - b.balance);
       }
 
       let month = 0;
       let totalInterest = 0;
-      const history = []; // { month, totalBalance, payments: [] }
-      const maxMonths = 600; // safety
+      const history = [];
+      const maxMonths = 720; // 60 years safety
 
-      while (debts.some(d => d.balance > 0.01) && month < maxMonths) {
+      while (debts.some(d => d.balance > 0.005) && month < maxMonths) {
         month++;
-        let remainingExtra = totalExtra;
+        let remainingExtra = extra;
         let monthInterest = 0;
-        const monthPayments = [];
 
-        // Apply interest first
+        // Accrue interest
         debts.forEach(d => {
           if (d.balance > 0) {
             const interest = d.balance * (d.apr / 100 / 12);
@@ -170,38 +213,32 @@
           }
         });
 
-        // Pay minimums
+        // Pay minimums (in current order)
         debts.forEach(d => {
           if (d.balance > 0) {
             const pay = Math.min(d.minPayment, d.balance);
             d.balance -= pay;
-            monthPayments.push({ name: d.name, amount: pay });
           }
         });
 
-        // Apply extra to first debt with balance (after sort order)
-        for (let d of debts) {
-          if (d.balance > 0.01 && remainingExtra > 0) {
+        // Apply extra to the first debt that still has a balance (classic method)
+        for (const d of debts) {
+          if (d.balance > 0.005 && remainingExtra > 0) {
             const pay = Math.min(remainingExtra, d.balance);
             d.balance -= pay;
             remainingExtra -= pay;
-            // add to existing payment entry or create
-            const existing = monthPayments.find(p => p.name === d.name);
-            if (existing) existing.amount += pay;
-            else monthPayments.push({ name: d.name, amount: pay });
-            break; // only one target at a time for classic methods
+            break;
           }
         }
 
-        // Clean tiny balances
-        debts.forEach(d => { if (d.balance < 0.01) d.balance = 0; });
+        // Clean up tiny balances
+        debts.forEach(d => { if (d.balance < 0.005) d.balance = 0; });
 
-        const totalBal = debts.reduce((sum, d) => sum + d.balance, 0);
+        const totalBal = debts.reduce((s, d) => s + d.balance, 0);
         history.push({
           month,
-          totalBalance: totalBal,
-          interest: monthInterest,
-          payments: monthPayments
+          totalBalance: Math.round(totalBal * 100) / 100,
+          interest: Math.round(monthInterest * 100) / 100
         });
 
         if (totalBal < 0.01) break;
@@ -209,20 +246,21 @@
 
       return {
         months: month,
-        totalInterest: totalInterest,
+        totalInterest: Math.round(totalInterest * 100) / 100,
         history,
-        debtFreeDate: addMonths(new Date(), month)
+        debtFreeDate: addMonths(new Date(), month),
+        strategy
       };
     }
 
     function addMonths(date, months) {
-      const d = new Date(date);
+      const d = new Date(date.getTime());
       d.setMonth(d.getMonth() + months);
       return d;
     }
 
     function formatCurrency(n) {
-      return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function formatDate(d) {
@@ -230,60 +268,143 @@
     }
 
     // ========== RENDER ==========
-    function renderResults(result, strategyLabel) {
-      resultsSection.classList.remove('hidden');
-
-      summaryEl.innerHTML = `
-        <div class="bg-indigo-50 rounded-lg p-4 text-center">
-          <div class="text-sm text-indigo-600">Debt-Free Date</div>
-          <div class="text-2xl font-bold text-indigo-800">${formatDate(result.debtFreeDate)}</div>
-        </div>
-        <div class="bg-green-50 rounded-lg p-4 text-center">
-          <div class="text-sm text-green-600">Total Interest</div>
-          <div class="text-2xl font-bold text-green-800">${formatCurrency(result.totalInterest)}</div>
-        </div>
-        <div class="bg-purple-50 rounded-lg p-4 text-center">
-          <div class="text-sm text-purple-600">Months to Freedom</div>
-          <div class="text-2xl font-bold text-purple-800">${result.months}</div>
+    function renderSingle(result, label, colorClass) {
+      return `
+        <div class="card border-t-4 ${colorClass}">
+          <div class="text-sm font-medium text-slate-500 mb-1">${label}</div>
+          <div class="text-2xl font-bold text-slate-800 mb-3">${formatDate(result.debtFreeDate)}</div>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <div class="text-slate-500">Total Interest</div>
+              <div class="font-semibold">${formatCurrency(result.totalInterest)}</div>
+            </div>
+            <div>
+              <div class="text-slate-500">Months</div>
+              <div class="font-semibold">${result.months}</div>
+            </div>
+          </div>
         </div>
       `;
+    }
 
-      // Chart
+    function renderResults(snowballResult, avalancheResult, mode) {
+      resultsSection.classList.remove('hidden');
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      if (mode === 'compare' && snowballResult && avalancheResult) {
+        comparisonSummary.innerHTML =
+          renderSingle(snowballResult, 'Snowball (Lowest Balance First)', 'border-indigo-400') +
+          renderSingle(avalancheResult, 'Avalanche (Highest APR First)', 'border-emerald-400');
+
+        // Winner logic
+        const interestDiff = snowballResult.totalInterest - avalancheResult.totalInterest;
+        const monthsDiff = snowballResult.months - avalancheResult.months;
+
+        let bannerHtml = '';
+        if (Math.abs(interestDiff) < 1 && Math.abs(monthsDiff) < 1) {
+          bannerHtml = `<p class="text-emerald-800 font-medium">Both strategies finish at virtually the same time and cost. Pick whichever motivates you more.</p>`;
+        } else if (interestDiff > 0) {
+          bannerHtml = `
+            <p class="text-emerald-800 font-medium text-lg">Avalanche wins on cost</p>
+            <p class="text-sm text-emerald-700 mt-1">You save <strong>${formatCurrency(interestDiff)}</strong> in interest
+            ${monthsDiff > 0 ? ` and finish <strong>${monthsDiff} month${monthsDiff > 1 ? 's' : ''}</strong> earlier` : ''} compared with Snowball.</p>
+            <p class="text-xs text-emerald-600 mt-2">Snowball can still be better psychologically if quick wins keep you motivated.</p>
+          `;
+        } else {
+          bannerHtml = `
+            <p class="text-indigo-800 font-medium text-lg">Snowball wins on cost in this scenario</p>
+            <p class="text-sm text-indigo-700 mt-1">You save <strong>${formatCurrency(-interestDiff)}</strong> in interest
+            ${monthsDiff < 0 ? ` and finish <strong>${-monthsDiff} month${-monthsDiff > 1 ? 's' : ''}</strong> earlier` : ''}.</p>
+          `;
+        }
+        winnerBanner.innerHTML = bannerHtml;
+        winnerBanner.classList.remove('hidden');
+
+        // Dual chart
+        drawChart([
+          { label: 'Snowball', data: snowballResult.history, color: '#6366f1' },
+          { label: 'Avalanche', data: avalancheResult.history, color: '#10b981' }
+        ]);
+
+        // Show schedule for the cheaper method
+        const best = interestDiff > 0 ? avalancheResult : snowballResult;
+        renderSchedule(best);
+      } else {
+        const result = snowballResult || avalancheResult;
+        const label = mode === 'snowball' ? 'Snowball Strategy' : 'Avalanche Strategy';
+        comparisonSummary.innerHTML = renderSingle(result, label, mode === 'snowball' ? 'border-indigo-400' : 'border-emerald-400');
+        winnerBanner.classList.add('hidden');
+        drawChart([{ label: label, data: result.history, color: mode === 'snowball' ? '#6366f1' : '#10b981' }]);
+        renderSchedule(result);
+      }
+    }
+
+    function drawChart(datasets) {
       const ctx = document.getElementById('debt-chart').getContext('2d');
       if (chartInstance) chartInstance.destroy();
+
+      // Align lengths
+      const maxLen = Math.max(...datasets.map(d => d.data.length));
+      const labels = Array.from({ length: maxLen }, (_, i) => 'M' + (i + 1));
+
       chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: result.history.map(h => 'M' + h.month),
-          datasets: [{
-            label: 'Remaining Debt',
-            data: result.history.map(h => h.totalBalance),
-            borderColor: '#4f46e5',
-            backgroundColor: 'rgba(79, 70, 229, 0.1)',
-            fill: true,
-            tension: 0.3
-          }]
+          labels,
+          datasets: datasets.map(ds => ({
+            label: ds.label,
+            data: ds.data.map(h => h.totalBalance).concat(Array(maxLen - ds.data.length).fill(null)),
+            borderColor: ds.color,
+            backgroundColor: ds.color + '18',
+            fill: datasets.length === 1,
+            tension: 0.25,
+            pointRadius: 0,
+            borderWidth: 2.5
+          }))
         },
         options: {
           responsive: true,
-          plugins: { legend: { display: false } },
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: datasets.length > 1, position: 'top' },
+            tooltip: {
+              callbacks: {
+                label: ctx => ctx.dataset.label + ': ' + formatCurrency(ctx.parsed.y)
+              }
+            }
+          },
           scales: {
-            y: { beginAtZero: true, ticks: { callback: v => '$' + v.toLocaleString() } }
+            y: {
+              beginAtZero: true,
+              ticks: { callback: v => '$' + Number(v).toLocaleString() }
+            },
+            x: { ticks: { maxTicksLimit: 12 } }
           }
         }
       });
+    }
 
-      // Schedule (first 12 months or all if short)
-      let scheduleHtml = `<table class="w-full text-left"><thead><tr class="border-b"><th class="py-2 pr-4">Month</th><th class="py-2 pr-4">Remaining</th><th class="py-2">Interest that month</th></tr></thead><tbody>`;
-      const show = result.history.slice(0, 24);
+    function renderSchedule(result) {
+      let html = `<table class="w-full text-left"><thead><tr class="border-b border-slate-200 text-slate-500">
+        <th class="py-2 pr-4 font-medium">Month</th>
+        <th class="py-2 pr-4 font-medium">Remaining Balance</th>
+        <th class="py-2 font-medium">Interest That Month</th>
+      </tr></thead><tbody>`;
+
+      const show = result.history.slice(0, 36);
       show.forEach(h => {
-        scheduleHtml += `<tr class="border-b border-gray-100"><td class="py-1.5 pr-4">${h.month}</td><td class="py-1.5 pr-4">${formatCurrency(h.totalBalance)}</td><td class="py-1.5">${formatCurrency(h.interest)}</td></tr>`;
+        html += `<tr class="border-b border-slate-100 hover:bg-slate-50">
+          <td class="py-1.5 pr-4">${h.month}</td>
+          <td class="py-1.5 pr-4 font-medium">${formatCurrency(h.totalBalance)}</td>
+          <td class="py-1.5 text-slate-600">${formatCurrency(h.interest)}</td>
+        </tr>`;
       });
-      if (result.history.length > 24) {
-        scheduleHtml += `<tr><td colspan="3" class="py-2 text-gray-500">... and ${result.history.length - 24} more months</td></tr>`;
+
+      if (result.history.length > 36) {
+        html += `<tr><td colspan="3" class="py-3 text-slate-400 text-center">… and ${result.history.length - 36} more months until debt-free</td></tr>`;
       }
-      scheduleHtml += `</tbody></table>`;
-      scheduleEl.innerHTML = scheduleHtml;
+      html += `</tbody></table>`;
+      scheduleEl.innerHTML = html;
     }
 
     // ========== EVENTS ==========
@@ -294,49 +415,77 @@
     calculateBtn.addEventListener('click', () => {
       const debtList = getDebtsFromUI();
       if (debtList.length === 0) {
-        alert('Please add at least one debt with a balance.');
+        alert('Please add at least one debt with a balance greater than zero.');
         return;
       }
+
       const extra = parseFloat(document.getElementById('extra-payment').value) || 0;
       const strategy = document.getElementById('strategy').value;
 
       if (strategy === 'compare') {
-        // For MVP we just run snowball and show it; full compare can be expanded later
-        const result = calculatePayoff(debtList, extra, 'snowball');
-        renderResults(result, 'Snowball');
+        const snow = calculatePayoff(debtList, extra, 'snowball');
+        const aval = calculatePayoff(debtList, extra, 'avalanche');
+        renderResults(snow, aval, 'compare');
       } else {
         const result = calculatePayoff(debtList, extra, strategy);
-        renderResults(result, strategy);
+        renderResults(
+          strategy === 'snowball' ? result : null,
+          strategy === 'avalanche' ? result : null,
+          strategy
+        );
       }
     });
 
     saveBtn.addEventListener('click', () => {
       const debtList = getDebtsFromUI();
       localStorage.setItem('debtPayoffDebts', JSON.stringify(debtList));
-      alert('Debts saved locally in your browser.');
+      const extra = document.getElementById('extra-payment').value;
+      localStorage.setItem('debtPayoffExtra', extra);
+      alert('Debts and extra payment saved in your browser.');
     });
 
     clearBtn.addEventListener('click', () => {
-      if (confirm('Clear all debts?')) {
+      if (confirm('Clear all debts and results?')) {
         debtsContainer.innerHTML = '';
         debtsContainer.appendChild(createDebtRow());
         localStorage.removeItem('debtPayoffDebts');
+        localStorage.removeItem('debtPayoffExtra');
         resultsSection.classList.add('hidden');
+        if (chartInstance) {
+          chartInstance.destroy();
+          chartInstance = null;
+        }
+      }
+    });
+
+    shareBtn.addEventListener('click', () => {
+      const text = 'I just calculated my debt-free date with this free private calculator. Check it out!';
+      if (navigator.share) {
+        navigator.share({ title: 'Debt Payoff Calculator', text, url: window.location.href }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          alert('Link copied to clipboard!');
+        });
       }
     });
 
     // ========== INIT ==========
     function loadSaved() {
       const saved = localStorage.getItem('debtPayoffDebts');
+      const extra = localStorage.getItem('debtPayoffExtra');
+      if (extra) document.getElementById('extra-payment').value = extra;
+
       if (saved) {
         try {
           const list = JSON.parse(saved);
-          list.forEach(d => debtsContainer.appendChild(createDebtRow(d)));
-          return;
+          if (Array.isArray(list) && list.length) {
+            list.forEach(d => debtsContainer.appendChild(createDebtRow(d)));
+            return;
+          }
         } catch (e) {}
       }
-      // Default one empty row
       debtsContainer.appendChild(createDebtRow());
+      debtsContainer.appendChild(createDebtRow({ name: '', balance: '', apr: '', minPayment: '' }));
     }
 
     loadSaved();
