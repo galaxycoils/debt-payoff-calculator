@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debt Payoff Calculator – Free Snowball vs Avalanche (Private)</title>
+  <meta name="description" content="Free private debt payoff calculator with gamification and dark mode. Track streaks, earn badges, level up while comparing snowball vs avalanche. All data stays in your browser." />
+  <meta name="keywords" content="debt payoff calculator, debt snowball, debt avalanche, extra payment calculator, debt free date" />
+  <meta property="og:title" content="Debt Payoff Calculator – See Your Exact Debt-Free Date" />
+  <meta property="og:description" content="Instantly compare strategies, drag extra payments, earn badges and keep your streak. 100% private." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="color-scheme" content="light dark" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Apply theme ASAP to avoid flash
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    input:focus, select:focus { outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25); }
+    input[type=range] { accent-color: #4f46e5; }
+    .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
+    .badge-earned { @apply bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200; }
+    .badge-locked { @apply bg-slate-100 text-slate-400 dark:bg-slate-700 dark:text-slate-500; }
+    @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+    .pop-in { animation: pop 0.35s ease-out; }
+    #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
+    .timeline-item { position: relative; padding-left: 1.75rem; }
+    .timeline-item::before { content: ''; position: absolute; left: 0.35rem; top: 0.5rem; bottom: -0.75rem; width: 2px; background: #c7d2fe; }
+    .dark .timeline-item::before { background: #4338ca; }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-dot { position: absolute; left: 0; top: 0.35rem; width: 0.75rem; height: 0.75rem; border-radius: 9999px; background: #6366f1; border: 2px solid #fff; box-shadow: 0 0 0 2px #c7d2fe; }
+    .dark .timeline-dot { border-color: #1e293b; box-shadow: 0 0 0 2px #4338ca; }
+    .history-chip { @apply text-xs px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 cursor-pointer transition; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
+  <div class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+
+    <!-- Top bar with theme toggle -->
+    <div class="flex justify-end mb-4">
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode"
+        class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-label">Dark</span>
+      </button>
+    </div>
+
+    <!-- Gamification Bar -->
+    <div id="game-bar" class="card mb-6 flex flex-wrap items-center justify-between gap-4 bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/50 dark:to-violet-950/50 border-indigo-100 dark:border-indigo-800">
+      <div class="flex items-center gap-4">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-indigo-700 dark:text-indigo-400" id="streak-count">0</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">Day Streak</div>
+        </div>
+        <div class="h-8 w-px bg-indigo-200 dark:bg-indigo-700"></div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-violet-700 dark:text-violet-400" id="level-display">1</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">Level</div>
+        </div>
+        <div class="h-8 w-px bg-indigo-200 dark:bg-indigo-700"></div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-amber-600 dark:text-amber-400" id="xp-display">0</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">XP</div>
+        </div>
+      </div>
+      <div class="flex-1 min-w-[140px]">
+        <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 mb-1">
+          <span>Level progress</span>
+          <span id="xp-next">100 XP to next</span>
+        </div>
+        <div class="w-full bg-white dark:bg-slate-700 rounded-full h-2.5 border border-indigo-100 dark:border-slate-600">
+          <div id="xp-bar" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-500" style="width:0%"></div>
+        </div>
+      </div>
+      <button id="checkin-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition shadow-sm">
+        Daily Check-in
+      </button>
+    </div>
+
+    <!-- PLACEHOLDER_REST -->
+  </div>
+</body>
+</html>
