@@ -13,31 +13,23 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - LocalStorage for debts + extra payment
 - Dark mode with system preference + toggle
 - Gamification: daily check-in streak, XP, levels, achievements (11 total)
-- **Debt Kill Order timeline** — which debt dies in which month (visual sequence)
-- **Near-debt-free celebration** + confetti when ≤18 months remaining
-- **Local calculation history** (last 8 scenarios) — reload previous runs with one tap
+- Debt Kill Order timeline
+- Near-debt-free celebration + confetti when ≤18 months remaining
+- Local calculation history (last 8 scenarios)
 - Clean monetization placeholder after results
-- Open Graph / Twitter card meta + canonical
-- **Snowflake payments** — one-time bonus payments on a specific future month (tax refund, bonus, gift). Live recalc on change; extra rolls across debts in order.
-- **Shareable result image** — canvas-generated 1200×630 PNG with debt-free date, months, interest, strategy badge. One-click download for social/Reddit.
-- **SEO supporting pages** — `snowball-vs-avalanche.html`, `how-extra-payments-work.html` with internal links and CTAs
-- **JSON-LD** structured data (WebApplication) for richer search results
-- New achievements: Snowflake, Time Traveler (5 history), Debt Slayer (multi-debt kill order)
+- Open Graph / Twitter card meta + canonical + JSON-LD
+- Snowflake payments (one-time bonus on a specific future month)
+- Shareable result image (canvas 1200×630 PNG download)
+- SEO supporting pages: snowball-vs-avalanche.html, how-extra-payments-work.html
+- **PDF export of plan** (jsPDF CDN) — debts, strategy, debt-free date, kill order
+- **Mobile polish & a11y**: min 44px touch targets, ARIA labels/roles, skip-link, focus styles, live regions
 
 ## High-Priority Next
-1. Faster perceived performance and more mobile polish / a11y
-2. PDF export of plan (jsPDF CDN)
-3. More long-tail SEO guides (debt consolidation vs payoff, credit card payoff tips, etc.)
-4. Real AdSense units + affiliate links after results (once approved)
-5. Structured FAQ schema on SEO pages
+1. More long-tail SEO guides (debt consolidation vs payoff, credit card payoff tips, etc.)
+2. Real AdSense units + affiliate links after results (once approved)
+3. Structured FAQ schema on SEO pages
+4. More achievements (PDF export, dark mode used, etc.)
+5. Faster perceived performance (optional subtle loading states)
 
 ## Why these features
-Research on top debt tools (Undebt.it, Debt Payoff Planner, Unbury.me, etc.) and retention patterns shows:
-- Instant feedback loops (sliders, live recalculation, snowflakes) keep users playing with numbers
-- Visual progress, kill-order timelines, and “wins” create emotional investment
-- Scenario history increases return visits and session depth
-- Celebration moments (confetti) make the tool feel rewarding → more shares
-- Shareable artifacts (image + text) drive organic traffic
-- SEO pages capture long-tail intent and feed the calculator
-
-All features remain 100% client-side and free to host.
+Instant feedback (sliders, snowflakes), visual progress, kill-order, celebration, history, shareable image/PDF, and SEO pages drive session depth, return visits, and organic traffic — all 100% client-side.
