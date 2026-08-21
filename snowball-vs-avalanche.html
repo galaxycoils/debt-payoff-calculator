@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snowball vs Avalanche – Which Debt Payoff Method Wins?</title>
+  <meta name="description" content="Clear comparison of debt snowball vs avalanche: psychology vs math, when each wins, and how to choose. Free calculator included." />
+  <meta name="keywords" content="debt snowball vs avalanche, snowball method, avalanche method, debt payoff strategies" />
+  <meta property="og:title" content="Snowball vs Avalanche – Which Debt Payoff Method Wins?" />
+  <meta property="og:description" content="Psychology vs math. See which strategy gets you debt-free faster and with less interest." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/snowball-vs-avalanche.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-indigo-700 dark:text-indigo-400 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-indigo-600 dark:text-indigo-400 hover:underline">← Calculator</a>
+      <span class="text-slate-300 dark:text-slate-600">|</span>
+      <a href="how-extra-payments-work.html" class="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400">Extra payments guide</a>
+    </nav>
+
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 dark:text-indigo-400 tracking-tight mb-4">Snowball vs Avalanche</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">Two proven ways to attack multiple debts. One optimizes for motivation. The other optimizes for interest. Here’s how they differ and how to pick.</p>
+    </header>
+
+    <article class="card prose mb-8">
+      <h2>Debt Snowball (lowest balance first)</h2>
+      <p>List debts from smallest balance to largest. Pay minimums on everything, then throw every extra dollar at the smallest balance. When it’s gone, roll that payment into the next smallest.</p>
+      <ul>
+        <li><strong>Strength:</strong> Quick wins. Paying off a $400 store card in a month or two feels real.</li>
+        <li><strong>Psychology:</strong> Momentum and visible progress keep people going when motivation dips.</li>
+        <li><strong>Trade-off:</strong> You may pay more interest if high-APR debts sit longer.</li>
+      </ul>
+
+      <h2>Debt Avalanche (highest APR first)</h2>
+      <p>Same minimums-plus-extra structure, but order by interest rate (highest first). You attack the most expensive debt first.</p>
+      <ul>
+        <li><strong>Strength:</strong> Mathematically optimal. Lowest total interest over the life of the plan.</li>
+        <li><strong>Psychology:</strong> Progress can feel slow if the highest-rate debt is also the largest.</li>
+        <li><strong>Best when:</strong> You’re disciplined and the rate gap between debts is large.</li>
+      </ul>
+
+      <h2>Which one wins on paper?</h2>
+      <p>Avalanche almost always costs less interest. The difference is often a few hundred to a few thousand dollars depending on balances and rates. Snowball can finish a small debt months earlier, which some people value more than the interest savings.</p>
+      <p>There is no universal “best.” The method you stick with beats the optimal method you abandon after three months.</p>
+
+      <h2>Hybrid approaches</h2>
+      <p>Many people knock out one or two tiny balances with snowball for the win, then switch to avalanche. Others use avalanche but keep a small “victory fund” for the lowest balance. Our calculator lets you compare both pure strategies side-by-side with the same debts and extra payment so you can see the exact dollar and month difference.</p>
+
+      <h2>How to decide in 60 seconds</h2>
+      <ul>
+        <li>If high-APR debts are also large and you care most about total cost → <strong>Avalanche</strong>.</li>
+        <li>If you have several small balances and struggle with consistency → <strong>Snowball</strong>.</li>
+        <li>If you’re unsure → run both in the calculator. The winner banner shows interest and months saved.</li>
+      </ul>
+    </article>
+
+    <div class="card bg-indigo-50 dark:bg-indigo-950/40 border-indigo-100 dark:border-indigo-800 text-center mb-8">
+      <p class="font-semibold text-indigo-800 dark:text-indigo-200 mb-2">See your numbers in seconds</p>
+      <p class="text-sm text-indigo-900/80 dark:text-indigo-200/80 mb-4">Add your debts, drag the extra-payment slider, and compare Snowball vs Avalanche live. Private, free, no account.</p>
+      <a href="index.html" class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition shadow-sm">Open the calculator →</a>
+    </div>
+
+    <footer class="text-center text-sm text-slate-400 dark:text-slate-500 space-y-2">
+      <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1">
+        <a href="index.html" class="text-indigo-600 dark:text-indigo-400 hover:underline">Calculator</a>
+        <a href="how-extra-payments-work.html" class="text-indigo-600 dark:text-indigo-400 hover:underline">How extra payments work</a>
+      </nav>
+      <p>100% private • Free forever</p>
+    </footer>
+  </div>
+</body>
+</html>
