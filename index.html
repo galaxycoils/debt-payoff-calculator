@@ -6,9 +6,548 @@
   <title>Debt Payoff Calculator – Free Snowball vs Avalanche (Private)</title>
   <meta name="description" content="Free private debt payoff calculator. Compare snowball vs avalanche, drag extra payments, schedule snowflakes, export PDF. All data stays in your browser." />
   <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/" />
-  <style>html,body{margin:0;height:100%;}iframe{border:0;width:100%;height:100%;}</style>
+  <meta property="og:title" content="Debt Payoff Calculator – Snowball vs Avalanche" />
+  <meta property="og:description" content="Private debt payoff planner with live charts, snowflakes, and PDF export." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="color-scheme" content="light dark" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <script src="payoff-engine.js"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    input:focus, select:focus, button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35); }
+    input[type=range] { accent-color: #4f46e5; }
+    .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
+    .badge-earned { @apply bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200; }
+    .badge-locked { @apply bg-slate-100 text-slate-400 dark:bg-slate-700 dark:text-slate-500; }
+    .history-chip { @apply text-xs px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 cursor-pointer transition; }
+    #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
+    .skip-link { position: absolute; left: -9999px; top: auto; }
+    .skip-link:focus { left: 1rem; top: 1rem; z-index: 200; background: #4f46e5; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; }
+  </style>
 </head>
-<body>
-  <iframe src="https://cdn.jsdelivr.net/gh/galaxycoils/debt-payoff-calculator@918308c6e3e778c27550d1d1f9b7c18d426b518a/index.html" title="Debt Payoff Calculator"></iframe>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
+  <a class="skip-link" href="#main">Skip to calculator</a>
+  <div class="max-w-6xl mx-auto px-4 py-6 md:py-10" id="main">
+    <div class="flex justify-end mb-4">
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="inline-flex items-center gap-2 px-3 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm">
+        <span id="theme-icon">🌙</span><span id="theme-label">Dark</span>
+      </button>
+    </div>
+
+    <div id="game-bar" class="card mb-6 flex flex-wrap items-center justify-between gap-4 bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/50 dark:to-violet-950/50 border-indigo-100 dark:border-indigo-800">
+      <div class="flex items-center gap-4">
+        <div class="text-center"><div class="text-2xl font-bold text-indigo-700 dark:text-indigo-400" id="streak-count">0</div><div class="text-xs text-slate-500 dark:text-slate-400">Day Streak</div></div>
+        <div class="h-8 w-px bg-indigo-200 dark:bg-indigo-700"></div>
+        <div class="text-center"><div class="text-2xl font-bold text-violet-700 dark:text-violet-400" id="level-display">1</div><div class="text-xs text-slate-500 dark:text-slate-400">Level</div></div>
+        <div class="h-8 w-px bg-indigo-200 dark:bg-indigo-700"></div>
+        <div class="text-center"><div class="text-2xl font-bold text-amber-600 dark:text-amber-400" id="xp-display">0</div><div class="text-xs text-slate-500 dark:text-slate-400">XP</div></div>
+      </div>
+      <div class="flex-1 min-w-[140px]">
+        <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 mb-1"><span>Level progress</span><span id="xp-next">100 XP to next</span></div>
+        <div class="w-full bg-white dark:bg-slate-700 rounded-full h-2.5 border border-indigo-100 dark:border-slate-600"><div id="xp-bar" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-500" style="width:0%"></div></div>
+      </div>
+      <button id="checkin-btn" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 min-h-[44px] rounded-xl transition shadow-sm">Daily Check-in</button>
+    </div>
+
+    <div class="card mb-6">
+      <button id="toggle-achievements" type="button" class="w-full flex items-center justify-between text-left min-h-[44px]">
+        <h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400">Achievements</h2>
+        <span class="text-sm text-slate-400" id="ach-count">0 unlocked</span>
+      </button>
+      <div id="achievements-list" class="mt-4 flex flex-wrap gap-2" role="list"></div>
+    </div>
+
+    <header class="text-center mb-8 md:mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 dark:text-indigo-400 tracking-tight mb-3">Debt Payoff Calculator</h1>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+        Enter your debts. Drag extra payments. Compare <strong>Snowball</strong> vs <strong>Avalanche</strong>.
+        <span class="block mt-1 text-sm text-indigo-600 dark:text-indigo-400 font-medium">Everything runs privately in your browser.</span>
+      </p>
+    </header>
+
+    <section class="card mb-6" aria-labelledby="debts-heading">
+      <div class="flex items-center justify-between mb-4">
+        <h2 id="debts-heading" class="text-xl font-semibold text-indigo-700 dark:text-indigo-400">Your Debts</h2>
+        <span class="text-xs text-slate-400">Add as many as you need</span>
+      </div>
+      <div id="debts-container" class="space-y-3 mb-4"></div>
+      <button id="add-debt" type="button" class="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition">+ Add Debt</button>
+
+      <div class="mt-6">
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="extra-slider">Extra Monthly Payment: <span id="extra-display" class="font-bold text-indigo-600 dark:text-indigo-400">$100</span></label>
+        <input type="range" id="extra-slider" min="0" max="1000" step="10" value="100" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer" />
+        <div class="flex justify-between text-xs text-slate-400 mt-1"><span>$0</span><span>$500</span><span>$1000</span></div>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="50">+$50</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="100">+$100</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="200">+$200</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="0">Reset</button>
+        </div>
+      </div>
+
+      <div class="mt-6" id="snowflake-section">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-sm font-medium text-slate-700 dark:text-slate-300">One-time snowflakes</label>
+          <button id="add-snowflake" type="button" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline min-h-[44px] px-2">+ Add snowflake</button>
+        </div>
+        <div id="snowflakes-container" class="space-y-2"></div>
+        <p class="text-xs text-slate-400 mt-1">Bonus payment applied in a specific future month</p>
+      </div>
+
+      <div class="mt-5">
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="strategy">Strategy</label>
+        <select id="strategy" class="w-full border border-slate-200 dark:border-slate-600 rounded-xl px-3.5 py-2.5 min-h-[44px] text-sm bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100">
+          <option value="compare">Compare Both (Recommended)</option>
+          <option value="snowball">Snowball only</option>
+          <option value="avalanche">Avalanche only</option>
+        </select>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button id="calculate" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] rounded-xl font-semibold text-sm transition shadow-sm">Calculate Payoff</button>
+        <button id="save-debts" type="button" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2.5 min-h-[44px] rounded-xl font-medium text-sm transition">Save Debts</button>
+        <button id="clear-all" type="button" class="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-2.5 min-h-[44px] rounded-xl font-medium text-sm transition">Clear All</button>
+      </div>
+    </section>
+
+    <section id="results" class="hidden space-y-6" aria-live="polite">
+      <div id="progress-card" class="card hidden">
+        <div class="flex justify-between text-sm mb-2"><span class="font-medium text-slate-600 dark:text-slate-300">Progress toward debt-free</span><span id="progress-pct" class="font-bold text-indigo-600 dark:text-indigo-400">0%</span></div>
+        <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-3"><div id="progress-bar" class="bg-indigo-500 h-3 rounded-full transition-all duration-500" style="width:0%"></div></div>
+        <p id="progress-msg" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>
+      </div>
+      <div id="comparison-summary" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      <div id="winner-banner" class="hidden card bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-emerald-100 dark:border-emerald-800"></div>
+      <div id="celebration-banner" class="hidden card bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 border-amber-200 dark:border-amber-800 text-center">
+        <div class="text-3xl mb-2">🎉</div>
+        <p class="text-lg font-bold text-amber-800 dark:text-amber-200" id="celebration-title">Almost debt-free!</p>
+        <p class="text-sm text-amber-700 dark:text-amber-300 mt-1" id="celebration-msg"></p>
+      </div>
+      <div id="kill-order-card" class="card hidden">
+        <h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400 mb-1">Debt Kill Order</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Which debt dies first — and when</p>
+        <div id="kill-order-timeline" class="space-y-3"></div>
+      </div>
+      <div class="card">
+        <h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400 mb-4">Remaining Debt Over Time</h2>
+        <canvas id="debt-chart" height="140" aria-label="Debt remaining over months chart"></canvas>
+      </div>
+      <div class="card">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <h3 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400">Month-by-Month Schedule</h3>
+          <div class="flex flex-wrap gap-2">
+            <button id="copy-summary" type="button" class="text-sm bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 min-h-[44px] rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition font-medium">Copy Summary</button>
+            <button id="share-btn" type="button" class="text-sm bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-3 py-2 min-h-[44px] rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition font-medium">Share</button>
+            <button id="pdf-btn" type="button" class="text-sm bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 min-h-[44px] rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition font-medium">PDF</button>
+          </div>
+        </div>
+        <div id="schedule" class="overflow-x-auto text-sm"></div>
+      </div>
+      <div id="history-card" class="card">
+        <div class="flex items-center justify-between mb-3"><h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400">Recent Scenarios</h2><button id="clear-history" type="button" class="text-xs text-slate-400 hover:text-red-500 transition min-h-[44px] px-2">Clear</button></div>
+        <div id="history-list" class="flex flex-wrap gap-2"></div>
+      </div>
+      <div class="card bg-indigo-50/70 dark:bg-indigo-950/40 border-indigo-100 dark:border-indigo-800">
+        <h3 class="font-semibold text-indigo-800 dark:text-indigo-300 mb-2">What to do with the money you free up</h3>
+        <p class="text-sm text-indigo-900/80 dark:text-indigo-200/80 mb-3">Once a debt is gone, that payment becomes available.</p>
+        <ul class="text-sm text-indigo-900/90 dark:text-indigo-200/90 space-y-1.5 list-disc list-inside">
+          <li>Park it in a <strong>high-yield savings account</strong></li>
+          <li>Throw it at the next debt</li>
+          <li>Consider consolidation only if the rate is meaningfully lower</li>
+        </ul>
+        <p class="text-xs text-indigo-600/70 dark:text-indigo-400/70 mt-3">AdSense + affiliate spots appear here after approval.</p>
+      </div>
+    </section>
+
+    <footer class="mt-12 mb-6 text-center text-sm text-slate-400 dark:text-slate-500">
+      <p>100% private • Calculations never leave your device • Free forever</p>
+      <p class="mt-2 space-x-3">
+        <a class="underline hover:text-indigo-500" href="snowball-vs-avalanche.html">Snowball vs Avalanche</a>
+        <a class="underline hover:text-indigo-500" href="how-extra-payments-work.html">Extra payments</a>
+        <a class="underline hover:text-indigo-500" href="credit-card-payoff-tips.html">Credit card tips</a>
+      </p>
+    </footer>
+  </div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <div id="toast" role="status" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-lg text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-50"></div>
+
+  <script>
+  // Theme
+  var themeToggle = document.getElementById('theme-toggle');
+  function updateThemeUI() {
+    var isDark = document.documentElement.classList.contains('dark');
+    document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+    document.getElementById('theme-label').textContent = isDark ? 'Light' : 'Dark';
+  }
+  function setTheme(mode) {
+    if (mode === 'dark') { document.documentElement.classList.add('dark'); localStorage.setItem('debtPayoffTheme', 'dark'); }
+    else { document.documentElement.classList.remove('dark'); localStorage.setItem('debtPayoffTheme', 'light'); }
+    updateThemeUI();
+  }
+  themeToggle.addEventListener('click', function () {
+    setTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
+  });
+  updateThemeUI();
+
+  // Game (thin layer; pure rules still inline for now)
+  var GAME_KEY = 'debtPayoffGame';
+  var defaultGame = { xp: 0, level: 1, streak: 0, lastCheckin: null, achievements: {}, totalCalcs: 0, maxExtraUsed: 0 };
+  function loadGame() {
+    try { var raw = localStorage.getItem(GAME_KEY); if (raw) return Object.assign({}, defaultGame, JSON.parse(raw)); } catch (e) {}
+    return Object.assign({}, defaultGame);
+  }
+  function saveGame(g) { localStorage.setItem(GAME_KEY, JSON.stringify(g)); }
+  var game = loadGame();
+  var ACHIEVEMENTS = [
+    { id: 'first_calc', name: 'First Steps', desc: 'Run your first calculation', xp: 25 },
+    { id: 'compare', name: 'Strategist', desc: 'Compare Snowball vs Avalanche', xp: 40 },
+    { id: 'extra_100', name: 'Booster', desc: 'Use $100+ extra payment', xp: 30 },
+    { id: 'extra_300', name: 'Aggressive', desc: 'Use $300+ extra payment', xp: 50 },
+    { id: 'streak_3', name: 'Consistent', desc: '3-day check-in streak', xp: 60 },
+    { id: 'streak_7', name: 'Week Warrior', desc: '7-day check-in streak', xp: 120 },
+    { id: 'level_5', name: 'Rising', desc: 'Reach Level 5', xp: 80 },
+    { id: 'calcs_10', name: 'Explorer', desc: 'Run 10 calculations', xp: 70 },
+    { id: 'snowflake', name: 'Snowflake', desc: 'Add a one-time bonus payment', xp: 45 }
+  ];
+  function xpForLevel(level) { return level * 100; }
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.remove('opacity-0');
+    t.classList.add('opacity-100');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(function () { t.classList.add('opacity-0'); t.classList.remove('opacity-100'); }, 2800);
+  }
+  function renderGameUI() {
+    document.getElementById('streak-count').textContent = game.streak;
+    document.getElementById('level-display').textContent = game.level;
+    document.getElementById('xp-display').textContent = game.xp;
+    var needed = xpForLevel(game.level);
+    document.getElementById('xp-bar').style.width = Math.min(100, Math.round((game.xp / needed) * 100)) + '%';
+    document.getElementById('xp-next').textContent = (needed - game.xp) + ' XP to next';
+    var today = new Date().toDateString();
+    var btn = document.getElementById('checkin-btn');
+    if (game.lastCheckin === today) { btn.textContent = 'Checked in today'; btn.disabled = true; }
+    else { btn.textContent = 'Daily Check-in'; btn.disabled = false; }
+  }
+  function renderAchievements() {
+    var unlocked = 0;
+    document.getElementById('achievements-list').innerHTML = ACHIEVEMENTS.map(function (a) {
+      var earned = !!game.achievements[a.id];
+      if (earned) unlocked++;
+      return '<span class="badge ' + (earned ? 'badge-earned' : 'badge-locked') + '" title="' + a.desc + '">' + (earned ? '✓' : '○') + ' ' + a.name + '</span>';
+    }).join('');
+    document.getElementById('ach-count').textContent = unlocked + ' / ' + ACHIEVEMENTS.length + ' unlocked';
+  }
+  function addXP(amount, reason) {
+    game.xp += amount;
+    while (game.xp >= xpForLevel(game.level)) { game.xp -= xpForLevel(game.level); game.level += 1; showToast('Level up! Level ' + game.level); }
+    saveGame(game); renderGameUI();
+    if (reason) showToast('+' + amount + ' XP — ' + reason);
+  }
+  function unlockAchievement(id) {
+    if (game.achievements[id]) return;
+    var ach = ACHIEVEMENTS.find(function (a) { return a.id === id; });
+    if (!ach) return;
+    game.achievements[id] = Date.now(); saveGame(game); renderAchievements(); addXP(ach.xp, ach.name);
+  }
+  document.getElementById('checkin-btn').addEventListener('click', function () {
+    var today = new Date().toDateString();
+    if (game.lastCheckin === today) return;
+    var y = new Date(); y.setDate(y.getDate() - 1);
+    game.streak = (game.lastCheckin === y.toDateString()) ? game.streak + 1 : 1;
+    game.lastCheckin = today; saveGame(game); renderGameUI();
+    if (game.streak >= 3) unlockAchievement('streak_3');
+    if (game.streak >= 7) unlockAchievement('streak_7');
+    addXP(15, 'Daily check-in');
+  });
+
+  // Debts UI
+  var debtsContainer = document.getElementById('debts-container');
+  var extraSlider = document.getElementById('extra-slider');
+  var extraDisplay = document.getElementById('extra-display');
+  var resultsSection = document.getElementById('results');
+  var chartInstance = null;
+  var lastResults = null;
+
+  function createDebtRow(debt) {
+    debt = debt || {};
+    var div = document.createElement('div');
+    div.className = 'grid grid-cols-1 sm:grid-cols-5 gap-2 items-end debt-row bg-slate-50/50 dark:bg-slate-700/40 p-3 rounded-xl';
+    div.innerHTML = '<div><label class="text-xs text-slate-500 dark:text-slate-400">Name</label><input class="debt-name w-full border border-slate-200 dark:border-slate-600 rounded-lg px-2.5 py-2 min-h-[44px] text-sm bg-white dark:bg-slate-800" value="' + (debt.name || '') + '" placeholder="Credit card"></div>' +
+      '<div><label class="text-xs text-slate-500 dark:text-slate-400">Balance</label><input type="number" class="debt-balance w-full border border-slate-200 dark:border-slate-600 rounded-lg px-2.5 py-2 min-h-[44px] text-sm bg-white dark:bg-slate-800" value="' + (debt.balance || '') + '" placeholder="5000" min="0" step="0.01"></div>' +
+      '<div><label class="text-xs text-slate-500 dark:text-slate-400">APR %</label><input type="number" class="debt-apr w-full border border-slate-200 dark:border-slate-600 rounded-lg px-2.5 py-2 min-h-[44px] text-sm bg-white dark:bg-slate-800" value="' + (debt.apr || '') + '" placeholder="19.9" min="0" step="0.1"></div>' +
+      '<div><label class="text-xs text-slate-500 dark:text-slate-400">Min payment</label><input type="number" class="debt-min w-full border border-slate-200 dark:border-slate-600 rounded-lg px-2.5 py-2 min-h-[44px] text-sm bg-white dark:bg-slate-800" value="' + (debt.minPayment || '') + '" placeholder="150" min="0" step="0.01"></div>' +
+      '<div><button type="button" class="remove-debt text-red-500 text-sm px-2 py-2 min-h-[44px]">Remove</button></div>';
+    div.querySelector('.remove-debt').addEventListener('click', function () { div.remove(); });
+    return div;
+  }
+  document.getElementById('add-debt').addEventListener('click', function () { debtsContainer.appendChild(createDebtRow()); });
+  function getDebtsFromUI() {
+    var list = [];
+    document.querySelectorAll('.debt-row').forEach(function (row) {
+      var balance = parseFloat(row.querySelector('.debt-balance').value) || 0;
+      if (balance > 0) list.push({
+        name: row.querySelector('.debt-name').value.trim() || 'Debt',
+        balance: balance,
+        apr: parseFloat(row.querySelector('.debt-apr').value) || 0,
+        minPayment: parseFloat(row.querySelector('.debt-min').value) || 0
+      });
+    });
+    return list;
+  }
+  function createSnowflakeRow(sf) {
+    sf = sf || {};
+    var div = document.createElement('div');
+    div.className = 'snowflake-row flex flex-wrap gap-2 items-end bg-sky-50/50 dark:bg-sky-900/20 p-2 rounded-lg';
+    div.innerHTML = '<div><label class="text-xs text-slate-500">Amount $</label><input type="number" class="sf-amount w-28 border border-slate-200 dark:border-slate-600 rounded-lg px-2 py-2 min-h-[44px] text-sm bg-white dark:bg-slate-800" value="' + (sf.amount || '') + '" min="0"></div>' +
+      '<div><label class="text-xs text-slate-500">Month #</label><input type="number" class="sf-month w-24 border border-slate-200 dark:border-slate-600 rounded-lg px-2 py-2 min-h-[44px] text-sm bg-white dark:bg-slate-800" value="' + (sf.month || '') + '" min="1"></div>' +
+      '<button type="button" class="remove-sf text-red-500 text-sm min-h-[44px] px-2">Remove</button>';
+    div.querySelector('.remove-sf').addEventListener('click', function () { div.remove(); });
+    return div;
+  }
+  document.getElementById('add-snowflake').addEventListener('click', function () {
+    document.getElementById('snowflakes-container').appendChild(createSnowflakeRow());
+    unlockAchievement('snowflake');
+  });
+  function getSnowflakesFromUI() {
+    var list = [];
+    document.querySelectorAll('.snowflake-row').forEach(function (row) {
+      var amount = parseFloat(row.querySelector('.sf-amount').value) || 0;
+      var month = parseInt(row.querySelector('.sf-month').value, 10) || 0;
+      if (amount > 0 && month > 0) list.push({ amount: amount, month: month });
+    });
+    return list;
+  }
+
+  function formatCurrency(n) {
+    return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function formatDate(d) {
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  }
+
+  /** Adapter: UI → pure PayoffEngine seam */
+  function calculatePayoff(debtList, extra, strategy, snowflakes) {
+    if (typeof PayoffEngine === 'undefined' || !PayoffEngine.calculate) {
+      console.error('PayoffEngine missing');
+      return { months: 0, totalInterest: 0, history: [], payoffOrder: [], debtFreeDate: new Date(), strategy: strategy, startingTotal: 0 };
+    }
+    return PayoffEngine.calculate({
+      debts: debtList,
+      extra: extra,
+      strategy: strategy,
+      snowflakes: snowflakes || []
+    });
+  }
+
+  function renderSingle(result, label, colorClass) {
+    return '<div class="card border-t-4 ' + colorClass + '"><div class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">' + label + '</div>' +
+      '<div class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-3">' + formatDate(result.debtFreeDate) + '</div>' +
+      '<div class="grid grid-cols-2 gap-3 text-sm"><div><div class="text-slate-500 dark:text-slate-400">Total Interest</div><div class="font-semibold">' + formatCurrency(result.totalInterest) + '</div></div>' +
+      '<div><div class="text-slate-500 dark:text-slate-400">Months</div><div class="font-semibold">' + result.months + '</div></div></div></div>';
+  }
+  function updateProgress(result) {
+    var card = document.getElementById('progress-card');
+    if (!result) { card.classList.add('hidden'); return; }
+    var pct = Math.max(0, Math.min(100, Math.round((1 - result.months / 120) * 100)));
+    card.classList.remove('hidden');
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('progress-msg').textContent = result.months <= 12 ? 'Under a year — keep going!' : 'Every extra dollar moves this bar.';
+  }
+  function renderKillOrder(result) {
+    var card = document.getElementById('kill-order-card');
+    var timeline = document.getElementById('kill-order-timeline');
+    if (!result || !result.payoffOrder || !result.payoffOrder.length) { card.classList.add('hidden'); return; }
+    card.classList.remove('hidden');
+    timeline.innerHTML = result.payoffOrder.map(function (p, i) {
+      return '<div class="text-sm"><span class="font-semibold">' + (i + 1) + '. ' + p.name + '</span> — <span class="text-indigo-600 dark:text-indigo-400">' + formatDate(p.date) + '</span> <span class="text-xs text-slate-400">(month ' + p.month + ')</span></div>';
+    }).join('');
+  }
+  function updateCelebration(result) {
+    var banner = document.getElementById('celebration-banner');
+    if (!result || result.months > 18) { banner.classList.add('hidden'); return; }
+    banner.classList.remove('hidden');
+    document.getElementById('celebration-title').textContent = result.months <= 12 ? 'Under a year to debt-free!' : 'You can see the finish line';
+    document.getElementById('celebration-msg').textContent = result.months + ' months remaining.';
+  }
+  function drawChart(datasets) {
+    var ctx = document.getElementById('debt-chart').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: (datasets[0] && datasets[0].data.map(function (h) { return h.month; })) || [],
+        datasets: datasets.map(function (ds) {
+          return { label: ds.label, data: ds.data.map(function (h) { return h.totalBalance; }), borderColor: ds.color, backgroundColor: ds.color + '22', fill: true, tension: 0.25, pointRadius: 0 };
+        })
+      },
+      options: { responsive: true, plugins: { legend: { position: 'top' } }, scales: { y: { ticks: { callback: function (v) { return '$' + Number(v).toLocaleString(); } } } } }
+    });
+  }
+  function renderSchedule(result) {
+    var el = document.getElementById('schedule');
+    if (!result || !result.history) { el.innerHTML = ''; return; }
+    var html = '<table class="w-full text-left"><thead><tr class="text-slate-500 border-b border-slate-200 dark:border-slate-600"><th class="py-2 pr-2">Month</th><th class="py-2 pr-2">Balance</th><th class="py-2">Interest</th></tr></thead><tbody>';
+    result.history.slice(0, 36).forEach(function (h) {
+      html += '<tr class="border-b border-slate-50 dark:border-slate-800"><td class="py-1.5 pr-2">' + h.month + '</td><td class="py-1.5 pr-2">' + formatCurrency(h.totalBalance) + '</td><td class="py-1.5">' + formatCurrency(h.interest) + '</td></tr>';
+    });
+    if (result.history.length > 36) html += '<tr><td colspan="3" class="py-3 text-slate-400 text-center">… and ' + (result.history.length - 36) + ' more months</td></tr>';
+    el.innerHTML = html + '</tbody></table>';
+  }
+
+  function renderResults(snow, aval, mode) {
+    resultsSection.classList.remove('hidden');
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    lastResults = { snow: snow, aval: aval, mode: mode };
+    var primary = mode === 'compare' ? (snow.totalInterest <= aval.totalInterest ? snow : aval) : (snow || aval);
+    updateCelebration(primary);
+    renderKillOrder(primary);
+    updateProgress(primary);
+
+    game.totalCalcs += 1;
+    if (game.totalCalcs === 1) unlockAchievement('first_calc');
+    if (game.totalCalcs >= 10) unlockAchievement('calcs_10');
+    if (mode === 'compare') unlockAchievement('compare');
+    var extra = parseFloat(extraSlider.value) || 0;
+    if (extra >= 100) unlockAchievement('extra_100');
+    if (extra >= 300) unlockAchievement('extra_300');
+    saveGame(game);
+    addXP(10, 'Calculation');
+
+    var summary = document.getElementById('comparison-summary');
+    var winner = document.getElementById('winner-banner');
+    if (mode === 'compare' && snow && aval) {
+      summary.innerHTML = renderSingle(snow, 'Snowball', 'border-indigo-400') + renderSingle(aval, 'Avalanche', 'border-emerald-400');
+      var interestDiff = snow.totalInterest - aval.totalInterest;
+      var monthsDiff = snow.months - aval.months;
+      var banner = '';
+      if (Math.abs(interestDiff) < 1) banner = '<p class="text-emerald-800 dark:text-emerald-300 font-medium">Both strategies finish almost the same.</p>';
+      else if (interestDiff > 0) banner = '<p class="text-emerald-800 dark:text-emerald-300 font-medium text-lg">Avalanche wins on cost</p><p class="text-sm mt-1">Save <strong>' + formatCurrency(interestDiff) + '</strong> in interest.</p>';
+      else banner = '<p class="text-indigo-800 dark:text-indigo-300 font-medium text-lg">Snowball wins on cost here</p><p class="text-sm mt-1">Save <strong>' + formatCurrency(-interestDiff) + '</strong> in interest.</p>';
+      winner.innerHTML = banner; winner.classList.remove('hidden');
+      drawChart([{ label: 'Snowball', data: snow.history, color: '#6366f1' }, { label: 'Avalanche', data: aval.history, color: '#10b981' }]);
+      renderSchedule(primary);
+    } else {
+      var result = snow || aval;
+      var label = mode === 'snowball' ? 'Snowball' : 'Avalanche';
+      summary.innerHTML = renderSingle(result, label, mode === 'snowball' ? 'border-indigo-400' : 'border-emerald-400');
+      winner.classList.add('hidden');
+      drawChart([{ label: label, data: result.history, color: mode === 'snowball' ? '#6366f1' : '#10b981' }]);
+      renderSchedule(result);
+    }
+  }
+
+  function runCalc() {
+    var debts = getDebtsFromUI();
+    if (!debts.length) { showToast('Add at least one debt with a balance'); return; }
+    var extra = parseFloat(extraSlider.value) || 0;
+    var strategy = document.getElementById('strategy').value;
+    var flakes = getSnowflakesFromUI();
+    if (strategy === 'compare') {
+      renderResults(calculatePayoff(debts, extra, 'snowball', flakes), calculatePayoff(debts, extra, 'avalanche', flakes), 'compare');
+    } else {
+      var r = calculatePayoff(debts, extra, strategy, flakes);
+      renderResults(strategy === 'snowball' ? r : null, strategy === 'avalanche' ? r : null, strategy);
+    }
+  }
+
+  document.getElementById('calculate').addEventListener('click', runCalc);
+  extraSlider.addEventListener('input', function () {
+    extraDisplay.textContent = '$' + extraSlider.value;
+    if (!resultsSection.classList.contains('hidden')) runCalc();
+  });
+  document.querySelectorAll('.what-if').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var amt = parseInt(btn.getAttribute('data-amount'), 10);
+      extraSlider.value = amt === 0 ? 100 : Math.min(1000, parseInt(extraSlider.value, 10) + amt);
+      extraDisplay.textContent = '$' + extraSlider.value;
+      if (!resultsSection.classList.contains('hidden')) runCalc();
+    });
+  });
+  document.getElementById('save-debts').addEventListener('click', function () {
+    localStorage.setItem('debtPayoffDebts', JSON.stringify(getDebtsFromUI()));
+    localStorage.setItem('debtPayoffExtra', extraSlider.value);
+    showToast('Debts saved in your browser');
+  });
+  document.getElementById('clear-all').addEventListener('click', function () {
+    if (!confirm('Clear debts and results? (Gamification is kept)')) return;
+    debtsContainer.innerHTML = '';
+    debtsContainer.appendChild(createDebtRow());
+    debtsContainer.appendChild(createDebtRow());
+    document.getElementById('snowflakes-container').innerHTML = '';
+    localStorage.removeItem('debtPayoffDebts');
+    resultsSection.classList.add('hidden');
+  });
+  document.getElementById('share-btn').addEventListener('click', function () {
+    var text = 'I calculated my debt-free date with this free private tool.';
+    if (navigator.share) navigator.share({ title: 'Debt Payoff Calculator', text: text, url: location.href }).catch(function () {});
+    else navigator.clipboard.writeText(location.href).then(function () { showToast('Link copied'); });
+  });
+  document.getElementById('copy-summary').addEventListener('click', function () {
+    if (!lastResults) return;
+    var r = lastResults.mode === 'compare' ? (lastResults.snow.totalInterest <= lastResults.aval.totalInterest ? lastResults.snow : lastResults.aval) : (lastResults.snow || lastResults.aval);
+    var text = 'Debt-free: ' + formatDate(r.debtFreeDate) + '\nMonths: ' + r.months + '\nInterest: ' + formatCurrency(r.totalInterest);
+    navigator.clipboard.writeText(text).then(function () { showToast('Summary copied'); });
+  });
+  document.getElementById('pdf-btn').addEventListener('click', function () {
+    if (!lastResults || typeof window.jspdf === 'undefined') { showToast('PDF library loading…'); return; }
+    var r = lastResults.mode === 'compare' ? (lastResults.snow.totalInterest <= lastResults.aval.totalInterest ? lastResults.snow : lastResults.aval) : (lastResults.snow || lastResults.aval);
+    var doc = new window.jspdf.jsPDF();
+    doc.setFontSize(16); doc.text('Debt Payoff Plan', 14, 20);
+    doc.setFontSize(11);
+    doc.text('Debt-free: ' + formatDate(r.debtFreeDate), 14, 32);
+    doc.text('Months: ' + r.months + '  |  Interest: ' + formatCurrency(r.totalInterest), 14, 40);
+    doc.text('Strategy: ' + r.strategy, 14, 48);
+    if (r.payoffOrder && r.payoffOrder.length) {
+      doc.text('Kill order:', 14, 60);
+      r.payoffOrder.forEach(function (o, i) { doc.text((i + 1) + '. ' + o.name + ' — month ' + o.month, 18, 68 + i * 8); });
+    }
+    doc.save('debt-payoff-plan.pdf');
+    showToast('PDF downloaded');
+  });
+
+  // History (still localStorage-direct; Persistence adapter is candidate #2)
+  var HISTORY_KEY = 'debtPayoffHistory';
+  function loadHistory() { try { var raw = localStorage.getItem(HISTORY_KEY); if (raw) return JSON.parse(raw); } catch (e) {} return []; }
+  function renderHistory() {
+    var list = loadHistory();
+    var el = document.getElementById('history-list');
+    if (!list.length) { el.innerHTML = '<span class="text-xs text-slate-400">No scenarios yet</span>'; return; }
+    el.innerHTML = list.map(function (h, i) {
+      return '<button type="button" class="history-chip" data-idx="' + i + '">' + h.debts.length + ' debts · +$' + h.extra + ' · ' + h.months + ' mo</button>';
+    }).join('');
+  }
+  document.getElementById('clear-history').addEventListener('click', function () {
+    localStorage.removeItem(HISTORY_KEY); renderHistory(); showToast('History cleared');
+  });
+
+  renderGameUI(); renderAchievements(); renderHistory();
+  (function load() {
+    var saved = localStorage.getItem('debtPayoffDebts');
+    var extra = localStorage.getItem('debtPayoffExtra');
+    if (extra) { extraSlider.value = extra; extraDisplay.textContent = '$' + extra; }
+    if (saved) {
+      try {
+        var list = JSON.parse(saved);
+        if (Array.isArray(list) && list.length) { list.forEach(function (d) { debtsContainer.appendChild(createDebtRow(d)); }); return; }
+      } catch (e) {}
+    }
+    debtsContainer.appendChild(createDebtRow());
+    debtsContainer.appendChild(createDebtRow());
+  })();
+  </script>
 </body>
 </html>
