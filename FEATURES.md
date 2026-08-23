@@ -31,13 +31,18 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - Module script tags wired: payoff-engine → persistence → gamification → inline → app-boot
 - Stronger OG / Twitter card meta
 - Post-results affiliate + AdSense placeholder grid (only after calculate)
+- **Static og-card.png** (1200×630) for social link previews
+- **Confetti celebration** (full / medium / light by months remaining ≤3 / ≤12 / ≤18)
+- **Finish Line achievement** (≤3 months remaining)
+- **JSON-LD** WebApplication + FAQPage schema on index
+- SEO guide: minimum-payments-vs-extra.html
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
-2. Static `og-card.png` (1200×630) for link previews
-3. More long-tail SEO guides
-4. Fuller visual restyle from DESIGN.md tokens across all chrome
-5. Confetti polish when months ≤ 3
+2. Fuller visual restyle from DESIGN.md tokens across all chrome
+3. More long-tail SEO guides (continue)
+4. Google Search Console + Analytics once custom domain is live
+5. Soft launch posts for initial backlinks
 
 ## Why these features
 Instant feedback, visual progress, kill-order, celebration, history restore, shareable images, and SEO pages drive session depth and organic traffic — all 100% client-side.
