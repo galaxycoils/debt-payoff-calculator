@@ -1,5 +1,200 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><title>Loading…</title>
-<meta http-equiv="refresh" content="0;url=https://debt-payoff-calculator-six.vercel.app/"/>
-<script>location.replace('https://debt-payoff-calculator-six.vercel.app/');</script>
-</head><body><p>Redirecting to production…</p></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debt Payoff Calculator – Free Snowball vs Avalanche (Private)</title>
+  <meta name="description" content="Free private debt payoff calculator. Compare snowball vs avalanche, drag extra payments, schedule snowflakes, export PDF. All data stays in your browser." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/" />
+  <meta property="og:title" content="Debt Payoff Calculator – Free Snowball vs Avalanche" />
+  <meta property="og:description" content="Private debt payoff planner. Live extra-payment slider, snowflakes, kill order, charts, PDF. Your data never leaves the browser." />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Debt Payoff Calculator – Snowball vs Avalanche" />
+  <meta name="twitter:description" content="Private debt payoff planner with live charts, snowflakes, and PDF export." />
+  <meta name="twitter:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="color-scheme" content="light dark" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <script src="payoff-engine.js"></script>
+  <script src="persistence.js"></script>
+  <script src="gamification.js"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    input:focus, select:focus, button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35); }
+    input[type=range] { accent-color: #4f46e5; }
+    .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
+    .badge-earned { @apply bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200; }
+    .badge-locked { @apply bg-slate-100 text-slate-400 dark:bg-slate-700 dark:text-slate-500; }
+    .history-chip { @apply text-xs px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 cursor-pointer transition; }
+    #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
+    .skip-link { position: absolute; left: -9999px; top: auto; }
+    .skip-link:focus { left: 1rem; top: 1rem; z-index: 200; background: #4f46e5; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
+  <a class="skip-link" href="#main">Skip to calculator</a>
+  <div class="max-w-6xl mx-auto px-4 py-6 md:py-10" id="main">
+    <div class="flex justify-end mb-4">
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="inline-flex items-center gap-2 px-3 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm">
+        <span id="theme-icon">🌙</span><span id="theme-label">Dark</span>
+      </button>
+    </div>
+    <div id="game-bar" class="card mb-6 flex flex-wrap items-center justify-between gap-4 bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/50 dark:to-violet-950/50 border-indigo-100 dark:border-indigo-800">
+      <div class="flex items-center gap-4">
+        <div class="text-center"><div class="text-2xl font-bold text-indigo-700 dark:text-indigo-400" id="streak-count">0</div><div class="text-xs text-slate-500 dark:text-slate-400">Day Streak</div></div>
+        <div class="h-8 w-px bg-indigo-200 dark:bg-indigo-700"></div>
+        <div class="text-center"><div class="text-2xl font-bold text-violet-700 dark:text-violet-400" id="level-display">1</div><div class="text-xs text-slate-500 dark:text-slate-400">Level</div></div>
+        <div class="h-8 w-px bg-indigo-200 dark:bg-indigo-700"></div>
+        <div class="text-center"><div class="text-2xl font-bold text-amber-600 dark:text-amber-400" id="xp-display">0</div><div class="text-xs text-slate-500 dark:text-slate-400">XP</div></div>
+      </div>
+      <div class="flex-1 min-w-[140px]">
+        <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 mb-1"><span>Level progress</span><span id="xp-next">100 XP to next</span></div>
+        <div class="w-full bg-white dark:bg-slate-700 rounded-full h-2.5 border border-indigo-100 dark:border-slate-600"><div id="xp-bar" class="bg-indigo-500 h-2.5 rounded-full transition-all duration-500" style="width:0%"></div></div>
+      </div>
+      <button id="checkin-btn" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 min-h-[44px] rounded-xl transition shadow-sm">Daily Check-in</button>
+    </div>
+    <div class="card mb-6">
+      <button id="toggle-achievements" type="button" class="w-full flex items-center justify-between text-left min-h-[44px]">
+        <h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400">Achievements</h2>
+        <span class="text-sm text-slate-400" id="ach-count">0 unlocked</span>
+      </button>
+      <div id="achievements-list" class="mt-4 flex flex-wrap gap-2" role="list"></div>
+    </div>
+    <header class="text-center mb-8 md:mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 dark:text-indigo-400 tracking-tight mb-3">Debt Payoff Calculator</h1>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+        Enter your debts. Drag extra payments. Compare <strong>Snowball</strong> vs <strong>Avalanche</strong>.
+        <span class="block mt-1 text-sm text-indigo-600 dark:text-indigo-400 font-medium">Everything runs privately in your browser.</span>
+      </p>
+    </header>
+    <section class="card mb-6" aria-labelledby="debts-heading">
+      <div class="flex items-center justify-between mb-4">
+        <h2 id="debts-heading" class="text-xl font-semibold text-indigo-700 dark:text-indigo-400">Your Debts</h2>
+        <span class="text-xs text-slate-400">Add as many as you need</span>
+      </div>
+      <div id="debts-container" class="space-y-3 mb-4"></div>
+      <button id="add-debt" type="button" class="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition">+ Add Debt</button>
+      <div class="mt-6">
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="extra-slider">Extra Monthly Payment: <span id="extra-display" class="font-bold text-indigo-600 dark:text-indigo-400">$100</span></label>
+        <input type="range" id="extra-slider" min="0" max="1000" step="10" value="100" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer" />
+        <div class="flex justify-between text-xs text-slate-400 mt-1"><span>$0</span><span>$500</span><span>$1000</span></div>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="50">+$50</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="100">+$100</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="200">+$200</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-slate-700 dark:text-slate-300" data-amount="0">Reset</button>
+        </div>
+      </div>
+      <div class="mt-6" id="snowflake-section">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-sm font-medium text-slate-700 dark:text-slate-300">One-time snowflakes</label>
+          <button id="add-snowflake" type="button" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline min-h-[44px] px-2">+ Add snowflake</button>
+        </div>
+        <div id="snowflakes-container" class="space-y-2"></div>
+        <p class="text-xs text-slate-400 mt-1">Bonus payment applied in a specific future month</p>
+      </div>
+      <div class="mt-5">
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="strategy">Strategy</label>
+        <select id="strategy" class="w-full border border-slate-200 dark:border-slate-600 rounded-xl px-3.5 py-2.5 min-h-[44px] text-sm bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100">
+          <option value="compare">Compare Both (Recommended)</option>
+          <option value="snowball">Snowball only</option>
+          <option value="avalanche">Avalanche only</option>
+        </select>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button id="calculate" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] rounded-xl font-semibold text-sm transition shadow-sm">Calculate Payoff</button>
+        <button id="save-debts" type="button" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2.5 min-h-[44px] rounded-xl font-medium text-sm transition">Save Debts</button>
+        <button id="clear-all" type="button" class="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-2.5 min-h-[44px] rounded-xl font-medium text-sm transition">Clear All</button>
+      </div>
+    </section>
+    <section id="results" class="hidden space-y-6" aria-live="polite">
+      <div id="progress-card" class="card hidden">
+        <div class="flex justify-between text-sm mb-2"><span class="font-medium text-slate-600 dark:text-slate-300">Progress toward debt-free</span><span id="progress-pct" class="font-bold text-indigo-600 dark:text-indigo-400">0%</span></div>
+        <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-3"><div id="progress-bar" class="bg-indigo-500 h-3 rounded-full transition-all duration-500" style="width:0%"></div></div>
+        <p id="progress-msg" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>
+      </div>
+      <div id="comparison-summary" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      <div id="winner-banner" class="hidden card bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-emerald-100 dark:border-emerald-800"></div>
+      <div id="celebration-banner" class="hidden card bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 border-amber-200 dark:border-amber-800 text-center">
+        <div class="text-3xl mb-2">🎉</div>
+        <p class="text-lg font-bold text-amber-800 dark:text-amber-200" id="celebration-title">Almost debt-free!</p>
+        <p class="text-sm text-amber-700 dark:text-amber-300 mt-1" id="celebration-msg"></p>
+      </div>
+      <div id="kill-order-card" class="card hidden">
+        <h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400 mb-1">Debt Kill Order</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Which debt dies first — and when</p>
+        <div id="kill-order-timeline" class="space-y-3"></div>
+      </div>
+      <div class="card">
+        <h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400 mb-4">Remaining Debt Over Time</h2>
+        <canvas id="debt-chart" height="140" aria-label="Debt remaining over months chart"></canvas>
+      </div>
+      <div class="card">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <h3 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400">Month-by-Month Schedule</h3>
+          <div class="flex flex-wrap gap-2">
+            <button id="copy-summary" type="button" class="text-sm bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 min-h-[44px] rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition font-medium">Copy Summary</button>
+            <button id="share-image-btn" type="button" class="text-sm bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 px-3 py-2 min-h-[44px] rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition font-medium">Share Image</button>
+            <button id="share-btn" type="button" class="text-sm bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-3 py-2 min-h-[44px] rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition font-medium">Share Link</button>
+            <button id="pdf-btn" type="button" class="text-sm bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 min-h-[44px] rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition font-medium">PDF</button>
+          </div>
+        </div>
+        <div id="schedule" class="overflow-x-auto text-sm"></div>
+      </div>
+      <div id="history-card" class="card">
+        <div class="flex items-center justify-between mb-3"><h2 class="text-lg font-semibold text-indigo-700 dark:text-indigo-400">Recent Scenarios</h2><button id="clear-history" type="button" class="text-xs text-slate-400 hover:text-red-500 transition min-h-[44px] px-2">Clear</button></div>
+        <div id="history-list" class="flex flex-wrap gap-2"></div>
+      </div>
+      <div class="card bg-indigo-50/70 dark:bg-indigo-950/40 border-indigo-100 dark:border-indigo-800" id="monetization-card">
+        <h3 class="font-semibold text-indigo-800 dark:text-indigo-300 mb-2">What to do with the money you free up</h3>
+        <p class="text-sm text-indigo-900/80 dark:text-indigo-200/80 mb-3">Once a debt is gone, that minimum payment becomes available cash flow.</p>
+        <ul class="text-sm text-indigo-900/90 dark:text-indigo-200/90 space-y-1.5 list-disc list-inside mb-4">
+          <li>Park it in a <strong>high-yield savings account</strong> (emergency fund first)</li>
+          <li>Throw every freed dollar at the next debt (avalanche or snowball)</li>
+          <li>Only consolidate if the new rate is meaningfully lower after fees</li>
+        </ul>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2" id="affiliate-slots">
+          <div class="rounded-xl border border-dashed border-indigo-200 dark:border-indigo-700 bg-white/60 dark:bg-slate-800/40 p-3 text-center min-h-[88px] flex flex-col justify-center">
+            <div class="text-xs font-medium text-indigo-700 dark:text-indigo-300">HYSA pick</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Affiliate placeholder</div>
+          </div>
+          <div class="rounded-xl border border-dashed border-indigo-200 dark:border-indigo-700 bg-white/60 dark:bg-slate-800/40 p-3 text-center min-h-[88px] flex flex-col justify-center">
+            <div class="text-xs font-medium text-indigo-700 dark:text-indigo-300">Balance transfer</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Affiliate placeholder</div>
+          </div>
+          <div class="rounded-xl border border-dashed border-indigo-200 dark:border-indigo-700 bg-white/60 dark:bg-slate-800/40 p-3 text-center min-h-[88px] flex flex-col justify-center">
+            <div class="text-xs font-medium text-indigo-700 dark:text-indigo-300">AdSense unit</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Insert after approval</div>
+          </div>
+        </div>
+        <p class="text-xs text-indigo-600/70 dark:text-indigo-400/70 mt-3">Non-intrusive placements appear only after you run a calculation.</p>
+      </div>
+    </section>
+    <footer class="mt-12 mb-6 text-center text-sm text-slate-400 dark:text-slate-500">
+      <p>100% private • Calculations never leave your device • Free forever</p>
+      <p class="mt-2 space-x-3">
+        <a class="underline hover:text-indigo-500" href="snowball-vs-avalanche.html">Snowball vs Avalanche</a>
+        <a class="underline hover:text-indigo-500" href="how-extra-payments-work.html">Extra payments</a>
+        <a class="underline hover:text-indigo-500" href="credit-card-payoff-tips.html">Credit card tips</a>
+      </p>
+    </footer>
+  </div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <div id="toast" role="status" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-lg text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-50"></div>
+  <script src="app-inline.js"></script>
+  <script src="app-boot.js"></script>
+</body>
+</html>
