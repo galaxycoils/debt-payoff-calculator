@@ -17,7 +17,8 @@
     { id: 'streak_7', name: 'Week Warrior', desc: '7-day check-in streak', xp: 120 },
     { id: 'level_5', name: 'Rising', desc: 'Reach Level 5', xp: 80 },
     { id: 'calcs_10', name: 'Explorer', desc: 'Run 10 calculations', xp: 70 },
-    { id: 'snowflake', name: 'Snowflake', desc: 'Add a one-time bonus payment', xp: 45 }
+    { id: 'snowflake', name: 'Snowflake', desc: 'Add a one-time bonus payment', xp: 45 },
+    { id: 'share_image', name: 'Show-off', desc: 'Export a shareable result image', xp: 55 }
   ];
 
   function defaultState() {
