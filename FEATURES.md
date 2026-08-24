@@ -2,13 +2,15 @@
 
 Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
 
-## Architecture (2026-08-22)
+## Architecture (2026-08-22+)
 - `payoff-engine.js` — pure PayoffEngine.calculate
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
+- `confetti.js` — near-debt-free celebration
+- `app-inline.js` — full UI (restored 2026-08-24)
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
-- `DESIGN.md` — operate-mode design contract
+- `DESIGN.md` — operate-mode design contract (hero debt-free date)
 
 ## Implemented
 - Side-by-side Snowball vs Avalanche comparison with winner banner and interest savings
@@ -21,25 +23,21 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Shareable result image** (canvas card 1200×630 — download or native share)
 - LocalStorage for debts + extra payment (via Persistence when loaded)
 - Dark mode with system preference + toggle
-- Gamification: daily check-in streak, XP, levels, achievements (incl. share_image)
+- Gamification: daily check-in streak, XP, levels, achievements (incl. share_image, finish_line)
 - Debt Kill Order timeline
-- Near-debt-free celebration
-- Local calculation history (last 8, one-tap restore) — **now saves on every calc**
+- Near-debt-free celebration + confetti (≤18 / ≤12 / ≤3 months)
+- Local calculation history (last 8, one-tap restore) — saves on every calc
 - Snowflake payments
-- SEO supporting pages
+- SEO supporting pages (snowball-vs-avalanche, how-extra-payments-work, credit-card-payoff-tips, minimum-payments-vs-extra)
 - Pure engine + persistence + gamification modules with tests
-- Module script tags wired: payoff-engine → persistence → gamification → inline → app-boot
 - Stronger OG / Twitter card meta
 - Post-results affiliate + AdSense placeholder grid (only after calculate)
-- **Static og-card.png** (1200×630) for social link previews
-- **Confetti celebration** (full / medium / light by months remaining ≤3 / ≤12 / ≤18)
-- **Finish Line achievement** (≤3 months remaining)
-- **JSON-LD** WebApplication + FAQPage schema on index
-- SEO guide: minimum-payments-vs-extra.html
+- **Hero debt-free date** as signature element (DESIGN.md)
+- Full UI restore after truncated app-inline (2026-08-24)
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
-2. Fuller visual restyle from DESIGN.md tokens across all chrome
+2. Fuller visual restyle from DESIGN.md tokens across all chrome (paper/ink/accent)
 3. More long-tail SEO guides (continue)
 4. Google Search Console + Analytics once custom domain is live
 5. Soft launch posts for initial backlinks
