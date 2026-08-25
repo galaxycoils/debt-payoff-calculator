@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>When Will I Be Debt-Free? Free Calculator & Timeline</title>
+  <meta name="description" content="Find your exact debt-free date. Enter balances, rates, and extra payments to see months remaining, interest saved, and which debt dies first. 100% private." />
+  <meta name="keywords" content="when will I be debt free, debt free date calculator, debt payoff timeline, months to debt free, debt free calculator" />
+  <meta property="og:title" content="When Will I Be Debt-Free? Free Calculator & Timeline" />
+  <meta property="og:description" content="See your debt-free date in seconds. Compare snowball vs avalanche, drag extra payments, and track kill order — all in your browser." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/when-will-i-be-debt-free.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="When Will I Be Debt-Free?" />
+  <meta name="twitter:description" content="Exact debt-free date, interest saved, and payoff order — private browser calculator." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/when-will-i-be-debt-free.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    :root {
+      --paper: #f7f5f0; --ink: #1a1f2e; --muted: #5c6578;
+      --accent: #0d6e6e; --accent-soft: #e6f3f3; --card: #ffffff; --line: #e5e2da;
+    }
+    .dark {
+      --paper: #0f1419; --ink: #e8eaed; --muted: #9aa3b2;
+      --accent: #3dbdbd; --accent-soft: #143232; --card: #1a222d; --line: #2a3340;
+    }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--paper); color: var(--ink); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+    .prose h2 { color: var(--accent); font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose p, .prose li { color: var(--ink); opacity: 0.92; line-height: 1.65; }
+    .prose ul { list-style: disc; padding-left: 1.25rem; margin: 0.75rem 0; }
+    .prose li { margin: 0.35rem 0; }
+    .text-accent { color: var(--accent); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { filter: brightness(1.08); }
+  </style>
+</head>
+<body class="min-h-screen transition-colors duration-200">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-accent hover:underline">← Calculator</a>
+      <span style="color:var(--line)">|</span>
+      <a href="snowball-vs-avalanche.html" class="hover:text-accent" style="color:var(--muted)">Snowball vs Avalanche</a>
+      <a href="how-extra-payments-work.html" class="hover:text-accent" style="color:var(--muted)">Extra payments</a>
+      <a href="minimum-payments-vs-extra.html" class="hover:text-accent" style="color:var(--muted)">Minimum vs extra</a>
+    </nav>
+
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">When will I be debt-free?</h1>
+      <p class="text-lg" style="color:var(--muted)">Your debt-free date is not a guess. With balances, APRs, minimums, and any extra you can pay, you can project the exact month — and see how small changes move that date by years.</p>
+    </header>
+
+    <article class="prose card mb-8">
+      <h2>What determines your debt-free date</h2>
+      <p>Four inputs drive the math:</p>
+      <ul>
+        <li><strong>Balances</strong> — how much you still owe on each account.</li>
+        <li><strong>APRs</strong> — the annual interest rate; higher rates grow the balance faster between payments.</li>
+        <li><strong>Minimum payments</strong> — the floor you must pay each month to stay current.</li>
+        <li><strong>Extra payment</strong> — any amount above the sum of minimums that you apply to the priority debt.</li>
+      </ul>
+      <p>Interest compounds monthly on revolving debt. Paying only the minimum often stretches payoff into a decade or more. Adding even $50–$100 extra can cut years off the timeline because every extra dollar goes to principal once the current priority debt is attacked.</p>
+
+      <h2>Snowball vs Avalanche and your date</h2>
+      <p><strong>Snowball</strong> (lowest balance first) often produces earlier “wins” — individual accounts hit zero sooner — which helps motivation. <strong>Avalanche</strong> (highest APR first) usually minimizes total interest and can finish the whole plan a few months earlier when rate gaps are large.</p>
+      <p>Neither is magic: the size of your extra payment moves the debt-free date far more than the order of the debts. Use the calculator to compare both strategies with the same extra amount so you see the exact month difference and dollars of interest saved.</p>
+
+      <h2>How to get a realistic date in 2 minutes</h2>
+      <ul>
+        <li>List every consumer debt (cards, personal loans, store accounts). Skip the mortgage unless you want a full “debt-free including house” plan.</li>
+        <li>Use today’s statement balances and the APR shown on the statement or online portal.</li>
+        <li>Enter the true minimum payment (or a realistic payment you already make).</li>
+        <li>Set an extra monthly amount you can sustain — not a heroic one-month sprint.</li>
+        <li>Run Snowball and Avalanche. Note the debt-free date, months remaining, and total interest.</li>
+        <li>Try the +$25 / +$50 / +$100 “what if” buttons. Watch the date jump; that feedback is the point.</li>
+      </ul>
+
+      <h2>Why the date changes when you drag the slider</h2>
+      <p>Extra payment is applied after minimums each month to one target debt (the next in snowball or avalanche order). When that debt hits zero, its minimum is freed and rolled into the next target. Higher extra means faster principal reduction, less interest accruing, and earlier roll-over of freed minimums — a compounding effect on the calendar.</p>
+      <p>One-time “snowflake” payments (tax refund, bonus, side-hustle cash) in a specific future month can pull the date forward without raising your permanent monthly budget.</p>
+
+      <h2>Common mistakes that inflate the timeline</h2>
+      <ul>
+        <li>Using promotional 0% APR that will expire — plan as if the post-promo rate applies unless you will pay in full before it ends.</li>
+        <li>Ignoring new charges on revolving cards while “paying off debt.”</li>
+        <li>Counting an aggressive extra you cannot maintain for 12+ months.</li>
+        <li>Forgetting fees or annual charges that effectively raise the cost of carrying the balance.</li>
+      </ul>
+
+      <h2>What to do once you have the date</h2>
+      <p>Treat the debt-free date as a target, not a prophecy. Check in monthly: update balances, adjust extra if income changes, and celebrate kill-order milestones (each account that hits zero). Progress bars and scenario history help you see that the plan is working even when the finish line is still far away.</p>
+      <p>When the projection shows fewer than 18 months remaining, motivation usually spikes — that is intentional. Use the shareable result image or copy summary if accountability with a partner or community helps you stick to the extra payment.</p>
+    </article>
+
+    <div class="card text-center mb-8" style="background:var(--accent-soft);border-color:var(--line)">
+      <p class="font-semibold text-accent mb-2">See your debt-free date now</p>
+      <p class="text-sm mb-4" style="color:var(--muted)">Add debts, drag the extra-payment slider, compare strategies. Private, free, no account — data never leaves your browser.</p>
+      <a href="index.html" class="inline-flex items-center justify-center btn-accent font-semibold px-6 py-3 rounded-xl transition shadow-sm min-h-[44px]">Open the calculator →</a>
+    </div>
+
+    <footer class="text-center text-sm" style="color:var(--muted)">
+      <p>Related guides:</p>
+      <p class="mt-2 space-x-3">
+        <a class="underline hover:text-accent" href="snowball-vs-avalanche.html">Snowball vs Avalanche</a>
+        <a class="underline hover:text-accent" href="how-extra-payments-work.html">How extra payments work</a>
+        <a class="underline hover:text-accent" href="minimum-payments-vs-extra.html">Minimum vs extra</a>
+        <a class="underline hover:text-accent" href="credit-card-payoff-tips.html">Credit card tips</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
