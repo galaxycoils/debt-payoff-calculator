@@ -4,27 +4,6 @@
 (function () {
   'use strict';
 
-  function ensureVsCard() {
-    if (document.getElementById('vs-minimums-card')) return;
-    var results = document.getElementById('results');
-    if (!results) return;
-    var hero = document.getElementById('hero-card');
-    var card = document.createElement('div');
-    card.id = 'vs-minimums-card';
-    card.className = 'card hidden border-l-4';
-    card.style.borderLeftColor = 'var(--accent)';
-    card.innerHTML =
-      '<p class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">Vs paying only minimums</p>' +
-      '<div class="grid grid-cols-2 gap-4 mb-3">' +
-      '<div><div id="vs-min-months" class="text-3xl font-extrabold text-accent">0</div><div class="text-xs text-slate-500 dark:text-slate-400">months saved</div></div>' +
-      '<div><div id="vs-min-interest" class="text-3xl font-extrabold text-accent">$0</div><div class="text-xs text-slate-500 dark:text-slate-400">interest saved</div></div>' +
-      '</div>' +
-      '<p class="text-sm text-slate-600 dark:text-slate-300">Plan frees you <span id="vs-plan-date">—</span>. Minimums alone: <span id="vs-min-date">—</span>.</p>' +
-      '<p id="vs-min-note" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>';
-    if (hero && hero.nextSibling) results.insertBefore(card, hero.nextSibling);
-    else results.insertBefore(card, results.firstChild);
-  }
-
   function fmtMoney(n) {
     return '$' + (Math.round(n * 100) / 100).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   }
@@ -34,7 +13,6 @@
   }
 
   function paintVs(cmp) {
-    ensureVsCard();
     var card = document.getElementById('vs-minimums-card');
     if (!card || !cmp) return;
     card.classList.remove('hidden');
@@ -73,18 +51,39 @@
     var cmp = PayoffEngine.compareToMinimums({ debts: debts, extra: extra, strategy: strat, snowflakes: snowflakes });
     window._lastMinCmp = cmp;
     paintVs(cmp);
-    var hero = document.getElementById('hero-date');
-    var sub = document.getElementById('hero-sub');
-    if (cmp.plan && hero && (!hero.textContent || hero.textContent === '—')) {
-      hero.textContent = fmtDate(cmp.plan.debtFreeDate);
+  }
+
+  function copyPlan() {
+    var snow = window._lastSnow;
+    var aval = window._lastAval;
+    var mode = window._lastMode || 'compare';
+    var primary = (mode === 'avalanche' ? aval : snow) || snow || aval;
+    var cmp = window._lastMinCmp;
+    if (!primary && cmp) primary = cmp.plan;
+    if (!primary) {
+      if (typeof showToast === 'function') showToast('Run a calculation first');
+      return;
     }
-    if (cmp.plan && sub && !sub.textContent) {
-      sub.textContent = cmp.plan.months + ' months · ' + fmtMoney(cmp.plan.totalInterest) + ' interest';
+    var lines = [
+      'Debt Payoff Plan',
+      'Debt-free date: ' + fmtDate(primary.debtFreeDate),
+      'Months: ' + primary.months,
+      'Total interest: ' + fmtMoney(primary.totalInterest),
+      'Strategy: ' + (primary.strategy || mode)
+    ];
+    if (cmp && (cmp.monthsSaved > 0 || cmp.interestSaved > 0)) {
+      lines.push('Vs minimums only: save ' + cmp.monthsSaved + ' months and ' + fmtMoney(Math.max(0, cmp.interestSaved)) + ' interest');
+    }
+    lines.push('Calculated privately at debt-payoff-calculator');
+    var text = lines.join('\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        if (typeof showToast === 'function') showToast('Summary copied');
+      });
     }
   }
 
   function attach() {
-    ensureVsCard();
     var calcBtn = document.getElementById('calculate-btn') || document.getElementById('calculate');
     if (calcBtn && !calcBtn._minBound) {
       calcBtn._minBound = true;
@@ -96,15 +95,7 @@
     var copyBtn = document.getElementById('copy-summary-btn') || document.getElementById('copy-summary');
     if (copyBtn && !copyBtn._minBound) {
       copyBtn._minBound = true;
-      copyBtn.addEventListener('click', function () {
-        var cmp = window._lastMinCmp;
-        if (!cmp || !navigator.clipboard) return;
-        if ((cmp.monthsSaved || 0) <= 0 && (cmp.interestSaved || 0) <= 0) return;
-        var extra = 'Vs minimums only: save ' + cmp.monthsSaved + ' months and ' + fmtMoney(Math.max(0, cmp.interestSaved)) + ' interest';
-        navigator.clipboard.readText().then(function (t) {
-          if (t && t.indexOf('Vs minimums') === -1) navigator.clipboard.writeText(t + '\n' + extra);
-        }).catch(function () {});
-      });
+      copyBtn.addEventListener('click', copyPlan);
     }
     var slider = document.getElementById('extra-slider');
     if (slider && !slider._minBound) {
