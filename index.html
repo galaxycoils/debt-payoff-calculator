@@ -16,6 +16,18 @@
   <meta name="twitter:description" content="Private debt payoff planner with live charts, snowflakes, and PDF export." />
   <meta name="twitter:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
   <meta name="color-scheme" content="light dark" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Debt Payoff Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Private snowball vs avalanche debt payoff calculator with live extra-payment slider, snowflakes, and minimums comparison.",
+    "url": "https://debt-payoff-calculator-six.vercel.app/"
+  }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class' }</script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -136,6 +148,25 @@
         <p id="hero-date" class="hero-date text-4xl md:text-5xl mb-2">—</p>
         <p id="hero-sub" class="text-sm text-slate-500 dark:text-slate-400"></p>
       </div>
+      <div id="celebration-banner" class="card hidden border-l-4 border-amber-400 bg-amber-50 dark:bg-amber-950/30">
+        <p id="celebration-title" class="font-semibold text-amber-800 dark:text-amber-200"></p>
+        <p id="celebration-msg" class="text-sm text-amber-900/80 dark:text-amber-100/80 mt-1"></p>
+      </div>
+      <div id="vs-minimums-card" class="card hidden border-l-4" style="border-left-color: var(--accent);">
+        <p class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">Vs paying only minimums</p>
+        <div class="grid grid-cols-2 gap-4 mb-3">
+          <div>
+            <div id="vs-min-months" class="text-3xl font-extrabold text-accent">0</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">months saved</div>
+          </div>
+          <div>
+            <div id="vs-min-interest" class="text-3xl font-extrabold text-accent">$0</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">interest saved</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300">Plan frees you <span id="vs-plan-date">—</span>. Minimums alone: <span id="vs-min-date">—</span>.</p>
+        <p id="vs-min-note" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>
+      </div>
       <div id="winner-banner" class="card hidden border-l-4 border-emerald-500"></div>
       <div id="progress-card" class="card hidden">
         <div class="flex justify-between text-sm mb-2"><span class="font-medium text-slate-600 dark:text-slate-300">Progress toward debt-free</span><span id="progress-pct" class="font-bold text-accent">0%</span></div>
@@ -202,12 +233,14 @@
         <a class="underline hover:text-accent" href="when-will-i-be-debt-free.html">When will I be debt-free?</a>
         <a class="underline hover:text-accent" href="credit-card-payoff-tips.html">Credit card tips</a>
         <a class="underline hover:text-accent" href="minimum-payments-vs-extra.html">Minimum vs extra</a>
+        <a class="underline hover:text-accent" href="debt-payoff-vs-minimums.html">Cost of minimums</a>
       </p>
     </footer>
   </div>
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
   <div id="toast" role="status" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-lg text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-50"></div>
   <script src="app-inline.js"></script>
+  <script src="app-min-compare.js"></script>
   <script src="app-boot.js"></script>
 </body>
 </html>
