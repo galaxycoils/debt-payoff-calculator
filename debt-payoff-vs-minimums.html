@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paying Only Minimums vs Extra Payments – How Much It Costs</title>
+  <meta name="description" content="See why credit-card minimums stretch payoff for decades. Compare months and interest vs extra payments with a free private calculator." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/debt-payoff-vs-minimums.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Paying Only Minimums vs Extra Payments" />
+  <meta property="og:description" content="The minimum-payment trap in dollars and months. Run your numbers privately." />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/debt-payoff-vs-minimums.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Paying Only Minimums vs Extra Payments","description":"Why credit-card minimums stretch payoff and how extra payments change the date."}
+  </script>
+  <style>
+    :root { --paper:#f7f5f0; --ink:#1a1f2e; --muted:#5c6578; --accent:#0d6e6e; --accent-soft:#e6f3f3; --card:#ffffff; --line:#e5e2da; }
+    .dark { --paper:#0f1419; --ink:#e8eaed; --muted:#9aa3b2; --accent:#3dbdbd; --accent-soft:#143232; --card:#1a222d; --line:#2a3340; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; background: var(--paper); color: var(--ink); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.5rem; }
+    .text-accent { color: var(--accent); }
+    .btn-accent { background: var(--accent); color: #fff; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 text-sm"><a href="index.html" class="font-medium text-accent hover:underline">← Calculator</a></nav>
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">The real cost of paying only minimums</h1>
+      <p class="text-lg" style="color:var(--muted)">A $5,000 card at 22% APR with a $125 minimum can take well over a decade. Extra payments collapse that calendar.</p>
+    </header>
+    <article class="card space-y-5 leading-relaxed" style="color:var(--muted)">
+      <h2 class="text-xl font-semibold text-accent">Why minimums are designed to last</h2>
+      <p>Issuers often set the minimum as interest plus a tiny slice of principal. Most of an early payment is interest. Principal barely moves.</p>
+      <h2 class="text-xl font-semibold text-accent">What extra $50–$200 actually does</h2>
+      <p>Extra dollars hit principal. That lowers next month’s interest. Small extras often cut years, not weeks.</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Same minimums on every debt, plus one extra pool for snowball or avalanche order.</li>
+        <li>One-time snowflakes on a specific month punch a hole in the balance.</li>
+        <li>Compare both strategies against a minimums-only baseline.</li>
+      </ul>
+      <h2 class="text-xl font-semibold text-accent">How to use the calculator</h2>
+      <ol class="list-decimal list-inside space-y-1">
+        <li>Enter each balance, APR, and current minimum.</li>
+        <li>Calculate at $0 extra — that is the minimums path.</li>
+        <li>Drag the extra slider. The vs-minimums card updates live.</li>
+        <li>Copy the summary when the savings number is share-worthy.</li>
+      </ol>
+      <p>Nothing is uploaded. Two amortizations run in your browser: plan vs extra = 0.</p>
+    </article>
+    <div class="card mt-8 text-center" style="background:var(--accent-soft)">
+      <p class="font-semibold text-accent mb-2">See months and interest saved vs minimums</p>
+      <a href="index.html" class="btn-accent inline-flex px-6 py-3 rounded-xl font-semibold">Open the calculator →</a>
+    </div>
+    <footer class="mt-10 text-center text-sm" style="color:var(--muted)">
+      <a class="underline hover:text-accent" href="minimum-payments-vs-extra.html">Minimum vs extra</a>
+      ·
+      <a class="underline hover:text-accent" href="how-extra-payments-work.html">How extra payments work</a>
+      ·
+      <a class="underline hover:text-accent" href="snowball-vs-avalanche.html">Snowball vs Avalanche</a>
+    </footer>
+  </div>
+</body>
+</html>

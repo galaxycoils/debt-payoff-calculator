@@ -33,6 +33,15 @@ test('snowflake accelerates', () => {
   const f = PayoffEngine.calculate({ debts: [{ name: 'X', balance: 500, apr: 0, minPayment: 50 }], extra: 0, strategy: 'snowball', snowflakes: [{ amount: 200, month: 1 }] });
   assert.ok(f.months < base.months);
 });
+test('compareToMinimums reports months saved', () => {
+  const r = PayoffEngine.compareToMinimums({
+    debts: [{ name: 'C', balance: 1000, apr: 0, minPayment: 100 }],
+    extra: 50, strategy: 'snowball'
+  });
+  assert.strictEqual(r.minimums.months, 10);
+  assert.strictEqual(r.plan.months, 7);
+  assert.strictEqual(r.monthsSaved, 3);
+});
 
 console.log('=== Persistence ===');
 test('memory backend round-trip debts', () => {

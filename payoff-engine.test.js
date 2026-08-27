@@ -1,5 +1,5 @@
 /**
- * Minimal Node tests for PayoffEngine (agreed seam: calculate).
+ * Minimal Node tests for PayoffEngine (agreed seam: calculate, compareToMinimums).
  * Run: node payoff-engine.test.js
  * Expected values are independent worked examples, not recomputed from the same loop.
  */
@@ -31,7 +31,6 @@ test('single debt pays down with extra', () => {
     extra: 0,
     strategy: 'snowball'
   });
-  // 0% APR, $100/mo on $1000 → 10 months
   assert.strictEqual(r.months, 10);
   assert.strictEqual(r.totalInterest, 0);
   assert.strictEqual(r.payoffOrder.length, 1);
@@ -81,6 +80,33 @@ test('snowflake in month 1 accelerates payoff', () => {
 
 test('rejects missing debts', () => {
   assert.throws(() => PayoffEngine.calculate({}), /debts/);
+});
+
+test('compareToMinimums: extra $50 on 0% $1000 / $100 min saves 3 months', () => {
+  const r = PayoffEngine.compareToMinimums({
+    debts: [{ name: 'Card', balance: 1000, apr: 0, minPayment: 100 }],
+    extra: 50,
+    strategy: 'snowball'
+  });
+  assert.strictEqual(r.minimums.months, 10);
+  assert.strictEqual(r.plan.months, 7);
+  assert.strictEqual(r.monthsSaved, 3);
+  assert.strictEqual(r.interestSaved, 0);
+});
+
+test('compareToMinimums: extra payment reduces interest vs minimums', () => {
+  const r = PayoffEngine.compareToMinimums({
+    debts: [{ name: 'Card', balance: 2000, apr: 24, minPayment: 50 }],
+    extra: 100,
+    strategy: 'avalanche'
+  });
+  assert.ok(r.plan.months < r.minimums.months);
+  assert.ok(r.interestSaved > 0);
+  assert.strictEqual(r.monthsSaved, r.minimums.months - r.plan.months);
+});
+
+test('compareToMinimums rejects missing debts', () => {
+  assert.throws(() => PayoffEngine.compareToMinimums({}), /debts/);
 });
 
 console.log(process.exitCode ? 'Done with failures' : 'All passed');
