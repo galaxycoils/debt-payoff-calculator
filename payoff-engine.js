@@ -1,6 +1,7 @@
 /**
  * PayoffEngine — pure debt amortization (no DOM, no storage).
  * Public seam: calculate(input) → result
+ *            compareToMinimums(input) → { plan, minimums, monthsSaved, interestSaved }
  *
  * @typedef {{ name: string, balance: number, apr: number, minPayment: number }} Debt
  * @typedef {{ amount: number, month: number }} Snowflake
@@ -141,12 +142,40 @@
       payoffOrder: payoffOrder,
       debtFreeDate: addMonths(asOf, month),
       strategy: strategy,
-      startingTotal: startingTotal
+      startingTotal: startingTotal,
+      hitCap: month >= MAX_MONTHS && debts.some(function (d) { return d.balance > EPS; })
+    };
+  }
+
+  /**
+   * Compare a plan (extra + snowflakes) against minimums-only.
+   * @param {PayoffInput} input
+   */
+  function compareToMinimums(input) {
+    if (!input || !Array.isArray(input.debts)) {
+      throw new Error('PayoffEngine.compareToMinimums: debts array required');
+    }
+    var plan = calculate(input);
+    var minimums = calculate({
+      debts: input.debts,
+      extra: 0,
+      strategy: input.strategy === 'avalanche' ? 'avalanche' : 'snowball',
+      snowflakes: [],
+      asOf: input.asOf
+    });
+    var monthsSaved = Math.max(0, minimums.months - plan.months);
+    var interestSaved = Math.round((minimums.totalInterest - plan.totalInterest) * 100) / 100;
+    return {
+      plan: plan,
+      minimums: minimums,
+      monthsSaved: monthsSaved,
+      interestSaved: interestSaved
     };
   }
 
   return {
     calculate: calculate,
+    compareToMinimums: compareToMinimums,
     addMonths: addMonths,
     MAX_MONTHS: MAX_MONTHS
   };
