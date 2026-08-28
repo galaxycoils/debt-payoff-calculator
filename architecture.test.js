@@ -42,6 +42,22 @@ test('compareToMinimums reports months saved', () => {
   assert.strictEqual(r.plan.months, 7);
   assert.strictEqual(r.monthsSaved, 3);
 });
+test('extraNeededForDate 5-month worked example', () => {
+  const r = PayoffEngine.extraNeededForDate({
+    debts: [{ name: 'C', balance: 1000, apr: 0, minPayment: 100 }],
+    strategy: 'snowball',
+    asOf: new Date(2026, 0, 1)
+  }, new Date(2026, 5, 1));
+  assert.strictEqual(r.extra, 100);
+  assert.strictEqual(r.plan.months, 5);
+});
+test('cashFreedTimeline first kill frees that min', () => {
+  const r = PayoffEngine.calculate({
+    debts: [{ name: 'S', balance: 200, apr: 0, minPayment: 50 }, { name: 'B', balance: 1000, apr: 0, minPayment: 75 }],
+    extra: 50, strategy: 'snowball'
+  });
+  assert.strictEqual(PayoffEngine.cashFreedTimeline(r)[0].freedMonthly, 50);
+});
 
 console.log('=== Persistence ===');
 test('memory backend round-trip debts', () => {
@@ -99,6 +115,10 @@ test('double checkin same day', () => {
   s = Gamification.reduce(s, { type: 'checkin', payload: { today: 'Same', yesterday: 'Prev' } }).state;
   const r = Gamification.reduce(s, { type: 'checkin', payload: { today: 'Same', yesterday: 'Prev' } });
   assert.strictEqual(r.state.streak, 1);
+});
+test('unlock target_date achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'target_date' } });
+  assert.ok(r.state.achievements.target_date);
 });
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');

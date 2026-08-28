@@ -1,7 +1,6 @@
 /**
- * Minimal Node tests for PayoffEngine (agreed seam: calculate, compareToMinimums).
+ * Minimal Node tests for PayoffEngine (agreed seam: calculate, compareToMinimums, extraNeededForDate).
  * Run: node payoff-engine.test.js
- * Expected values are independent worked examples, not recomputed from the same loop.
  */
 const assert = require('assert');
 const PayoffEngine = require('./payoff-engine.js');
@@ -107,6 +106,52 @@ test('compareToMinimums: extra payment reduces interest vs minimums', () => {
 
 test('compareToMinimums rejects missing debts', () => {
   assert.throws(() => PayoffEngine.compareToMinimums({}), /debts/);
+});
+
+test('extraNeededForDate: $1000 @ 0% / $100 min needs $100 extra to finish in 5 months', () => {
+  const asOf = new Date(2026, 0, 1);
+  const target = new Date(2026, 5, 1);
+  const r = PayoffEngine.extraNeededForDate({
+    debts: [{ name: 'Card', balance: 1000, apr: 0, minPayment: 100 }],
+    strategy: 'snowball',
+    asOf: asOf
+  }, target);
+  assert.strictEqual(r.extra, 100);
+  assert.strictEqual(r.plan.months, 5);
+  assert.strictEqual(r.reachable, true);
+  assert.strictEqual(r.alreadyOnTrack, false);
+});
+
+test('extraNeededForDate: already on track with minimums → extra 0', () => {
+  const asOf = new Date(2026, 0, 1);
+  const target = new Date(2027, 0, 1);
+  const r = PayoffEngine.extraNeededForDate({
+    debts: [{ name: 'Card', balance: 1000, apr: 0, minPayment: 100 }],
+    strategy: 'snowball',
+    asOf: asOf
+  }, target);
+  assert.strictEqual(r.extra, 0);
+  assert.strictEqual(r.alreadyOnTrack, true);
+});
+
+test('extraNeededForDate rejects missing debts', () => {
+  assert.throws(() => PayoffEngine.extraNeededForDate({}, new Date()), /debts/);
+});
+
+test('cashFreedTimeline accumulates min payments as debts die', () => {
+  const r = PayoffEngine.calculate({
+    debts: [
+      { name: 'Small', balance: 200, apr: 0, minPayment: 50 },
+      { name: 'Big', balance: 1000, apr: 0, minPayment: 75 }
+    ],
+    extra: 50,
+    strategy: 'snowball'
+  });
+  const tl = PayoffEngine.cashFreedTimeline(r);
+  assert.strictEqual(tl[0].name, 'Small');
+  assert.strictEqual(tl[0].freedMonthly, 50);
+  assert.strictEqual(tl[1].name, 'Big');
+  assert.strictEqual(tl[1].cumulativeFreed, 125);
 });
 
 console.log(process.exitCode ? 'Done with failures' : 'All passed');

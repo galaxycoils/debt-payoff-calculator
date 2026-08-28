@@ -19,7 +19,8 @@
     { id: 'calcs_10', name: 'Explorer', desc: 'Run 10 calculations', xp: 70 },
     { id: 'snowflake', name: 'Snowflake', desc: 'Add a one-time bonus payment', xp: 45 },
     { id: 'share_image', name: 'Show-off', desc: 'Export a shareable result image', xp: 55 },
-    { id: 'finish_line', name: 'Finish Line', desc: 'Plan with 3 months or fewer remaining', xp: 90 }
+    { id: 'finish_line', name: 'Finish Line', desc: 'Plan with 3 months or fewer remaining', xp: 90 },
+    { id: 'target_date', name: 'Deadline', desc: 'Solve extra payment for a target debt-free date', xp: 50 }
   ];
 
   function defaultState() {
