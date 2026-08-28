@@ -141,6 +141,15 @@
         </select>
         <button id="calculate-btn" type="button" class="btn-accent px-5 py-2.5 min-h-[44px] rounded-xl text-sm font-semibold transition shadow-sm">Calculate payoff</button>
       </div>
+      <div class="mt-6 pt-6 border-t border-[var(--line)]" id="target-date-section">
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="target-date">I want to be debt-free by</label>
+        <div class="flex flex-wrap gap-2 items-center">
+          <input type="date" id="target-date" class="rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 min-h-[44px] text-sm" />
+          <button type="button" id="solve-target-date" class="px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-accent-soft text-accent">How much extra?</button>
+          <button type="button" id="apply-target-extra" class="hidden px-4 py-2 min-h-[44px] rounded-xl text-sm font-semibold btn-accent">Apply that extra</button>
+        </div>
+        <p id="target-date-result" class="text-sm text-slate-600 dark:text-slate-300 mt-2">Pick a month. We solve the smallest extra payment that hits it.</p>
+      </div>
     </section>
     <div id="results" class="space-y-6 hidden">
       <div id="hero-card" class="card text-center py-8">
@@ -182,6 +191,12 @@
         <h2 class="text-lg font-semibold text-accent mb-1">Debt kill order</h2>
         <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Which debt is paid off in which month</p>
         <div id="kill-order-timeline" class="space-y-3"></div>
+      </div>
+      <div id="cash-freed-card" class="card hidden">
+        <h2 class="text-lg font-semibold text-accent mb-1">Cash you get back</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Each paid-off debt frees its minimum payment for the rest of the plan</p>
+        <div id="cash-freed-list"></div>
+        <p id="cash-freed-end" class="text-sm font-medium text-accent mt-3"></p>
       </div>
       <div id="schedule-card" class="card hidden">
         <h2 class="text-lg font-semibold text-accent mb-3">Month-by-month schedule</h2>
@@ -234,6 +249,8 @@
         <a class="underline hover:text-accent" href="credit-card-payoff-tips.html">Credit card tips</a>
         <a class="underline hover:text-accent" href="minimum-payments-vs-extra.html">Minimum vs extra</a>
         <a class="underline hover:text-accent" href="debt-payoff-vs-minimums.html">Cost of minimums</a>
+        <a class="underline hover:text-accent" href="set-a-debt-free-date.html">Set a date</a>
+        <a class="underline hover:text-accent" href="student-loan-payoff.html">Student loans</a>
       </p>
     </footer>
   </div>
@@ -241,6 +258,7 @@
   <div id="toast" role="status" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-lg text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-50"></div>
   <script src="app-inline.js"></script>
   <script src="app-min-compare.js"></script>
+  <script src="app-target-date.js"></script>
   <script src="app-boot.js"></script>
 </body>
 </html>
