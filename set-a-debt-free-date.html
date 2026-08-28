@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Set a Debt-Free Date — How Much Extra Do You Need?</title>
+  <meta name="description" content="Pick a debt-free month and see the smallest extra payment that hits it. Private target-date solver for snowball and avalanche plans." />
+  <meta name="keywords" content="debt free date goal, extra payment needed, payoff by date calculator, how much extra to pay off debt" />
+  <meta property="og:title" content="Set a Debt-Free Date — Extra Payment Solver" />
+  <meta property="og:description" content="Choose a month. Get the extra payment required. Apply it to the live calculator." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/set-a-debt-free-date.html" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/set-a-debt-free-date.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    :root { --paper:#f7f5f0; --ink:#1a1f2e; --muted:#5c6578; --accent:#0d6e6e; --accent-soft:#e6f3f3; --card:#fff; --line:#e5e2da; }
+    .dark { --paper:#0f1419; --ink:#e8eaed; --muted:#9aa3b2; --accent:#3dbdbd; --accent-soft:#143232; --card:#1a222d; --line:#2a3340; }
+    body { font-family: system-ui, sans-serif; background: var(--paper); color: var(--ink); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+    .prose h2 { color: var(--accent); font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose p, .prose li { line-height: 1.65; }
+    .prose ul { list-style: disc; padding-left: 1.25rem; margin: 0.75rem 0; }
+    .text-accent { color: var(--accent); }
+    .btn-accent { background: var(--accent); color: #fff; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-accent hover:underline">← Calculator</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Set a debt-free date</h1>
+      <p class="text-slate-600 dark:text-slate-300">Working backward from a month you care about — a wedding, a move, a new year — is more motivating than staring at a 47-month schedule.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>Why a date beats a dollar amount</h2>
+      <p>Most people pick an extra payment they “can afford” and hope. A target date flips the question: <em>what extra is required to finish by June 2028?</em> That number is either feasible this month or it is not. If it is not, you add a snowflake (bonus, tax refund) or you move the date.</p>
+      <h2>How the solver works</h2>
+      <p>The calculator binary-searches the smallest extra monthly payment that finishes on or before your chosen month, using the same snowball or avalanche engine as the main plan. Minimums stay in place. One-time snowflakes still count in the months you schedule them.</p>
+      <ul>
+        <li>0% worked example: $1,000 balance, $100 minimum. Finishing in 5 months requires $100 extra. That is a known answer, not a guess.</li>
+        <li>If minimums already beat the date, extra needed is $0.</li>
+        <li>Apply the solved extra to the live slider in one tap and watch the hero date move.</li>
+      </ul>
+      <h2>Pick a date you will still believe in</h2>
+      <p>Aggressive dates create shareable “I need $240 more” moments. Impossible dates create bounce. A useful rule: start 18–24 months out, solve, then tighten one year if the extra is under 10% of take-home.</p>
+    </article>
+    <div class="card text-center mb-8 bg-accent-soft">
+      <p class="font-semibold text-accent mb-2">Solve your date</p>
+      <p class="text-sm mb-4">Private, in-browser. No account.</p>
+      <a href="index.html#target-date-section" class="inline-flex items-center justify-center btn-accent font-semibold px-6 py-3 rounded-xl">Open the solver →</a>
+    </div>
+    <footer class="text-center text-sm text-slate-400 space-y-2">
+      <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1">
+        <a href="index.html" class="text-accent hover:underline">Calculator</a>
+        <a href="when-will-i-be-debt-free.html" class="text-accent hover:underline">When will I be debt-free?</a>
+        <a href="student-loan-payoff.html" class="text-accent hover:underline">Student loans</a>
+      </nav>
+      <p>100% private • Free forever</p>
+    </footer>
+  </div>
+</body>
+</html>

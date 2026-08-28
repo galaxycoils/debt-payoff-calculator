@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Loan Payoff Calculator — Snowball vs Avalanche</title>
+  <meta name="description" content="Plan federal and private student loan payoff. Compare snowball vs avalanche, add extra payments, and see when each loan dies. 100% private." />
+  <meta name="keywords" content="student loan payoff calculator, student loan snowball, student loan avalanche, extra payment student loans" />
+  <meta property="og:title" content="Student Loan Payoff Calculator" />
+  <meta property="og:description" content="Compare strategies and extra payments on student loans without uploading your data." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/student-loan-payoff.html" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/student-loan-payoff.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    :root { --paper:#f7f5f0; --ink:#1a1f2e; --muted:#5c6578; --accent:#0d6e6e; --accent-soft:#e6f3f3; --card:#fff; --line:#e5e2da; }
+    .dark { --paper:#0f1419; --ink:#e8eaed; --muted:#9aa3b2; --accent:#3dbdbd; --accent-soft:#143232; --card:#1a222d; --line:#2a3340; }
+    body { font-family: system-ui, sans-serif; background: var(--paper); color: var(--ink); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+    .prose h2 { color: var(--accent); font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose p, .prose li { line-height: 1.65; }
+    .prose ul { list-style: disc; padding-left: 1.25rem; margin: 0.75rem 0; }
+    .text-accent { color: var(--accent); }
+    .btn-accent { background: var(--accent); color: #fff; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-accent hover:underline">← Calculator</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Student loan payoff</h1>
+      <p class="text-slate-600 dark:text-slate-300">Treat each loan as its own debt row. The engine does not care whether the label is “Direct Unsubsidized” or “Card” — balance, APR, and minimum are what move the date.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>List loans separately</h2>
+      <p>Do not mash federal and private balances into one line. Avalanche needs the real APRs. Snowball needs the real balances. Combine only if two loans share the same rate and servicer and you already treat them as one payment.</p>
+      <h2>Federal vs private</h2>
+      <ul>
+        <li><strong>Federal:</strong> Keep making at least the billed minimum so you stay current. Extra dollars can still follow avalanche (highest rate first) even if the servicer applies them differently — call and specify “apply extra to this loan ID.”</li>
+        <li><strong>Private:</strong> Often higher rates and fewer protections. These usually deserve avalanche priority unless a tiny private balance is blocking motivation.</li>
+      </ul>
+      <h2>Extra payments and snowflakes</h2>
+      <p>A tax refund or signing bonus is a snowflake: one month, one amount. Schedule it in the calculator and the debt-free date jumps. Recurring extra (overtime, renting a room) belongs on the slider so you feel the live change.</p>
+      <h2>Income-driven plans</h2>
+      <p>This tool models amortization with a fixed minimum. If your federal payment is income-driven and may not cover interest, treat the billed amount as the minimum and know the calendar date is an estimate unless you pay enough to stop negative amortization. Use the vs-minimums card to see how much time extra buys versus the billed floor.</p>
+    </article>
+    <div class="card text-center mb-8 bg-accent-soft">
+      <p class="font-semibold text-accent mb-2">Run your loans</p>
+      <p class="text-sm mb-4">Add each loan, drag extra, set a target date. Nothing is uploaded.</p>
+      <a href="index.html" class="inline-flex items-center justify-center btn-accent font-semibold px-6 py-3 rounded-xl">Open the calculator →</a>
+    </div>
+    <footer class="text-center text-sm text-slate-400 space-y-2">
+      <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1">
+        <a href="index.html" class="text-accent hover:underline">Calculator</a>
+        <a href="set-a-debt-free-date.html" class="text-accent hover:underline">Set a date</a>
+        <a href="snowball-vs-avalanche.html" class="text-accent hover:underline">Snowball vs Avalanche</a>
+      </nav>
+      <p>100% private • Free forever</p>
+    </footer>
+  </div>
+</body>
+</html>
