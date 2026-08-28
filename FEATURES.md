@@ -3,7 +3,8 @@
 Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
 
 ## Architecture (2026-08-22+)
-- `payoff-engine.js` — pure PayoffEngine.calculate + compareToMinimums
+- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline
+- `app-target-date.js` — target-date solver + cash-freed UI
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
 - `confetti.js` — near-debt-free celebration
@@ -34,14 +35,17 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - Fixed Calculate / Copy / schedule wiring to match index.html IDs
 - Post-results affiliate + AdSense placeholder grid
 - Hero debt-free date as signature element (DESIGN.md)
+- **Target debt-free date solver** (smallest extra that hits a chosen month)
+- **Cash-freed timeline** (minimums that roll off as each debt dies)
+- SEO pages: set-a-debt-free-date.html, student-loan-payoff.html
+- Deadline achievement when a target date is solved
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
-2. Apply design tokens to remaining SEO guide chrome
-3. More long-tail SEO guides (student loans, balance transfer math)
-4. Google Search Console + Analytics once custom domain is live
-5. Soft launch posts for initial backlinks
-6. Static og-card.png asset for social previews
+2. Balance-transfer math guide + more long-tail SEO
+3. Google Search Console + Analytics once custom domain is live
+4. Soft launch posts for initial backlinks
+5. Static og-card.png asset for social previews
 
 ## Why these features
-Instant feedback, vs-minimums shock numbers, kill-order, celebration, history restore, shareable images, and SEO pages drive session depth and organic traffic — all 100% client-side.
+Target-date solving keeps people dragging extras until the date feels real. Cash-freed “you get $X back” is a shareable hook. SEO guides pull search traffic into the calculator — all 100% client-side.
