@@ -2,12 +2,14 @@
  * PayoffEngine — pure debt amortization (no DOM, no storage).
  * Public seam: calculate(input) → result
  *            compareToMinimums(input) → { plan, minimums, monthsSaved, interestSaved }
+ *            extraNeededForDate(input, targetDate)
+ *            cashFreedTimeline(result)
  *
  * @typedef {{ name: string, balance: number, apr: number, minPayment: number }} Debt
  * @typedef {{ amount: number, month: number }} Snowflake
  * @typedef {{ debts: Debt[], extra?: number, strategy: 'snowball'|'avalanche', snowflakes?: Snowflake[], asOf?: Date }} PayoffInput
  * @typedef {{ month: number, totalBalance: number, interest: number }} HistoryPoint
- * @typedef {{ name: string, month: number, date: Date }} PayoffEvent
+ * @typedef {{ name: string, month: number, date: Date, minPayment?: number }} PayoffEvent
  * @typedef {{ months: number, totalInterest: number, history: HistoryPoint[], payoffOrder: PayoffEvent[], debtFreeDate: Date, strategy: string, startingTotal: number }} PayoffResult
  */
 
@@ -29,10 +31,6 @@
     return d;
   }
 
-  /**
-   * @param {PayoffInput} input
-   * @returns {PayoffResult}
-   */
   function calculate(input) {
     if (!input || !Array.isArray(input.debts)) {
       throw new Error('PayoffEngine.calculate: debts array required');
@@ -120,7 +118,7 @@
         if (d.balance < EPS) {
           if (d.paidOffMonth === null) {
             d.paidOffMonth = month;
-            payoffOrder.push({ name: d.name, month: month, date: addMonths(asOf, month) });
+            payoffOrder.push({ name: d.name, month: month, date: addMonths(asOf, month), minPayment: d.minPayment });
           }
           d.balance = 0;
         }
@@ -147,10 +145,97 @@
     };
   }
 
-  /**
-   * Compare a plan (extra + snowflakes) against minimums-only.
-   * @param {PayoffInput} input
-   */
+  function cashFreedTimeline(result) {
+    if (!result || !Array.isArray(result.payoffOrder)) return [];
+    var cumulative = 0;
+    return result.payoffOrder.map(function (ev) {
+      var freed = Math.max(0, Number(ev.minPayment) || 0);
+      cumulative += freed;
+      return {
+        name: ev.name,
+        month: ev.month,
+        date: ev.date,
+        freedMonthly: Math.round(freed * 100) / 100,
+        cumulativeFreed: Math.round(cumulative * 100) / 100
+      };
+    });
+  }
+
+  function monthsUntil(asOf, targetDate) {
+    var start = asOf instanceof Date ? asOf : new Date();
+    var target = targetDate instanceof Date ? targetDate : new Date(targetDate);
+    if (isNaN(target.getTime())) return 1;
+    var n = (target.getFullYear() - start.getFullYear()) * 12 + (target.getMonth() - start.getMonth());
+    if (target.getDate() > start.getDate()) n += 1;
+    return Math.max(1, n);
+  }
+
+  function extraNeededForDate(input, targetDate) {
+    if (!input || !Array.isArray(input.debts)) {
+      throw new Error('PayoffEngine.extraNeededForDate: debts array required');
+    }
+    var asOf = input.asOf instanceof Date ? input.asOf : new Date();
+    var monthsWanted = monthsUntil(asOf, targetDate);
+    var zero = calculate({
+      debts: input.debts,
+      extra: 0,
+      strategy: input.strategy,
+      snowflakes: input.snowflakes,
+      asOf: asOf
+    });
+    if (!zero.hitCap && zero.months <= monthsWanted) {
+      return {
+        extra: 0,
+        monthsWanted: monthsWanted,
+        plan: zero,
+        reachable: true,
+        alreadyOnTrack: true
+      };
+    }
+    var lo = 0;
+    var hi = Math.max(1, Math.ceil(zero.startingTotal || 1));
+    var best = null;
+    while (lo <= hi) {
+      var mid = Math.floor((lo + hi) / 2);
+      var plan = calculate({
+        debts: input.debts,
+        extra: mid,
+        strategy: input.strategy,
+        snowflakes: input.snowflakes,
+        asOf: asOf
+      });
+      if (!plan.hitCap && plan.months <= monthsWanted) {
+        best = { extra: mid, plan: plan };
+        hi = mid - 1;
+      } else {
+        lo = mid + 1;
+      }
+    }
+    if (!best) {
+      var maxPlan = calculate({
+        debts: input.debts,
+        extra: lo,
+        strategy: input.strategy,
+        snowflakes: input.snowflakes,
+        asOf: asOf
+      });
+      return {
+        extra: lo,
+        monthsWanted: monthsWanted,
+        plan: maxPlan,
+        reachable: !maxPlan.hitCap && maxPlan.months <= monthsWanted,
+        alreadyOnTrack: false
+      };
+    }
+    return {
+      extra: best.extra,
+      monthsWanted: monthsWanted,
+      plan: best.plan,
+      reachable: true,
+      alreadyOnTrack: false
+    };
+  }
+
   function compareToMinimums(input) {
     if (!input || !Array.isArray(input.debts)) {
       throw new Error('PayoffEngine.compareToMinimums: debts array required');
@@ -176,6 +261,9 @@
   return {
     calculate: calculate,
     compareToMinimums: compareToMinimums,
+    extraNeededForDate: extraNeededForDate,
+    cashFreedTimeline: cashFreedTimeline,
+    monthsUntil: monthsUntil,
     addMonths: addMonths,
     MAX_MONTHS: MAX_MONTHS
   };
