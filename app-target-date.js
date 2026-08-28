@@ -50,6 +50,12 @@
     });
   }
 
+  function paintFromLast() {
+    var mode = window._lastMode;
+    var primary = (mode === 'avalanche' ? window._lastAval : window._lastSnow) || window._lastSnow || window._lastAval;
+    if (primary) paintCashFreed(primary);
+  }
+
   function solveTarget() {
     if (typeof PayoffEngine === 'undefined' || typeof getDebtsFromUI !== 'function') return;
     var debts = getDebtsFromUI();
@@ -96,6 +102,7 @@
     var display = document.getElementById('extra-display');
     if (display) display.textContent = '$' + slider.value;
     if (typeof window.runCalc === 'function') window.runCalc(true);
+    setTimeout(paintFromLast, 50);
     if (typeof showToast === 'function') showToast('Extra set to $' + slider.value);
   }
 
@@ -116,12 +123,21 @@
       dateEl._bound = true;
       dateEl.addEventListener('change', solveTarget);
     }
+    var calcBtn = document.getElementById('calculate-btn') || document.getElementById('calculate');
+    if (calcBtn && !calcBtn._cashBound) {
+      calcBtn._cashBound = true;
+      calcBtn.addEventListener('click', function () { setTimeout(paintFromLast, 50); });
+    }
+    var slider = document.getElementById('extra-slider');
+    if (slider && !slider._cashBound) {
+      slider._cashBound = true;
+      slider.addEventListener('input', function () { setTimeout(paintFromLast, 50); });
+    }
     var orig = window.renderResults;
     if (typeof orig === 'function' && !orig._cashPatched) {
       window.renderResults = function (snow, aval, mode) {
         orig(snow, aval, mode);
-        var primary = (mode === 'avalanche' ? aval : snow) || snow || aval;
-        if (primary) paintCashFreed(primary);
+        paintFromLast();
       };
       window.renderResults._cashPatched = true;
     }
