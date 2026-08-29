@@ -12,17 +12,14 @@
   var store = Persistence.create();
   window._store = store;
 
-  // Theme preference through Persistence
   var savedTheme = store.loadTheme();
   if (savedTheme === 'dark') document.documentElement.classList.add('dark');
   if (savedTheme === 'light') document.documentElement.classList.remove('dark');
 
-  // Replace setTheme if defined later — expose helper
   window.persistTheme = function (mode) {
     store.saveTheme(mode === 'dark' ? 'dark' : 'light');
   };
 
-  // Game state from Persistence + Gamification
   var game = store.loadGame(Gamification.defaultState());
   window._game = game;
 
@@ -43,7 +40,6 @@
     applyEffects(Gamification.reduce(game, { type: type, payload: payload || {} }));
   };
 
-  // After DOM ready, rebind critical controls if elements exist
   function enhance() {
     var checkin = document.getElementById('checkin-btn');
     if (checkin && !checkin._bootBound) {
@@ -55,18 +51,6 @@
       }, true);
     }
 
-    // Sync game global used by inline script if it exists
-    if (typeof window.game !== 'undefined') {
-      // keep both in sync via proxy assignment
-    }
-    // Prefer module ACHIEVEMENTS for list length in UI if renderAchievements exists
-    try {
-      if (typeof ACHIEVEMENTS !== 'undefined' && Gamification.ACHIEVEMENTS) {
-        // leave inline ACHIEVEMENTS; reduce path is what matters for rules
-      }
-    } catch (e) {}
-
-    // Save debts button enhancement
     var saveBtn = document.getElementById('save-debts');
     if (saveBtn && !saveBtn._bootBound) {
       saveBtn._bootBound = true;
@@ -79,7 +63,6 @@
       }, true);
     }
 
-    // Load debts from store on boot if container empty of values
     var container = document.getElementById('debts-container');
     if (container && typeof createDebtRow === 'function') {
       var debts = store.loadDebts();
@@ -102,13 +85,10 @@
       }
     }
 
-    // History via store
     if (typeof renderHistory === 'function') {
-      var origLoad = window.loadHistory;
       window.loadHistory = function () { return store.loadHistory(); };
     }
 
-    // Patch theme toggle to persist via store
     var themeBtn = document.getElementById('theme-toggle');
     if (themeBtn && !themeBtn._bootTheme) {
       themeBtn._bootTheme = true;
@@ -118,6 +98,12 @@
           store.saveTheme(isDark ? 'dark' : 'light');
         }, 0);
       });
+    }
+
+    if (!document.querySelector('script[src="app-balance-transfer.js"]')) {
+      var s = document.createElement('script');
+      s.src = 'app-balance-transfer.js';
+      document.body.appendChild(s);
     }
 
     console.info('app-boot: Persistence + Gamification adapter active');
