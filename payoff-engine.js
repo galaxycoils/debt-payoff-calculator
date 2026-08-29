@@ -40,7 +40,12 @@
     var extra = Math.max(0, Number(input.extra) || 0);
     var asOf = input.asOf instanceof Date ? input.asOf : new Date();
     var snowflakes = (input.snowflakes || [])
-      .map(function (f) { return { amount: Math.max(0, Number(f.amount) || 0), month: Math.max(0, parseInt(f.month, 10) || 0); }; })
+      .map(function (f) {
+        return {
+          amount: Math.max(0, Number(f.amount) || 0),
+          month: Math.max(0, parseInt(f.month, 10) || 0)
+        };
+      })
       .filter(function (f) { return f.amount > 0 && f.month > 0; })
       .sort(function (a, b) { return a.month - b.month; });
 
