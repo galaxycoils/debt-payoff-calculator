@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balance Transfer vs Paying Off Your Cards — Fee, Promo APR, and Real Math</title>
+  <meta name="description" content="Should you take a 0% balance transfer? Model the transfer fee, promo months, and post-promo APR against staying on your current cards. 100% private calculator." />
+  <meta property="og:title" content="Balance Transfer vs Paying Off Your Cards" />
+  <meta property="og:description" content="Compare a promo APR plus fee against staying put. Private, client-side math." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/balance-transfer-vs-payoff.html" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/balance-transfer-vs-payoff.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    :root { --paper:#f7f5f0; --ink:#1a1f2e; --muted:#5c6578; --accent:#0d6e6e; --accent-soft:#e6f3f3; --card:#fff; --line:#e5e2da; }
+    .dark { --paper:#0f1419; --ink:#e8eaed; --muted:#9aa3b2; --accent:#3dbdbd; --accent-soft:#143232; --card:#1a222d; --line:#2a3340; }
+    body { font-family: system-ui, sans-serif; background: var(--paper); color: var(--ink); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+    .prose h2 { color: var(--accent); font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose p, .prose li { line-height: 1.65; }
+    .prose ul { list-style: disc; padding-left: 1.25rem; margin: 0.75rem 0; }
+    .text-accent { color: var(--accent); }
+    .btn-accent { background: var(--accent); color: #fff; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 text-sm"><a href="index.html" class="font-medium text-accent hover:underline">← Calculator</a></nav>
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Balance transfer vs payoff</h1>
+      <p class="text-slate-600 dark:text-slate-300">A 0% intro offer is not free. You pay a transfer fee up front, you get a promotional APR for a fixed number of months, then the leftover balance jumps to a regular rate. The only honest comparison is stay-put interest versus transfer interest plus the fee.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>The three numbers that matter</h2>
+      <ul>
+        <li><strong>Fee percent</strong> — usually 3–5% of the amount moved.</li>
+        <li><strong>Promo APR and months</strong> — often 0% for 12–21 months.</li>
+        <li><strong>Post-promo APR</strong> — the rate after the window.</li>
+      </ul>
+      <h2>When a transfer wins</h2>
+      <p>It wins when interest avoided is larger than the fee and you can finish before the promo ends. Extra payments and annual snowflakes are how you force that finish line.</p>
+      <h2>When staying put wins</h2>
+      <p>If the fee is high, the promo is short, or you would finish soon anyway, the transfer just inflates the starting balance. If net-after-fee is negative, decline the offer.</p>
+      <h2>How this calculator models it</h2>
+      <p>Each transferred debt is increased by the fee. During promo months the engine uses the promo APR, then switches. The result card shows months saved, interest saved, fee paid, and net after fee.</p>
+    </article>
+    <div class="card text-center mb-8 bg-accent-soft">
+      <p class="font-semibold text-accent mb-2">Run the comparison on your balances</p>
+      <p class="text-sm mb-4">Add cards, enter the offer, tap Compare transfer vs stay. Nothing is uploaded.</p>
+      <a href="index.html" class="inline-flex items-center justify-center btn-accent font-semibold px-6 py-3 rounded-xl">Open the calculator →</a>
+    </div>
+    <footer class="text-center text-sm text-slate-400"><p>100% private • Free forever</p></footer>
+  </div>
+</body>
+</html>
