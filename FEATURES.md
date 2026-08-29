@@ -5,6 +5,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 ## Architecture (2026-08-22+)
 - `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline
 - `app-target-date.js` — target-date solver + cash-freed UI
+- `app-balance-transfer.js` — transfer vs stay + annual snowflakes
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
 - `confetti.js` — near-debt-free celebration
@@ -39,13 +40,17 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Cash-freed timeline** (minimums that roll off as each debt dies)
 - SEO pages: set-a-debt-free-date.html, student-loan-payoff.html
 - Deadline achievement when a target date is solved
+- **Balance-transfer compare** (fee + promo APR + post-promo APR vs stay)
+- **Repeating annual snowflakes** (bonus / tax-refund every 12 months)
+- SEO page: balance-transfer-vs-payoff.html
+- Static `og-card.svg` for social-style branding
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
-2. Balance-transfer math guide + more long-tail SEO
-3. Google Search Console + Analytics once custom domain is live
-4. Soft launch posts for initial backlinks
-5. Static og-card.png asset for social previews
+2. Google Search Console + Analytics once custom domain is live
+3. Soft launch posts for initial backlinks
+4. More long-tail SEO (debt consolidation vs payoff, 0% intro pitfalls)
+5. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
 
 ## Why these features
-Target-date solving keeps people dragging extras until the date feels real. Cash-freed “you get $X back” is a shareable hook. SEO guides pull search traffic into the calculator — all 100% client-side.
+Target-date solving keeps people dragging extras until the date feels real. Balance-transfer compare is a high-intent hook (people Google the fee). Annual snowflakes bring users back when bonuses hit. SEO guides pull search traffic into the calculator — all 100% client-side.
