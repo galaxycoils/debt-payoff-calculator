@@ -22,7 +22,9 @@
     { id: 'finish_line', name: 'Finish Line', desc: 'Plan with 3 months or fewer remaining', xp: 90 },
     { id: 'target_date', name: 'Deadline', desc: 'Solve extra payment for a target debt-free date', xp: 50 },
     { id: 'balance_transfer', name: 'Shop the APR', desc: 'Compare a balance-transfer offer to staying put', xp: 50 },
-    { id: 'annual_bonus', name: 'Bonus Hunter', desc: 'Schedule a repeating annual snowflake', xp: 40 }
+    { id: 'annual_bonus', name: 'Bonus Hunter', desc: 'Schedule a repeating annual snowflake', xp: 40 },
+    { id: 'biweekly', name: 'Pay Day Split', desc: 'Model biweekly payments vs monthly', xp: 40 },
+    { id: 'consolidator', name: 'One Payment', desc: 'Compare a consolidation loan to staying put', xp: 50 }
   ];
 
   function defaultState() {
@@ -80,31 +82,36 @@
         var y = new Date(); y.setDate(y.getDate() - 1);
         yesterday = y.toDateString();
       }
-      next.streak = next.lastCheckin === yesterday ? next.streak + 1 : 1;
+      if (next.lastCheckin === yesterday) next.streak += 1;
+      else next.streak = 1;
       next.lastCheckin = today;
+      applyXp(next, 10, 'Daily check-in', effects);
       if (next.streak >= 3) unlockIn(next, 'streak_3', effects);
       if (next.streak >= 7) unlockIn(next, 'streak_7', effects);
-      applyXp(next, 15, 'Daily check-in', effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
     } else if (type === 'calculation') {
       next.totalCalcs += 1;
-      if (next.totalCalcs === 1) unlockIn(next, 'first_calc', effects);
-      if (next.totalCalcs >= 10) unlockIn(next, 'calcs_10', effects);
-      if (p.compared) unlockIn(next, 'compare', effects);
-      var extra = Number(p.extra) || 0;
+      var extra = Math.max(0, Number(p.extra) || 0);
       if (extra > next.maxExtraUsed) next.maxExtraUsed = extra;
+      unlockIn(next, 'first_calc', effects);
+      if (p.compared) unlockIn(next, 'compare', effects);
       if (extra >= 100) unlockIn(next, 'extra_100', effects);
       if (extra >= 300) unlockIn(next, 'extra_300', effects);
-      applyXp(next, 10, 'Calculation', effects);
+      if (next.totalCalcs >= 10) unlockIn(next, 'calcs_10', effects);
+      if (p.months != null && p.months <= 3) unlockIn(next, 'finish_line', effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
     } else if (type === 'snowflake_added') {
       unlockIn(next, 'snowflake', effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
+    } else if (type === 'share_image') {
+      unlockIn(next, 'share_image', effects);
+      effects.push({ type: 'persist' });
+      effects.push({ type: 'render' });
     } else if (type === 'unlock') {
-      unlockIn(next, p.id, effects);
+      if (p.id) unlockIn(next, p.id, effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
     }
@@ -112,5 +119,10 @@
     return { state: next, effects: effects };
   }
 
-  return { reduce: reduce, defaultState: defaultState, ACHIEVEMENTS: ACHIEVEMENTS, xpForLevel: xpForLevel };
+  return {
+    ACHIEVEMENTS: ACHIEVEMENTS,
+    defaultState: defaultState,
+    xpForLevel: xpForLevel,
+    reduce: reduce
+  };
 });
