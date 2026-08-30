@@ -3,9 +3,10 @@
 Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
 
 ## Architecture (2026-08-22+)
-- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline
+- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence
 - `app-target-date.js` — target-date solver + cash-freed UI
 - `app-balance-transfer.js` — transfer vs stay + annual snowflakes
+- `app-consolidation.js` — consolidation loan vs stay UI
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
 - `confetti.js` — near-debt-free celebration
@@ -44,13 +45,18 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Repeating annual snowflakes** (bonus / tax-refund every 12 months)
 - SEO page: balance-transfer-vs-payoff.html
 - Static `og-card.svg` for social-style branding
+- **Biweekly cadence** (26 half-payments = one extra monthly payment, live toggle)
+- **Consolidation-loan compare** (APR + term + origination/flat fee, keep-budget default)
+- SEO pages: debt-consolidation-vs-payoff.html, biweekly-vs-monthly-payments.html
+- Achievements: Pay Day Split, One Payment
+- Calculate button now binds to `#calculate-btn`
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
 2. Google Search Console + Analytics once custom domain is live
 3. Soft launch posts for initial backlinks
-4. More long-tail SEO (debt consolidation vs payoff, 0% intro pitfalls)
+4. More long-tail SEO (0% intro pitfalls, debt snowball spreadsheet vs calculator)
 5. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
 
 ## Why these features
-Target-date solving keeps people dragging extras until the date feels real. Balance-transfer compare is a high-intent hook (people Google the fee). Annual snowflakes bring users back when bonuses hit. SEO guides pull search traffic into the calculator — all 100% client-side.
+Target-date solving keeps people dragging extras until the date feels real. Biweekly and consolidation compares are high-intent hooks that keep users tweaking numbers. SEO guides pull search traffic into the calculator — all 100% client-side.

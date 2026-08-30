@@ -1,7 +1,8 @@
 # Architecture (after #1–#6)
 
 ```
-payoff-engine.js   pure calculate(plan) → result
+payoff-engine.js   pure calculate / compareConsolidation / cadence
+app-consolidation.js  loan vs stay UI
 persistence.js     storage seam (localStorage | memory backend)
 gamification.js    pure reduce(state, event) → { state, effects }
 app-boot.js        adapter: wires modules into existing UI
