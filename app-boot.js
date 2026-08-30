@@ -105,6 +105,11 @@
       s.src = 'app-balance-transfer.js';
       document.body.appendChild(s);
     }
+    if (!document.querySelector('script[src="app-consolidation.js"]')) {
+      var c = document.createElement('script');
+      c.src = 'app-consolidation.js';
+      document.body.appendChild(c);
+    }
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
