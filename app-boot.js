@@ -40,6 +40,13 @@
     applyEffects(Gamification.reduce(game, { type: type, payload: payload || {} }));
   };
 
+  function loadScriptOnce(src) {
+    if (document.querySelector('script[src="' + src + '"]')) return;
+    var s = document.createElement('script');
+    s.src = src;
+    document.body.appendChild(s);
+  }
+
   function enhance() {
     var checkin = document.getElementById('checkin-btn');
     if (checkin && !checkin._bootBound) {
@@ -100,16 +107,9 @@
       });
     }
 
-    if (!document.querySelector('script[src="app-balance-transfer.js"]')) {
-      var s = document.createElement('script');
-      s.src = 'app-balance-transfer.js';
-      document.body.appendChild(s);
-    }
-    if (!document.querySelector('script[src="app-consolidation.js"]')) {
-      var c = document.createElement('script');
-      c.src = 'app-consolidation.js';
-      document.body.appendChild(c);
-    }
+    loadScriptOnce('app-balance-transfer.js');
+    loadScriptOnce('app-consolidation.js');
+    loadScriptOnce('app-cadence.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }

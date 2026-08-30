@@ -82,36 +82,31 @@
         var y = new Date(); y.setDate(y.getDate() - 1);
         yesterday = y.toDateString();
       }
-      if (next.lastCheckin === yesterday) next.streak += 1;
-      else next.streak = 1;
+      next.streak = next.lastCheckin === yesterday ? next.streak + 1 : 1;
       next.lastCheckin = today;
-      applyXp(next, 10, 'Daily check-in', effects);
       if (next.streak >= 3) unlockIn(next, 'streak_3', effects);
       if (next.streak >= 7) unlockIn(next, 'streak_7', effects);
+      applyXp(next, 15, 'Daily check-in', effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
     } else if (type === 'calculation') {
       next.totalCalcs += 1;
-      var extra = Math.max(0, Number(p.extra) || 0);
-      if (extra > next.maxExtraUsed) next.maxExtraUsed = extra;
-      unlockIn(next, 'first_calc', effects);
+      if (next.totalCalcs === 1) unlockIn(next, 'first_calc', effects);
+      if (next.totalCalcs >= 10) unlockIn(next, 'calcs_10', effects);
       if (p.compared) unlockIn(next, 'compare', effects);
+      var extra = Number(p.extra) || 0;
+      if (extra > next.maxExtraUsed) next.maxExtraUsed = extra;
       if (extra >= 100) unlockIn(next, 'extra_100', effects);
       if (extra >= 300) unlockIn(next, 'extra_300', effects);
-      if (next.totalCalcs >= 10) unlockIn(next, 'calcs_10', effects);
-      if (p.months != null && p.months <= 3) unlockIn(next, 'finish_line', effects);
+      applyXp(next, 10, 'Calculation', effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
     } else if (type === 'snowflake_added') {
       unlockIn(next, 'snowflake', effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
-    } else if (type === 'share_image') {
-      unlockIn(next, 'share_image', effects);
-      effects.push({ type: 'persist' });
-      effects.push({ type: 'render' });
     } else if (type === 'unlock') {
-      if (p.id) unlockIn(next, p.id, effects);
+      unlockIn(next, p.id, effects);
       effects.push({ type: 'persist' });
       effects.push({ type: 'render' });
     }
@@ -119,10 +114,5 @@
     return { state: next, effects: effects };
   }
 
-  return {
-    ACHIEVEMENTS: ACHIEVEMENTS,
-    defaultState: defaultState,
-    xpForLevel: xpForLevel,
-    reduce: reduce
-  };
+  return { reduce: reduce, defaultState: defaultState, ACHIEVEMENTS: ACHIEVEMENTS, xpForLevel: xpForLevel };
 });
