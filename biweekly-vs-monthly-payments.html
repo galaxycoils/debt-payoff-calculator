@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biweekly vs Monthly Debt Payments – The Extra Payment Effect</title>
+  <meta name="description" content="Paying half your debt payment every two weeks equals 13 monthly payments a year. See how many months and how much interest that saves. Private calculator." />
+  <meta property="og:title" content="Biweekly vs Monthly Debt Payments" />
+  <meta property="og:description" content="26 half-payments a year is one extra monthly payment. Drag the slider and toggle biweekly to see the date move." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/biweekly-vs-monthly-payments.html" />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/biweekly-vs-monthly-payments.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    :root { --paper:#f7f5f0; --ink:#1a1f2e; --muted:#5c6578; --accent:#0d6e6e; --accent-soft:#e6f3f3; --card:#fff; --line:#e5e2da; }
+    .dark { --paper:#0f1419; --ink:#e8eaed; --muted:#9aa3b2; --accent:#3dbdbd; --accent-soft:#143232; --card:#1a222d; --line:#2a3340; }
+    body { font-family: system-ui, sans-serif; background: var(--paper); color: var(--ink); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+    .prose h2 { color: var(--accent); font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose p, .prose li { line-height: 1.65; }
+    .prose ul { list-style: disc; padding-left: 1.25rem; margin: 0.75rem 0; }
+    .text-accent { color: var(--accent); }
+    .btn-accent { background: var(--accent); color: #fff; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 text-sm"><a href="index.html" class="font-medium text-accent hover:underline">← Calculator</a></nav>
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Biweekly vs monthly payments</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300">There are 26 two-week periods in a year. Half a monthly payment, 26 times, is 13 full payments — one extra month of progress without “finding” a new budget line.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>The simple math</h2>
+      <p>If your combined minimums plus extra equal $P each month, twelve payments send $12P. Biweekly half-payments send $13P. Our engine adds <em>P ÷ 12</em> as extra each month so a monthly amortization still matches that yearly total.</p>
+      <h2>Worked example</h2>
+      <p>A $1,300 balance at 0% APR with a $100 minimum takes 13 months. Flip biweekly and the same cash flow finishes in 12. With interest the gap is larger because the extra principal lands earlier.</p>
+      <h2>When it backfires</h2>
+      <p>If “biweekly” just means paying whenever a paycheck hits but the total cash per year does not rise, nothing changes. Autopay on the due date plus a planned extra is clearer than hoping timing saves you.</p>
+      <h2>Stack it</h2>
+      <p>Biweekly cadence stacks with snowflakes, a target debt-free date, and avalanche order. Toggle the checkbox on the calculator — results and charts recalc with the live slider.</p>
+    </article>
+    <div class="card text-center" style="background: var(--accent-soft);">
+      <p class="font-semibold mb-2">Toggle biweekly on your real debts</p>
+      <p class="text-sm mb-4">Watch the debt-free date jump. Private, client-side, no account.</p>
+      <a href="index.html#cadence" class="inline-flex items-center justify-center btn-accent font-semibold px-6 py-3 rounded-xl">Open the calculator →</a>
+    </div>
+    <footer class="mt-10 text-sm text-slate-500">
+      <a class="underline hover:text-accent" href="how-extra-payments-work.html">How extra payments work</a>
+      ·
+      <a class="underline hover:text-accent" href="debt-consolidation-vs-payoff.html">Consolidation vs payoff</a>
+    </footer>
+  </div>
+</body>
+</html>
