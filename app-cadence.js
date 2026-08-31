@@ -53,6 +53,8 @@
     wrap('extraNeededForDate');
     wrap('compareBalanceTransfer');
     wrap('compareConsolidation');
+    wrap('compareAprShock');
+    wrap('comparePaymentHoliday');
   }
 
   function bind() {

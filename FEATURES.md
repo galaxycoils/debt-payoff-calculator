@@ -3,10 +3,11 @@
 Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
 
 ## Architecture (2026-08-22+)
-- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence
+- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday
 - `app-target-date.js` — target-date solver + cash-freed UI
 - `app-balance-transfer.js` — transfer vs stay + annual snowflakes
 - `app-consolidation.js` — consolidation loan vs stay UI
+- `app-stress.js` — APR shock + payment holiday + .ics download
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
 - `confetti.js` — near-debt-free celebration
@@ -50,13 +51,19 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - SEO pages: debt-consolidation-vs-payoff.html, biweekly-vs-monthly-payments.html
 - Achievements: Pay Day Split, One Payment
 - Calculate button now binds to `#calculate-btn`
+- **APR shock stress test** (live slider: extra months + interest if every rate rises)
+- **Payment-holiday cost** (skip extras 1–3 months)
+- **Debt-free .ics calendar download**
+- SEO pages: zero-percent-intro-apr-pitfalls.html, what-if-my-apr-goes-up.html
+- Achievements: Rate Watcher, Pause Check
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
 2. Google Search Console + Analytics once custom domain is live
 3. Soft launch posts for initial backlinks
-4. More long-tail SEO (0% intro pitfalls, debt snowball spreadsheet vs calculator)
+4. More long-tail SEO (debt snowball spreadsheet vs calculator)
 5. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
+6. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Target-date solving keeps people dragging extras until the date feels real. Biweekly and consolidation compares are high-intent hooks that keep users tweaking numbers. SEO guides pull search traffic into the calculator — all 100% client-side.
+APR-shock and holiday sliders keep people on the results screen after the first calculate. Calendar downloads create a return visit on the debt-free date. Long-tail SEO pages (0% intro pitfalls, rising APR) feed the calculator.

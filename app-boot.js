@@ -110,6 +110,7 @@
     loadScriptOnce('app-balance-transfer.js');
     loadScriptOnce('app-consolidation.js');
     loadScriptOnce('app-cadence.js');
+    loadScriptOnce('app-stress.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
