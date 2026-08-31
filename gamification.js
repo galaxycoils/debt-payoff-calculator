@@ -24,7 +24,9 @@
     { id: 'balance_transfer', name: 'Shop the APR', desc: 'Compare a balance-transfer offer to staying put', xp: 50 },
     { id: 'annual_bonus', name: 'Bonus Hunter', desc: 'Schedule a repeating annual snowflake', xp: 40 },
     { id: 'biweekly', name: 'Pay Day Split', desc: 'Model biweekly payments vs monthly', xp: 40 },
-    { id: 'consolidator', name: 'One Payment', desc: 'Compare a consolidation loan to staying put', xp: 50 }
+    { id: 'consolidator', name: 'One Payment', desc: 'Compare a consolidation loan to staying put', xp: 50 },
+    { id: 'apr_shock', name: 'Rate Watcher', desc: 'Stress-test the plan if APRs rise', xp: 40 },
+    { id: 'holiday', name: 'Pause Check', desc: 'Price a month off extra payments', xp: 40 }
   ];
 
   function defaultState() {
