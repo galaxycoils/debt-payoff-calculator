@@ -107,6 +107,7 @@
       });
     }
 
+    loadScriptOnce('payoff-engine-ext.js');
     loadScriptOnce('app-balance-transfer.js');
     loadScriptOnce('app-consolidation.js');
     loadScriptOnce('app-cadence.js');
