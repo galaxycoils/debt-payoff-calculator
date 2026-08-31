@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What If My APR Goes Up? – Rate Hike Debt Payoff Planner</title>
+  <meta name="description" content="Variable-rate cards and promo cliffs raise APR without warning. See how a 2–12 point hike changes your debt-free date and interest — privately in the browser." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/what-if-my-apr-goes-up.html" />
+  <meta property="og:title" content="What If My APR Goes Up?" />
+  <meta property="og:description" content="Stress-test your payoff plan against a rate hike." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 text-sm"><a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a></nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">What if my APR goes up?</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300">Most credit cards are variable. Prime moves, penalty APRs trigger, promos expire. Your plan should survive a hike.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>Why this question keeps people calculating</h2>
+      <p>A payoff date at today’s rate feels finished. A two-point hike on a large balance can add months and hundreds in interest. Seeing that number on a slider is what makes extra payments feel urgent instead of optional.</p>
+      <h2>Common ways APR jumps</h2>
+      <ul>
+        <li>Fed / prime rate changes on variable cards</li>
+        <li>Promo APR ending (0% → 21%+)</li>
+        <li>Penalty APR after a late payment</li>
+        <li>Issuer repricing at renewal</li>
+      </ul>
+      <h2>What to do with the result</h2>
+      <p>If a +3% shock adds more months than you can accept, raise the extra payment until the shocked date matches your original date. That extra is the insurance premium. If you cannot raise extras, a balance-transfer or consolidation compare on the same page shows whether a fixed rate is cheaper after fees.</p>
+    </article>
+    <div class="card text-center mb-8">
+      <p class="font-semibold mb-2">Drag the rate-hike slider</p>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">After you calculate, the results screen prices +1% to +12% instantly. Nothing leaves the browser.</p>
+      <a href="index.html" class="inline-flex items-center justify-center bg-teal-700 hover:bg-teal-800 text-white font-semibold px-6 py-3 rounded-xl">Open the calculator →</a>
+    </div>
+    <footer class="text-center text-sm text-slate-400">
+      <a class="underline" href="index.html">Calculator</a> ·
+      <a class="underline" href="zero-percent-intro-apr-pitfalls.html">0% intro pitfalls</a> ·
+      <a class="underline" href="how-extra-payments-work.html">Extra payments</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0% Intro APR Pitfalls – What Happens When the Promo Ends</title>
+  <meta name="description" content="0% intro APR cards look cheap until the promo ends. See the pitfalls, deferred interest traps, and how to model the jump in a private payoff calculator." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/zero-percent-intro-apr-pitfalls.html" />
+  <meta property="og:title" content="0% Intro APR Pitfalls" />
+  <meta property="og:description" content="Promo rates expire. Model the jump before you transfer." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 text-sm"><a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a></nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">0% intro APR pitfalls</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300">A promo rate is a deadline, not a gift. Miss the window and the balance can jump to 20%+ overnight.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>The fine print that actually costs money</h2>
+      <ul>
+        <li><strong>Promo length is short.</strong> 12–18 months is common. Large balances do not finish on minimums.</li>
+        <li><strong>Transfer fees are real interest.</strong> 3–5% upfront is prepaid interest even at 0% APR.</li>
+        <li><strong>Deferred-interest store cards.</strong> If anything remains when the promo ends, some issuers charge interest back to day one.</li>
+        <li><strong>Post-promo APR is often worse</strong> than the card you left.</li>
+        <li><strong>One late payment can cancel 0%.</strong> The rate reverts and a penalty APR can stick.</li>
+      </ul>
+      <h2>Who a 0% offer helps</h2>
+      <p>Someone with a written payoff date inside the promo window, a fee they already priced, and a budget that still covers every other minimum. If the calculator says you still have a balance in month 19, the offer is a trap unless you plan a second transfer (and another fee).</p>
+      <h2>How to check before you apply</h2>
+      <p>Enter the current debts. Use the target-date solver for the promo end month. If the extra payment required is more than you can keep for every month of the promo, skip the transfer or shrink the amount you move.</p>
+      <p>Then drag the APR-shock slider: if the promo ends and rates land 12 points higher, how many extra months appear? That number is the cost of finishing late.</p>
+    </article>
+    <div class="card text-center mb-8">
+      <p class="font-semibold mb-2">Price the promo end date</p>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Private calculator. Set a debt-free date, compare a transfer, then shock the APR.</p>
+      <a href="index.html" class="inline-flex items-center justify-center bg-teal-700 hover:bg-teal-800 text-white font-semibold px-6 py-3 rounded-xl">Open the calculator →</a>
+    </div>
+    <footer class="text-center text-sm text-slate-400">
+      <a class="underline" href="index.html">Calculator</a> ·
+      <a class="underline" href="what-if-my-apr-goes-up.html">If APR rises</a> ·
+      <a class="underline" href="balance-transfer-vs-payoff.html">Balance transfer</a>
+    </footer>
+  </div>
+</body>
+</html>
