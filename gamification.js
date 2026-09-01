@@ -26,7 +26,9 @@
     { id: 'biweekly', name: 'Pay Day Split', desc: 'Model biweekly payments vs monthly', xp: 40 },
     { id: 'consolidator', name: 'One Payment', desc: 'Compare a consolidation loan to staying put', xp: 50 },
     { id: 'apr_shock', name: 'Rate Watcher', desc: 'Stress-test the plan if APRs rise', xp: 40 },
-    { id: 'holiday', name: 'Pause Check', desc: 'Price a month off extra payments', xp: 40 }
+    { id: 'holiday', name: 'Pause Check', desc: 'Price a month off extra payments', xp: 40 },
+    { id: 'raise_plan', name: 'Raise Rider', desc: 'Model putting a yearly raise toward debt', xp: 40 },
+    { id: 'share_plan', name: 'Pass It On', desc: 'Copy a shareable scenario link', xp: 55 }
   ];
 
   function defaultState() {
