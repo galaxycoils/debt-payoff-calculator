@@ -3,11 +3,13 @@
 Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
 
 ## Architecture (2026-08-22+)
-- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday
+- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise
 - `app-target-date.js` — target-date solver + cash-freed UI
 - `app-balance-transfer.js` — transfer vs stay + annual snowflakes
 - `app-consolidation.js` — consolidation loan vs stay UI
 - `app-stress.js` — APR shock + payment holiday + .ics download
+- `app-raise.js` — annual raise on extras
+- `plan-share.js` / `app-plan-share.js` — hash-encoded scenario links
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
 - `confetti.js` — near-debt-free celebration
@@ -55,15 +57,19 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Payment-holiday cost** (skip extras 1–3 months)
 - **Debt-free .ics calendar download**
 - SEO pages: zero-percent-intro-apr-pitfalls.html, what-if-my-apr-goes-up.html
-- Achievements: Rate Watcher, Pause Check
+- Achievements: Rate Watcher, Pause Check, Raise Rider, Pass It On
+- **Annual raise slider** (put each year’s raise into extras; live recalc)
+- **Shareable scenario links** (`#p=` encoded plan — one-click load)
+- SEO pages: debt-snowball-spreadsheet-vs-calculator.html, how-to-pay-off-debt-with-a-raise.html
+- `sitemap.xml` + `robots.txt` for crawlers
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
 2. Google Search Console + Analytics once custom domain is live
 3. Soft launch posts for initial backlinks
-4. More long-tail SEO (debt snowball spreadsheet vs calculator)
-5. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
-6. Soft-launch copy for r/personalfinance once custom domain is live
+4. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
+5. Soft-launch copy for r/personalfinance once custom domain is live
+6. Income-volatility / irregular-paycheck planner
 
 ## Why these features
-APR-shock and holiday sliders keep people on the results screen after the first calculate. Calendar downloads create a return visit on the debt-free date. Long-tail SEO pages (0% intro pitfalls, rising APR) feed the calculator.
+Raise sliders and scenario links keep people on results and send friends back with a pre-filled plan. Calendar downloads create a return visit on the debt-free date. Long-tail SEO pages feed the calculator.
