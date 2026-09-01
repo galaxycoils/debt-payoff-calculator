@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debt Snowball Spreadsheet vs Calculator – Which Should You Use?</title>
+  <meta name="description" content="Compare a debt snowball spreadsheet with a live calculator. When a sheet is enough, when a calculator saves hours, and how to switch without losing your plan." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/debt-snowball-spreadsheet-vs-calculator.html" />
+  <meta property="og:title" content="Debt Snowball Spreadsheet vs Calculator" />
+  <meta property="og:description" content="Sheets are great for tracking. A calculator is faster for what-if scenarios." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-indigo-700 dark:text-indigo-400 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-indigo-600 dark:text-indigo-400 hover:underline">← Calculator</a>
+      <a href="snowball-vs-avalanche.html" class="text-slate-500 dark:text-slate-400 hover:text-indigo-600">Snowball vs Avalanche</a>
+    </nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 dark:text-indigo-400 tracking-tight mb-4">Spreadsheet vs calculator</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">A debt snowball spreadsheet is a ledger. A calculator is a sandbox. Use both, but don’t build a 40-tab workbook just to answer “what if I paid $75 more?”</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>What a spreadsheet is good at</h2>
+      <ul>
+        <li>Logging actual payments you already made</li>
+        <li>Tracking remaining balances month to month</li>
+        <li>Sharing a file with a partner who lives in Excel</li>
+      </ul>
+      <h2>Where spreadsheets get expensive</h2>
+      <p>Every extra payment, snowflake, raise, or strategy change means rewriting formulas or copying a new column. Interest accrual, minimums, and payoff order are easy to get subtly wrong. People abandon the sheet and go back to minimums.</p>
+      <h2>What the calculator is for</h2>
+      <p>Instant what-ifs: drag extra payment, add a tax-refund snowflake, compare snowball vs avalanche, price a raise. Numbers stay in the browser. Copy a scenario link when you want a second opinion.</p>
+      <h2>A simple split</h2>
+      <ul>
+        <li>Plan the attack in the calculator.</li>
+        <li>Record what you actually paid in a one-tab sheet or your bank app.</li>
+        <li>Re-run the calculator when income or rates change — don’t rebuild the model.</li>
+      </ul>
+    </article>
+    <div class="card bg-indigo-50 dark:bg-indigo-950/40 border-indigo-100 dark:border-indigo-800 text-center mb-8">
+      <p class="font-semibold text-indigo-800 dark:text-indigo-200 mb-2">Skip the formula wrangling</p>
+      <p class="text-sm text-indigo-900/80 dark:text-indigo-200/80 mb-4">Enter balances once. Drag extras. Compare strategies live. Private and free.</p>
+      <a href="index.html" class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl">Open the calculator →</a>
+    </div>
+    <footer class="text-center text-sm text-slate-400">
+      <a href="index.html" class="text-indigo-600 dark:text-indigo-400 hover:underline">Calculator</a>
+      · <a href="how-to-pay-off-debt-with-a-raise.html" class="text-indigo-600 dark:text-indigo-400 hover:underline">Pay off debt with a raise</a>
+    </footer>
+  </div>
+</body>
+</html>
