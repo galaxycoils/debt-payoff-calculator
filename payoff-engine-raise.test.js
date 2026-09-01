@@ -3,7 +3,7 @@
  * Run: node payoff-engine-raise.test.js
  */
 const assert = require('assert');
-const PayoffEngine = require('./payoff-engine.js');
+const PayoffEngine = require('./payoff-engine-ext.js');
 
 function test(name, fn) {
   try { fn(); console.log('  ok —', name); }
