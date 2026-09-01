@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://debt-payoff-calculator-six.vercel.app/sitemap.xml
