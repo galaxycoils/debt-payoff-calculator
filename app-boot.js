@@ -112,6 +112,9 @@
     loadScriptOnce('app-consolidation.js');
     loadScriptOnce('app-cadence.js');
     loadScriptOnce('app-stress.js');
+    loadScriptOnce('app-raise.js');
+    loadScriptOnce('plan-share.js');
+    loadScriptOnce('app-plan-share.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
