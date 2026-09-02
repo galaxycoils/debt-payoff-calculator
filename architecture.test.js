@@ -120,5 +120,9 @@ test('unlock target_date achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'target_date' } });
   assert.ok(r.state.achievements.target_date);
 });
+test('unlock gig_plan achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'gig_plan' } });
+  assert.ok(r.state.achievements.gig_plan);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
