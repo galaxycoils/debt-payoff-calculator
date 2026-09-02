@@ -3,12 +3,13 @@
 Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
 
 ## Architecture (2026-08-22+)
-- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise
+- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise, compareIrregularIncome
 - `app-target-date.js` — target-date solver + cash-freed UI
 - `app-balance-transfer.js` — transfer vs stay + annual snowflakes
 - `app-consolidation.js` — consolidation loan vs stay UI
 - `app-stress.js` — APR shock + payment holiday + .ics download
 - `app-raise.js` — annual raise on extras
+- `app-irregular.js` — lean vs flush extras for gig / irregular pay
 - `plan-share.js` / `app-plan-share.js` — hash-encoded scenario links
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
@@ -62,6 +63,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Shareable scenario links** (`#p=` encoded plan — one-click load)
 - SEO pages: debt-snowball-spreadsheet-vs-calculator.html, how-to-pay-off-debt-with-a-raise.html
 - `sitemap.xml` + `robots.txt` for crawlers
+- **Irregular / gig paycheck planner** (lean extra vs flush extra every N months)
+- SEO page: irregular-paycheck-debt-payoff.html
+- Achievement: Gig Rhythm
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -69,7 +73,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 3. Soft launch posts for initial backlinks
 4. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
 5. Soft-launch copy for r/personalfinance once custom domain is live
-6. Income-volatility / irregular-paycheck planner
+6. Side-hustle vs overtime hour-value compare
 
 ## Why these features
-Raise sliders and scenario links keep people on results and send friends back with a pre-filled plan. Calendar downloads create a return visit on the debt-free date. Long-tail SEO pages feed the calculator.
+Raise sliders and scenario links keep people on results and send friends back with a pre-filled plan. Calendar downloads create a return visit on the debt-free date. Long-tail SEO pages feed the calculator. Irregular-pay sliders keep gig workers on the results card longer.

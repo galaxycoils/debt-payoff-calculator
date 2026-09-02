@@ -113,6 +113,7 @@
     loadScriptOnce('app-cadence.js');
     loadScriptOnce('app-stress.js');
     loadScriptOnce('app-raise.js');
+    loadScriptOnce('app-irregular.js');
     loadScriptOnce('plan-share.js');
     loadScriptOnce('app-plan-share.js');
 
