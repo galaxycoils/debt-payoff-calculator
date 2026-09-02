@@ -1,6 +1,7 @@
 /**
  * Extends PayoffEngine with holidayMonths wrap, annual raise,
- * compareAprShock, comparePaymentHoliday, compareRaise.
+ * compareAprShock, comparePaymentHoliday, compareRaise,
+ * irregularSnowflakes, compareIrregularIncome.
  */
 (function (root) {
   'use strict';
@@ -116,6 +117,46 @@
       skipMonths: n,
       extraMonths: holiday.months - stay.months,
       extraInterest: Math.round((holiday.totalInterest - stay.totalInterest) * 100) / 100
+    };
+  };
+
+  PE.irregularSnowflakes = function (leanExtra, flushExtra, flushEvery, cap) {
+    var lean = Math.max(0, Number(leanExtra) || 0);
+    var flush = Math.max(0, Number(flushExtra) || 0);
+    var every = Math.max(2, parseInt(flushEvery, 10) || 2);
+    var max = Math.max(1, parseInt(cap, 10) || (PE.MAX_MONTHS || 720));
+    var delta = flush - lean;
+    if (Math.abs(delta) < 0.0001) return [];
+    var out = [];
+    for (var m = every; m <= max; m += every) {
+      out.push({ month: m, amount: delta });
+    }
+    return out;
+  };
+
+  PE.compareIrregularIncome = function (input, opts) {
+    if (!input || !Array.isArray(input.debts)) throw new Error('PayoffEngine.compareIrregularIncome: debts array required');
+    opts = opts || {};
+    var lean = Math.max(0, Number(opts.leanExtra != null ? opts.leanExtra : input.extra) || 0);
+    var flush = Math.max(0, Number(opts.flushExtra != null ? opts.flushExtra : lean) || 0);
+    var every = Math.max(2, parseInt(opts.flushEvery, 10) || 2);
+    var stay = PE.calculate(Object.assign({}, input, { extra: lean }));
+    var flakes = (input.snowflakes || []).concat(
+      PE.irregularSnowflakes(lean, flush, every, PE.MAX_MONTHS || 720)
+    );
+    var irregular = PE.calculate(Object.assign({}, input, {
+      extra: lean,
+      snowflakes: flakes
+    }));
+    return {
+      stay: stay,
+      steady: stay,
+      irregular: irregular,
+      leanExtra: lean,
+      flushExtra: flush,
+      flushEvery: every,
+      monthsSaved: stay.months - irregular.months,
+      interestSaved: Math.round((stay.totalInterest - irregular.totalInterest) * 100) / 100
     };
   };
 

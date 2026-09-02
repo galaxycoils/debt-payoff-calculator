@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Irregular Paycheck Debt Payoff – Lean Months vs Flush Months</title>
+  <meta name="description" content="Commission, gig, and two-paycheck months do not have to stall a debt plan. Model a lean extra and a flush extra and see the new debt-free date. Private calculator." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/irregular-paycheck-debt-payoff.html" />
+  <meta property="og:title" content="Irregular Paycheck Debt Payoff" />
+  <meta property="og:description" content="Keep a floor extra on lean months. Dump extras on flush months. Watch the date move." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-[#f7f5f0] dark:bg-[#0f1419] text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Extra payments</a>
+    </nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Pay off debt on an irregular paycheck</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">Gig work, commissions, and two-paycheck months feel incompatible with a fixed extra payment. They are not. Split extras into a lean floor and a flush dump.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>The lean floor</h2>
+      <p>Pick an extra you can hit even on a thin month. That number is the plan’s floor. If a month is worse than the floor, skip extras (price that with the payment-holiday slider) rather than bouncing the whole plan.</p>
+      <h2>The flush dump</h2>
+      <p>Every second, third, or sixth month — overtime, a second paycheck, a tax refund — send a larger extra. The calculator treats those as scheduled snowflakes on top of the lean extra so the debt-free date moves without a spreadsheet.</p>
+      <h2>Why this beats “I’ll catch up later”</h2>
+      <ul>
+        <li>Interest does not pause on lean months. A floor extra still cuts the balance.</li>
+        <li>Flush months without a written number get spent. Pre-commit the dump.</li>
+        <li>You can compare lean-only vs lean+flush after one calculate click.</li>
+      </ul>
+    </article>
+    <div class="card text-center mb-8" style="background:#e6f3f3;">
+      <p class="font-semibold text-teal-900 mb-2">Drag lean and flush extras.</p>
+      <p class="text-sm text-teal-900/80 mb-4">After you calculate, the irregular-paycheck card appears. Private, no account.</p>
+      <a href="index.html" class="inline-flex items-center justify-center bg-teal-800 hover:bg-teal-900 text-white font-semibold px-6 py-3 rounded-xl">Open the calculator →</a>
+    </div>
+    <footer class="text-center text-sm text-slate-400">
+      <a href="index.html" class="text-teal-700 dark:text-teal-300 hover:underline">Calculator</a>
+      · <a href="how-to-pay-off-debt-with-a-raise.html" class="text-teal-700 dark:text-teal-300 hover:underline">Raises</a>
+    </footer>
+  </div>
+</body>
+</html>
