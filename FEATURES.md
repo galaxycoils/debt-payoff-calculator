@@ -10,6 +10,8 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `app-stress.js` — APR shock + payment holiday + .ics download
 - `app-raise.js` — annual raise on extras
 - `app-irregular.js` — lean vs flush extras for gig / irregular pay
+- `app-hours.js` — overtime vs side-hustle hour-value
+- `payoff-engine-ext.js` — also compareHourValue
 - `plan-share.js` / `app-plan-share.js` — hash-encoded scenario links
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
@@ -66,6 +68,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Irregular / gig paycheck planner** (lean extra vs flush extra every N months)
 - SEO page: irregular-paycheck-debt-payoff.html
 - Achievement: Gig Rhythm
+- **Overtime vs side-hustle hour-value** (interest saved per hour worked)
+- SEO page: overtime-vs-side-hustle-debt.html
+- Achievement: Hour Broker
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -73,7 +78,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 3. Soft launch posts for initial backlinks
 4. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
 5. Soft-launch copy for r/personalfinance once custom domain is live
-6. Side-hustle vs overtime hour-value compare
+6. Round-up extras / paycheck-date calendar reminders (still client-side)
 
 ## Why these features
-Raise sliders and scenario links keep people on results and send friends back with a pre-filled plan. Calendar downloads create a return visit on the debt-free date. Long-tail SEO pages feed the calculator. Irregular-pay sliders keep gig workers on the results card longer.
+Raise sliders and scenario links keep people on results and send friends back with a pre-filled plan. Calendar downloads create a return visit on the debt-free date. Long-tail SEO pages feed the calculator. Irregular-pay sliders keep gig workers on the results card longer. Hour-value compare keeps people dragging OT vs hustle rates after they already have a plan.
