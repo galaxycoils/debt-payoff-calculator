@@ -1,7 +1,7 @@
 /**
  * Extends PayoffEngine with holidayMonths wrap, annual raise,
  * compareAprShock, comparePaymentHoliday, compareRaise,
- * irregularSnowflakes, compareIrregularIncome.
+ * irregularSnowflakes, compareIrregularIncome, compareHourValue.
  */
 (function (root) {
   'use strict';
@@ -157,6 +157,70 @@
       flushEvery: every,
       monthsSaved: stay.months - irregular.months,
       interestSaved: Math.round((stay.totalInterest - irregular.totalInterest) * 100) / 100
+    };
+  };
+
+  function hoursPath(input, extraMonthly, hoursPerMonth, stay) {
+    var extra = Math.max(0, Number(input.extra) || 0) + extraMonthly;
+    var plan = PE.calculate(Object.assign({}, input, { extra: extra }));
+    var hours = Math.max(0, Number(hoursPerMonth) || 0);
+    var monthsSaved = stay.months - plan.months;
+    var interestSaved = Math.round((stay.totalInterest - plan.totalInterest) * 100) / 100;
+    var totalHours = hours * plan.months;
+    var interestSavedPerHour = totalHours > 0
+      ? Math.round((interestSaved / totalHours) * 100) / 100
+      : 0;
+    var monthsSavedPerHour = totalHours > 0
+      ? Math.round((monthsSaved / totalHours) * 1000) / 1000
+      : 0;
+    return {
+      extraMonthly: extraMonthly,
+      hoursPerMonth: hours,
+      plan: plan,
+      monthsSaved: monthsSaved,
+      interestSaved: interestSaved,
+      interestSavedPerHour: interestSavedPerHour,
+      monthsSavedPerHour: monthsSavedPerHour
+    };
+  }
+
+  PE.compareHourValue = function (input, opts) {
+    if (!input || !Array.isArray(input.debts)) throw new Error('PayoffEngine.compareHourValue: debts array required');
+    opts = opts || {};
+    var otRate = Math.max(0, Number(opts.overtimeRate) || 0);
+    var otHours = Math.max(0, Number(opts.overtimeHours) || 0);
+    var huRate = Math.max(0, Number(opts.hustleRate) || 0);
+    var huHours = Math.max(0, Number(opts.hustleHours) || 0);
+    var stay = PE.calculate(input);
+    var overtime = hoursPath(input, Math.round(otRate * otHours * 100) / 100, otHours, stay);
+    var hustle = hoursPath(input, Math.round(huRate * huHours * 100) / 100, huHours, stay);
+    var winner = 'stay';
+    if (overtime.extraMonthly <= 0 && hustle.extraMonthly <= 0) {
+      winner = 'stay';
+    } else if (overtime.interestSavedPerHour > hustle.interestSavedPerHour) {
+      winner = 'overtime';
+    } else if (hustle.interestSavedPerHour > overtime.interestSavedPerHour) {
+      winner = 'hustle';
+    } else if (overtime.monthsSavedPerHour > hustle.monthsSavedPerHour) {
+      winner = 'overtime';
+    } else if (hustle.monthsSavedPerHour > overtime.monthsSavedPerHour) {
+      winner = 'hustle';
+    } else if (overtime.extraMonthly > 0 && hustle.extraMonthly > 0) {
+      winner = 'tie';
+    } else if (overtime.extraMonthly > 0) {
+      winner = 'overtime';
+    } else if (hustle.extraMonthly > 0) {
+      winner = 'hustle';
+    }
+    return {
+      stay: stay,
+      overtime: overtime,
+      hustle: hustle,
+      winner: winner,
+      overtimeRate: otRate,
+      overtimeHours: otHours,
+      hustleRate: huRate,
+      hustleHours: huHours
     };
   };
 
