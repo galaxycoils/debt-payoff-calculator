@@ -1,7 +1,7 @@
 # Architecture (after #1–#6)
 
 ```
-payoff-engine.js   pure calculate / compareConsolidation / cadence
+payoff-engine.js   pure calculate / compareConsolidation / cadence / compareHourValue (via ext)
 app-consolidation.js  loan vs stay UI
 persistence.js     storage seam (localStorage | memory backend)
 gamification.js    pure reduce(state, event) → { state, effects }
