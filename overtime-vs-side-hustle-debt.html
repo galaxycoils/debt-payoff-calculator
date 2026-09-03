@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overtime vs Side Hustle for Debt Payoff – Which Hour Wins?</title>
+  <meta name="description" content="Compare overtime and a side hustle by interest saved per hour. After-tax rates in, months off your debt-free date out. Private calculator, no signup." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/overtime-vs-side-hustle-debt.html" />
+  <meta property="og:title" content="Overtime vs Side Hustle for Debt Payoff" />
+  <meta property="og:description" content="The extra hour that saves the most interest is the one worth working." />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-to-pay-off-debt-with-a-raise.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Raise</a>
+      <a href="irregular-paycheck-debt-payoff.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Irregular pay</a>
+    </nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-teal-800 dark:text-teal-300 tracking-tight mb-4">Overtime vs side hustle</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">Gross hourly pay lies. After-tax cash pointed at extras, divided by hours, tells you which extra shift is actually worth it.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>Why “more hours” is the wrong scoreboard</h2>
+      <p>A $30 overtime hour that lands as $22 after tax beats a $20 gig hour that lands as $16 — unless the gig takes twice as long to schedule, drive, and invoice. The calculator scores each path by <strong>interest saved per hour worked</strong>, not by who looks busier.</p>
+      <h2>How to enter rates</h2>
+      <ul>
+        <li>Use take-home dollars, not the number on the job posting.</li>
+        <li>Count only hours you would actually work this month.</li>
+        <li>Leave commute and setup time in the hours if you would not work them otherwise.</li>
+      </ul>
+      <h2>Worked example</h2>
+      <p>A $1,200, 0% balance with a $100 minimum takes 12 months. Four overtime hours at $25 after tax add $100 extra and cut the plan to 6 months. Eight hustle hours at $15 add $120 and also finish in 6 months — but they cost twice the hours. Overtime wins per hour even when the hustle sends more cash.</p>
+      <h2>When the hustle still wins</h2>
+      <p>High-APR cards punish delay. If the hustle can run more hours than your employer will approve for overtime, total interest saved can still favor the side work. Drag both sliders on the results card and watch the winner flip.</p>
+      <p class="mt-6"><a href="index.html" class="inline-flex items-center px-4 py-2 rounded-xl text-white bg-teal-800 hover:brightness-110">Open the hour-value card</a></p>
+    </article>
+    <p class="text-xs text-slate-400">Private, client-side only. Nothing is stored on a server.</p>
+  </div>
+</body>
+</html>
