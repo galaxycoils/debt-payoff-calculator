@@ -108,6 +108,7 @@
     }
 
     loadScriptOnce('payoff-engine-ext.js');
+    loadScriptOnce('payoff-engine-roundup.js');
     loadScriptOnce('app-balance-transfer.js');
     loadScriptOnce('app-consolidation.js');
     loadScriptOnce('app-cadence.js');
