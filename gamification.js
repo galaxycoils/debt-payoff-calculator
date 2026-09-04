@@ -30,7 +30,9 @@
     { id: 'raise_plan', name: 'Raise Rider', desc: 'Model putting a yearly raise toward debt', xp: 40 },
     { id: 'share_plan', name: 'Pass It On', desc: 'Copy a shareable scenario link', xp: 55 },
     { id: 'gig_plan', name: 'Gig Rhythm', desc: 'Model lean vs flush extras on irregular pay', xp: 40 },
-    { id: 'hour_value', name: 'Hour Broker', desc: 'Compare overtime vs a side hustle by interest per hour', xp: 45 }
+    { id: 'hour_value', name: 'Hour Broker', desc: 'Compare overtime vs a side hustle by interest per hour', xp: 45 },
+    { id: 'round_up', name: 'Loose Change', desc: 'See what rounding payments up is worth', xp: 35 },
+    { id: 'payday_cal', name: 'Pay Day Ping', desc: 'Download paycheck extra-payment reminders', xp: 40 }
   ];
 
   function defaultState() {
