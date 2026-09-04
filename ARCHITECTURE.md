@@ -1,7 +1,7 @@
 # Architecture (after #1–#6)
 
 ```
-payoff-engine.js   pure calculate / compareConsolidation / cadence / compareHourValue (via ext)
+payoff-engine.js   pure calculate / compareConsolidation / cadence / compareHourValue / compareRoundUp (via ext)
 app-consolidation.js  loan vs stay UI
 persistence.js     storage seam (localStorage | memory backend)
 gamification.js    pure reduce(state, event) → { state, effects }
@@ -12,9 +12,10 @@ index.html         DOM + Chart + operate-mode shell
 ## Tests
 ```bash
 node architecture.test.js
+node payoff-engine-roundup.test.js
 ```
 
-Covers PayoffEngine, Persistence (memory backend), Gamification transitions.
+Covers PayoffEngine, Persistence (memory backend), Gamification transitions, round-up extras, payday reminders.
 
 ## Design
 See DESIGN.md — operate mode, hero debt-free date, token palette.
@@ -25,6 +26,6 @@ See DESIGN.md — operate mode, hero debt-free date, token palette.
 3. persistence.js
 4. gamification.js
 5. inline UI script
-6. app-boot.js (last)
+6. app-boot.js (last; loads app-roundup.js)
 
 If script tags are missing from index.html, add them in that order.
