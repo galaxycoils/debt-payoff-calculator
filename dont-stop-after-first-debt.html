@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Don't Stop After the First Debt – Why the First Win Is Dangerous</title>
+  <meta name="description" content="The month the smallest debt dies feels like the finish line. Compare keeping extras vs dropping them after that first win. Private, in-browser math." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/dont-stop-after-first-debt.html" />
+  <meta property="og:title" content="Don't Stop After the First Debt" />
+  <meta property="og:description" content="Price what happens if extras vanish after the first snowball win." />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Extra payments</a>
+      <a href="snowball-vs-avalanche.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Snowball vs avalanche</a>
+    </nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-teal-800 dark:text-teal-300 tracking-tight mb-4">Don't stop after the first debt</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">Snowball is built to give you a win early. That win is also the month people quietly go back to minimums.</p>
+    </header>
+    <article class="card prose mb-8">
+      <h2>The fade</h2>
+      <p>After the smallest balance hits zero, the extra payment is supposed to roll onto the next debt. If it instead disappears into lifestyle, you keep only the remaining minimums. The calculator prices both paths on the same debts.</p>
+      <h2>Worked example</h2>
+      <p>A $200 card and a $1,000 card, both 0% APR, $50 minimums, $50 extra. Snowball kills the $200 first. Keep the extra and the second balance dies on the original schedule. Drop the extra after that first win and every leftover month is minimum-only.</p>
+      <h2>Put the dates on a calendar</h2>
+      <p>Download the kill-order .ics so each payoff date is a reminder to keep the extra alive, not a permission slip to stop.</p>
+      <p class="mt-6"><a href="index.html" class="inline-flex items-center px-4 py-2 rounded-xl text-white bg-teal-800 hover:brightness-110">Open the first-win card</a></p>
+    </article>
+    <p class="text-xs text-slate-400">Private, client-side only. Nothing is stored on a server.</p>
+  </div>
+</body>
+</html>
