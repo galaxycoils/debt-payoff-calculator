@@ -128,5 +128,9 @@ test('unlock hour_value achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'hour_value' } });
   assert.ok(r.state.achievements.hour_value);
 });
+test('unlock first_win_fade achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'first_win_fade' } });
+  assert.ok(r.state.achievements.first_win_fade);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');

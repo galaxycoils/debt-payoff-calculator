@@ -32,7 +32,9 @@
     { id: 'gig_plan', name: 'Gig Rhythm', desc: 'Model lean vs flush extras on irregular pay', xp: 40 },
     { id: 'hour_value', name: 'Hour Broker', desc: 'Compare overtime vs a side hustle by interest per hour', xp: 45 },
     { id: 'round_up', name: 'Loose Change', desc: 'See what rounding payments up is worth', xp: 35 },
-    { id: 'payday_cal', name: 'Pay Day Ping', desc: 'Download paycheck extra-payment reminders', xp: 40 }
+    { id: 'payday_cal', name: 'Pay Day Ping', desc: 'Download paycheck extra-payment reminders', xp: 40 },
+    { id: 'first_win_fade', name: 'Keep Rolling', desc: 'See the cost of quitting extras after the first debt dies', xp: 45 },
+    { id: 'kill_cal', name: 'Date on the Wall', desc: 'Download kill-order calendar dates', xp: 40 }
   ];
 
   function defaultState() {
