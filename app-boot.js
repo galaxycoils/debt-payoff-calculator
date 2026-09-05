@@ -117,6 +117,8 @@
     loadScriptOnce('app-irregular.js');
     loadScriptOnce('app-hours.js');
     loadScriptOnce('app-roundup.js');
+    loadScriptOnce('payoff-engine-fade.js');
+    loadScriptOnce('app-fade.js');
     loadScriptOnce('plan-share.js');
     loadScriptOnce('app-plan-share.js');
 
