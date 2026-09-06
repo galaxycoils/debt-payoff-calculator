@@ -1,6 +1,6 @@
 const assert = require('assert');
 const PayoffEngine = require('./payoff-engine.js');
-require('./payoff-engine-ext.js');
+require('./payoff-engine-windfall.js');
 
 function test(name, fn) {
   try { fn(); console.log('  ok —', name); }

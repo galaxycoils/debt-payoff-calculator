@@ -13,6 +13,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `app-hours.js` — overtime vs side-hustle hour-value
 - `payoff-engine-fade.js` / `app-fade.js` — first-win fade + kill-order .ics
 - `payoff-engine-ext.js` — also compareHourValue
+- `payoff-engine-windfall.js` / `app-windfall.js` — lump vs drip a bonus
 - `plan-share.js` / `app-plan-share.js` — hash-encoded scenario links
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
@@ -60,7 +61,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **First-win fade** (cost of dropping extras after the first debt dies)
 - **Kill-order calendar download** (.ics of each payoff date + debt-free day)
 - SEO page: dont-stop-after-first-debt.html
-- Achievements: Keep Rolling, Date on the Wall
+- Achievements: Keep Rolling, Date on the Wall, Bonus Drop
+- **Windfall allocator** (lump bonus this month vs drip over N months)
+- SEO page: use-a-windfall-on-debt.html
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -70,4 +73,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-First-win fade keeps people on the results card after they already have a date. Kill-order calendars create return visits on each payoff month. Long-tail SEO pages feed the calculator.
+Windfall comparison keeps people tinkering after a bonus lands. First-win fade keeps people on the results card after they already have a date. Kill-order calendars create return visits on each payoff month. Long-tail SEO pages feed the calculator.

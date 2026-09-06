@@ -109,6 +109,7 @@
 
     loadScriptOnce('payoff-engine-ext.js');
     loadScriptOnce('payoff-engine-roundup.js');
+    loadScriptOnce('payoff-engine-windfall.js');
     loadScriptOnce('app-balance-transfer.js');
     loadScriptOnce('app-consolidation.js');
     loadScriptOnce('app-cadence.js');
@@ -121,6 +122,7 @@
     loadScriptOnce('app-fade.js');
     loadScriptOnce('plan-share.js');
     loadScriptOnce('app-plan-share.js');
+    loadScriptOnce('app-windfall.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
