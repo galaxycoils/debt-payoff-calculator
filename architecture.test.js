@@ -132,5 +132,9 @@ test('unlock first_win_fade achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'first_win_fade' } });
   assert.ok(r.state.achievements.first_win_fade);
 });
+test('unlock windfall achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'windfall' } });
+  assert.ok(r.state.achievements.windfall);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
