@@ -136,5 +136,9 @@ test('unlock windfall achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'windfall' } });
   assert.ok(r.state.achievements.windfall);
 });
+test('unlock cut_sub achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'cut_sub' } });
+  assert.ok(r.state.achievements.cut_sub);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
