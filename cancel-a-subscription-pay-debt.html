@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cancel a Subscription to Pay Off Debt Faster</title>
+  <meta name="description" content="See how redirecting one monthly subscription to extra debt payments shortens your payoff date. Private in-browser calculator." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/cancel-a-subscription-pay-debt.html" />
+  <meta property="og:title" content="Cancel a Subscription, Pay Debt Faster" />
+  <meta property="og:description" content="A $12/month cut looks small. On a high-APR card it is months of interest." />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Extra payments</a>
+      <a href="use-a-windfall-on-debt.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Windfalls</a>
+    </nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-teal-800 dark:text-teal-300 tracking-tight mb-4">Cancel one subscription. Send it to debt.</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">A streaming bill feels tiny. Redirected every month it is a permanent extra payment — the same lever the calculator already uses.</p>
+    </header>
+    <article class="prose card">
+      <h2>Why this works</h2>
+      <p>Interest compounds on the remaining balance. An extra $12 every month hits principal after minimums, so the next month’s interest is calculated on a smaller number. That is the same math as the live extra-payment slider.</p>
+      <h2>Pick something you will not miss</h2>
+      <ul>
+        <li>$8–$16 unused streaming or delivery pass</li>
+        <li>A gym you have not visited this quarter</li>
+        <li>A duplicate music or cloud plan</li>
+      </ul>
+      <p>Keep the subscriptions you use. The calculator is for the ones that already feel like waste.</p>
+      <h2>Then lock it in</h2>
+      <p>On the calculator, run your plan, tap a preset on the subscription card, and apply it to extra. Compare snowball vs avalanche again. The new debt-free date is the shareable number.</p>
+      <p class="mt-6"><a href="index.html" class="inline-flex items-center font-semibold text-teal-700 dark:text-teal-300 hover:underline">Open the calculator →</a></p>
+    </article>
+  </div>
+</body>
+</html>
