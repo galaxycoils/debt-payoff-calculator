@@ -123,6 +123,8 @@
     loadScriptOnce('plan-share.js');
     loadScriptOnce('app-plan-share.js');
     loadScriptOnce('app-windfall.js');
+    loadScriptOnce('payoff-engine-subscription.js');
+    loadScriptOnce('app-subscription.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
