@@ -35,7 +35,8 @@
     { id: 'payday_cal', name: 'Pay Day Ping', desc: 'Download paycheck extra-payment reminders', xp: 40 },
     { id: 'first_win_fade', name: 'Keep Rolling', desc: 'See the cost of quitting extras after the first debt dies', xp: 45 },
     { id: 'kill_cal', name: 'Date on the Wall', desc: 'Download kill-order calendar dates', xp: 40 },
-    { id: 'windfall', name: 'Bonus Drop', desc: 'Price a windfall now vs dripping it', xp: 40 }
+    { id: 'windfall', name: 'Bonus Drop', desc: 'Price a windfall now vs dripping it', xp: 40 },
+    { id: 'cut_sub', name: 'Cut the Cord', desc: 'Redirect a subscription into extra payments', xp: 40 }
   ];
 
   function defaultState() {
