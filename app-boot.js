@@ -125,6 +125,8 @@
     loadScriptOnce('app-windfall.js');
     loadScriptOnce('payoff-engine-subscription.js');
     loadScriptOnce('app-subscription.js');
+    loadScriptOnce('payoff-engine-cushion.js');
+    loadScriptOnce('app-cushion.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
