@@ -140,5 +140,13 @@ test('unlock cut_sub achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'cut_sub' } });
   assert.ok(r.state.achievements.cut_sub);
 });
+test('unlock cushion achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'cushion' } });
+  assert.ok(r.state.achievements.cushion);
+});
+test('unlock daily_leak achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'daily_leak' } });
+  assert.ok(r.state.achievements.daily_leak);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
