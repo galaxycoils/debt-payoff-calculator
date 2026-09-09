@@ -15,6 +15,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-ext.js` — also compareHourValue
 - `payoff-engine-windfall.js` / `app-windfall.js` — lump vs drip a bonus
 - `payoff-engine-subscription.js` / `app-subscription.js` — redirect a subscription into extras
+- `payoff-engine-cushion.js` / `app-cushion.js` — emergency-fund vs extra + daily leak
 - `plan-share.js` / `app-plan-share.js` — hash-encoded scenario links
 - `persistence.js` — storage seam (localStorage + memory for tests)
 - `gamification.js` — pure reduce(state, event)
@@ -67,6 +68,10 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - SEO page: use-a-windfall-on-debt.html
 - **Subscription cut** (redirect a monthly bill into extras; presets + apply)
 - SEO page: cancel-a-subscription-pay-debt.html
+- **Emergency-fund vs extra** (divert part of extra into a HYSA; months delayed vs cash on hand)
+- **Daily leak redirect** ($/day habit → extra principal, apply to slider)
+- SEO page: emergency-fund-vs-debt.html
+- Achievements: Cash Cushion, Plug the Leak
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -76,4 +81,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Subscription-cut compare turns a familiar bill into a live extra-payment experiment. Windfall comparison keeps people tinkering after a bonus lands. First-win fade keeps people on the results card after they already have a date. Kill-order calendars create return visits on each payoff month. Long-tail SEO pages feed the calculator.
+Emergency-fund vs extra is a debate people reopen every payday. Daily-leak presets turn a habit into a live extra-payment experiment. Both keep users on the results card and feed a long-tail SEO page. Everything stays client-side.
