@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pay Off Debt vs Invest Extra Money</title>
+  <meta name="description" content="Should you invest extra cash or throw it at debt? Compare guaranteed APR savings against an assumed market return in a private calculator." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/pay-debt-vs-invest.html" />
+  <meta property="og:title" content="Pay Off Debt vs Invest Extra Money" />
+  <meta property="og:description" content="Credit-card APR is a guaranteed return. Markets are not. Run the numbers before you split extra cash." />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Extra payments</a>
+      <a href="emergency-fund-vs-debt.html" class="text-slate-500 dark:text-slate-400 hover:text-teal-700">Emergency fund</a>
+    </nav>
+    <header class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-teal-800 dark:text-teal-300 tracking-tight mb-4">Paying 22% debt is a 22% return you cannot lose.</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">Investing extra while a credit card compounds is a bet that markets beat a guaranteed rate. Sometimes they do. Often they do not on the balances people actually carry.</p>
+    </header>
+    <article class="prose card">
+      <h2>What the calculator compares</h2>
+      <p>It reruns your plan with the extra payment, then asks: if that same extra had been invested each month at your assumed return for the length of the payoff, how large would the pile be versus the interest you avoided?</p>
+      <ul>
+        <li>Interest avoided = minimums-only interest minus plan interest.</li>
+        <li>Invest pile = future value of the extra as a monthly annuity.</li>
+        <li>Edge = interest avoided minus that pile. Positive means the debt wins.</li>
+      </ul>
+      <h2>A useful default</h2>
+      <ul>
+        <li>Cards and personal loans above ~10–12% APR: extra payments first.</li>
+        <li>0% promo balances: investing extra can win if you still hit the promo end date.</li>
+        <li>Always keep a small cash cushion so a surprise does not become new debt.</li>
+      </ul>
+      <p>Markets have down years. Your statement APR does not. Use the live return field on the results card and watch the winner flip.</p>
+      <p class="mt-6"><a href="index.html" class="inline-flex items-center font-semibold text-teal-700 dark:text-teal-300 hover:underline">Open the calculator →</a></p>
+    </article>
+  </div>
+</body>
+</html>
