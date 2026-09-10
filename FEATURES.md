@@ -4,26 +4,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 
 ## Architecture (2026-08-22+)
 - `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise, compareIrregularIncome
-- `app-target-date.js` — target-date solver + cash-freed UI
-- `app-balance-transfer.js` — transfer vs stay + annual snowflakes
-- `app-consolidation.js` — consolidation loan vs stay UI
-- `app-stress.js` — APR shock + payment holiday + .ics download
-- `app-raise.js` — annual raise on extras
-- `app-irregular.js` — lean vs flush extras for gig / irregular pay
-- `app-hours.js` — overtime vs side-hustle hour-value
-- `payoff-engine-fade.js` / `app-fade.js` — first-win fade + kill-order .ics
-- `payoff-engine-ext.js` — also compareHourValue
-- `payoff-engine-windfall.js` / `app-windfall.js` — lump vs drip a bonus
-- `payoff-engine-subscription.js` / `app-subscription.js` — redirect a subscription into extras
-- `payoff-engine-cushion.js` / `app-cushion.js` — emergency-fund vs extra + daily leak
-- `plan-share.js` / `app-plan-share.js` — hash-encoded scenario links
-- `persistence.js` — storage seam (localStorage + memory for tests)
-- `gamification.js` — pure reduce(state, event)
-- `confetti.js` — near-debt-free celebration
-- `app-inline.js` — full UI (restored 2026-08-24)
+- `payoff-engine-invest.js` / `app-invest.js` — pay extra vs invest extra + milestone map
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
-- `DESIGN.md` — operate-mode design contract (hero debt-free date)
 
 ## Implemented
 - Side-by-side Snowball vs Avalanche comparison with winner banner and interest savings
@@ -72,6 +55,10 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Daily leak redirect** ($/day habit → extra principal, apply to slider)
 - SEO page: emergency-fund-vs-debt.html
 - Achievements: Cash Cushion, Plug the Leak
+- **Pay extra vs invest extra** (interest avoided vs future value of the extra at an assumed return)
+- **Milestone map** (25% / halfway / 75% / debt-free dates on the results card)
+- SEO page: pay-debt-vs-invest.html
+- Achievement: Rate vs Market
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -81,4 +68,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Emergency-fund vs extra is a debate people reopen every payday. Daily-leak presets turn a habit into a live extra-payment experiment. Both keep users on the results card and feed a long-tail SEO page. Everything stays client-side.
+Pay-vs-invest is the argument people reopen every bonus and every bull market. The live return field keeps them on the results card. Milestone dates give a reason to come back. Everything stays client-side.

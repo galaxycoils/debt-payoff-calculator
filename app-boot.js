@@ -127,6 +127,8 @@
     loadScriptOnce('app-subscription.js');
     loadScriptOnce('payoff-engine-cushion.js');
     loadScriptOnce('app-cushion.js');
+    loadScriptOnce('payoff-engine-invest.js');
+    loadScriptOnce('app-invest.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
