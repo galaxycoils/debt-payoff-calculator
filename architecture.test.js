@@ -148,5 +148,9 @@ test('unlock daily_leak achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'daily_leak' } });
   assert.ok(r.state.achievements.daily_leak);
 });
+test('unlock invest_vs_debt achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'invest_vs_debt' } });
+  assert.ok(r.state.achievements.invest_vs_debt);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
