@@ -5,6 +5,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 ## Architecture (2026-08-22+)
 - `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise, compareIrregularIncome
 - `payoff-engine-invest.js` / `app-invest.js` — pay extra vs invest extra + milestone map
+- `payoff-engine-clock.js` / `app-clock.js` — daily interest burn + debt-free age
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -59,6 +60,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Milestone map** (25% / halfway / 75% / debt-free dates on the results card)
 - SEO page: pay-debt-vs-invest.html
 - Achievement: Rate vs Market
+- **Interest burn clock** (daily / hourly cost of waiting + debt-free age)
+- SEO page: how-much-interest-per-day.html
+- Achievement: Meter Watcher
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -68,4 +72,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Pay-vs-invest is the argument people reopen every bonus and every bull market. The live return field keeps them on the results card. Milestone dates give a reason to come back. Everything stays client-side.
+Daily interest is the number people screenshot. Debt-free age is the number they tell a partner. Both keep the results card open and bring people back after a paycheck. Everything stays client-side.
