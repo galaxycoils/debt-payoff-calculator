@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Much Interest Am I Paying Per Day? – Debt Burn Clock</title>
+  <meta name="description" content="Turn APR into dollars per day. See why $3,650 at 10% costs $1 every sunrise, then model the date and age when that meter stops." />
+  <meta name="keywords" content="interest per day, daily credit card interest, how much interest am I paying, debt free age" />
+  <meta property="og:title" content="How Much Interest Am I Paying Per Day?" />
+  <meta property="og:description" content="APR is abstract. Dollars per day is not. Calculate the burn and the debt-free age." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/how-much-interest-per-day.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 hover:underline">Extra payments</a>
+      <a href="when-will-i-be-debt-free.html" class="text-slate-500 hover:underline">Debt-free date</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">Daily burn</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">How much interest are you paying per day?</h1>
+      <p class="text-slate-600 dark:text-slate-300">APR looks small. Divided by 365 it becomes a meter you can feel. The calculator turns every balance into dollars-per-sunrise and the age you will be when it stops.</p>
+    </header>
+    <article class="prose card">
+      <h2>The $1-a-day example</h2>
+      <p>A $3,650 card at 10% APR accrues $365 of interest in a year if the balance never moves. That is exactly $1.00 every day. Two cards like that are $2.00. People who would not “waste a dollar” still watch this meter run because the statement hides it in a monthly line.</p>
+      <h2>Why the clock is addictive</h2>
+      <ul>
+        <li>It updates when you drag extra payment — days-left drops in real time.</li>
+        <li>Debt-free age makes the date personal. “Age 34” hits harder than “March 2028.”</li>
+        <li>Hourly burn is tiny, which is the point: waiting is a drip, not a splash.</li>
+      </ul>
+      <h2>What the number is not</h2>
+      <p>Daily interest on revolving credit is balance × APR ÷ 365 (issuers often use 365 or 360). It is not your minimum payment. Paying only the minimum can still let the daily meter stay almost the same for years.</p>
+      <p><a class="text-teal-700 dark:text-teal-300 underline font-medium" href="index.html">Open the burn clock on your debts →</a></p>
+    </article>
+  </div>
+</body>
+</html>
