@@ -39,7 +39,8 @@
     { id: 'cut_sub', name: 'Cut the Cord', desc: 'Redirect a subscription into extras', xp: 40 },
     { id: 'cushion', name: 'Cash Cushion', desc: 'Compare a starter emergency fund vs extra payments', xp: 40 },
     { id: 'daily_leak', name: 'Plug the Leak', desc: 'Turn a daily habit into extra principal', xp: 35 },
-    { id: 'invest_vs_debt', name: 'Rate vs Market', desc: 'Compare paying extra against investing it', xp: 40 }
+    { id: 'invest_vs_debt', name: 'Rate vs Market', desc: 'Compare paying extra against investing it', xp: 40 },
+    { id: 'burn_clock', name: 'Meter Watcher', desc: 'See how much interest burns per day', xp: 35 }
   ];
 
   function defaultState() {
