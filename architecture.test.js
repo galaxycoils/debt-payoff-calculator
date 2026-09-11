@@ -152,5 +152,9 @@ test('unlock invest_vs_debt achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'invest_vs_debt' } });
   assert.ok(r.state.achievements.invest_vs_debt);
 });
+test('unlock burn_clock achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'burn_clock' } });
+  assert.ok(r.state.achievements.burn_clock);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
