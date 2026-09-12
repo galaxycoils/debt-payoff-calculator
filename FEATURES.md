@@ -3,9 +3,10 @@
 Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
 
 ## Architecture (2026-08-22+)
-- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise, compareIrregularIncome
+- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise, compareIrregularIncome, compareDelay
 - `payoff-engine-invest.js` / `app-invest.js` — pay extra vs invest extra + milestone map
 - `payoff-engine-clock.js` / `app-clock.js` — daily interest burn + debt-free age
+- `app-delay.js` — cost of waiting 1/2/3/6 months to start extras
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -63,6 +64,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Interest burn clock** (daily / hourly cost of waiting + debt-free age)
 - SEO page: how-much-interest-per-day.html
 - Achievement: Meter Watcher
+- **Cost of waiting** (extras start in 1 / 2 / 3 / 6 months; extra interest + months + coffee framing)
+- SEO page: start-now-vs-wait.html
+- Achievement: Do It Today
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -72,4 +76,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Daily interest is the number people screenshot. Debt-free age is the number they tell a partner. Both keep the results card open and bring people back after a paycheck. Everything stays client-side.
+Daily interest is the number people screenshot. The wait-cost card is the number that makes them start this paycheck. Both keep the results card open and bring people back after payday. Everything stays client-side.
