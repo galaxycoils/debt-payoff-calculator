@@ -1,5 +1,6 @@
 const assert = require('assert');
 const PayoffEngine = require('./payoff-engine.js');
+require('./payoff-engine-freedom.js');
 const Persistence = require('./persistence.js');
 const Gamification = require('./gamification.js');
 
@@ -57,6 +58,15 @@ test('cashFreedTimeline first kill frees that min', () => {
     extra: 50, strategy: 'snowball'
   });
   assert.strictEqual(PayoffEngine.cashFreedTimeline(r)[0].freedMonthly, 50);
+});
+test('freedomYear piles mins plus extra', () => {
+  const r = PayoffEngine.freedomYear({
+    debts: [{ name: 'C', balance: 1000, apr: 0, minPayment: 100 }],
+    extra: 50
+  });
+  assert.strictEqual(r.monthlyFreed, 150);
+  assert.strictEqual(r.year1, 1800);
+  assert.strictEqual(r.year5, 9000);
 });
 
 console.log('=== Persistence ===');
@@ -155,6 +165,10 @@ test('unlock invest_vs_debt achievement', () => {
 test('unlock burn_clock achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'burn_clock' } });
   assert.ok(r.state.achievements.burn_clock);
+});
+test('unlock freedom_year achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'freedom_year' } });
+  assert.ok(r.state.achievements.freedom_year);
 });
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
