@@ -7,6 +7,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-invest.js` / `app-invest.js` — pay extra vs invest extra + milestone map
 - `payoff-engine-clock.js` / `app-clock.js` — daily interest burn + debt-free age
 - `app-delay.js` — cost of waiting 1/2/3/6 months to start extras
+- `payoff-engine-freedom.js` / `app-freedom.js` — first-year pile after debt-free
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -67,6 +68,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Cost of waiting** (extras start in 1 / 2 / 3 / 6 months; extra interest + months + coffee framing)
 - SEO page: start-now-vs-wait.html
 - Achievement: Do It Today
+- **First year after debt-free** (mins + extra → monthly cash, year-one pile, five-year stack)
+- SEO page: life-after-debt-free.html
+- Achievement: Keep the Habit
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -76,4 +80,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Daily interest is the number people screenshot. The wait-cost card is the number that makes them start this paycheck. Both keep the results card open and bring people back after payday. Everything stays client-side.
+The freedom-year pile is the number people send a partner. It keeps the results card open after the payoff date and points at the affiliate HYSA slot. Everything stays client-side.
