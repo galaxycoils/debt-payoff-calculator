@@ -133,6 +133,8 @@
     loadScriptOnce('app-clock.js');
     loadScriptOnce('payoff-engine-delay.js');
     loadScriptOnce('app-delay.js');
+    loadScriptOnce('payoff-engine-freedom.js');
+    loadScriptOnce('app-freedom.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
