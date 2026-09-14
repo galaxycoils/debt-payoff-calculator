@@ -42,7 +42,9 @@
     { id: 'invest_vs_debt', name: 'Rate vs Market', desc: 'Compare paying extra against investing it', xp: 40 },
     { id: 'burn_clock', name: 'Meter Watcher', desc: 'See how much interest burns per day', xp: 35 },
     { id: 'start_now', name: 'Do It Today', desc: 'See what waiting 1–6 months costs', xp: 35 },
-    { id: 'freedom_year', name: 'Keep the Habit', desc: 'See the first-year pile after debt-free', xp: 40 }
+    { id: 'freedom_year', name: 'Keep the Habit', desc: 'See the first-year pile after debt-free', xp: 40 },
+    { id: 'on_track', name: 'On Track', desc: 'Compare current balances to the saved plan', xp: 40 },
+    { id: 'util_glide', name: 'Util Glide', desc: 'See when card utilization crosses 30%', xp: 35 }
   ];
 
   function defaultState() {
