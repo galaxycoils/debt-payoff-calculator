@@ -135,6 +135,8 @@
     loadScriptOnce('app-delay.js');
     loadScriptOnce('payoff-engine-freedom.js');
     loadScriptOnce('app-freedom.js');
+    loadScriptOnce('payoff-engine-track.js');
+    loadScriptOnce('app-track.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
