@@ -8,6 +8,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-clock.js` / `app-clock.js` — daily interest burn + debt-free age
 - `app-delay.js` — cost of waiting 1/2/3/6 months to start extras
 - `payoff-engine-freedom.js` / `app-freedom.js` — first-year pile after debt-free
+- `payoff-engine-track.js` / `app-track.js` — on-track check-in + utilization path
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -71,6 +72,10 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **First year after debt-free** (mins + extra → monthly cash, year-one pile, five-year stack)
 - SEO page: life-after-debt-free.html
 - Achievement: Keep the Habit
+- **On-track check-in** (saved plan curve vs current remaining; ahead / behind / done)
+- **Credit utilization glide** (month under 30% / 10% for card-like debts)
+- SEO page: stay-on-track.html
+- Achievements: On Track, Util Glide
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -80,4 +85,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The freedom-year pile is the number people send a partner. It keeps the results card open after the payoff date and points at the affiliate HYSA slot. Everything stays client-side.
+The on-track check-in is why someone reopens the tab next month. Utilization dates are the screenshot. Everything stays client-side.

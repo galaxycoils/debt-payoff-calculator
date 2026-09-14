@@ -3,6 +3,7 @@
 ```
 payoff-engine.js   pure calculate / compareConsolidation / cadence / compareHourValue / compareRoundUp (via ext)
 payoff-engine-freedom.js  first-year cash after debt-free
+payoff-engine-track.js     on-track check-in + utilization path
 app-consolidation.js  loan vs stay UI
 persistence.js     storage seam (localStorage | memory backend)
 gamification.js    pure reduce(state, event) → { state, effects }
@@ -16,9 +17,10 @@ node architecture.test.js
 node payoff-engine-roundup.test.js
 node payoff-engine-clock.test.js
 node payoff-engine-freedom.test.js
+node payoff-engine-track.test.js
 ```
 
-Covers PayoffEngine, Persistence (memory backend), Gamification transitions, round-up extras, payday reminders, daily interest burn, first-year freedom pile.
+Covers PayoffEngine, Persistence (memory backend), Gamification transitions, round-up extras, payday reminders, daily interest burn, first-year freedom pile, on-track check-in.
 
 ## Design
 See DESIGN.md — operate mode, hero debt-free date, token palette.
@@ -29,6 +31,6 @@ See DESIGN.md — operate mode, hero debt-free date, token palette.
 3. persistence.js
 4. gamification.js
 5. inline UI script
-6. app-boot.js (last; loads app-roundup.js, app-clock.js, app-freedom.js)
+6. app-boot.js (last; loads app-roundup.js, app-clock.js, app-freedom.js, app-track.js)
 
 If script tags are missing from index.html, add them in that order.
