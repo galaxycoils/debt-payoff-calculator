@@ -9,6 +9,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `app-delay.js` — cost of waiting 1/2/3/6 months to start extras
 - `payoff-engine-freedom.js` / `app-freedom.js` — first-year pile after debt-free
 - `payoff-engine-track.js` / `app-track.js` — on-track check-in + utilization path
+- `payoff-engine-refi.js` / `app-refi.js` — refinance vs stay (APR + fee, net after fee)
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -76,6 +77,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Credit utilization glide** (month under 30% / 10% for card-like debts)
 - SEO page: stay-on-track.html
 - Achievements: On Track, Util Glide
+- **Refinance vs stay** (lower APR + percent/flat fee vs current stack; net after fee)
+- SEO page: refinance-vs-payoff.html
+- Achievement: Rate Cut
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -85,4 +89,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The on-track check-in is why someone reopens the tab next month. Utilization dates are the screenshot. Everything stays client-side.
+The refinance card is why someone comes back when a lender mailer arrives. Net-after-fee is the screenshot. Everything stays client-side.
