@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refinance Debt vs Stay and Pay Extra</title>
+  <meta name="description" content="Compare a lower-APR refinance plus closing fee against staying on your current debts and throwing extra at them. See net savings in the browser." />
+  <meta name="keywords" content="refinance vs payoff, debt refinance calculator, rate cut fee, personal loan refinance worth it" />
+  <meta property="og:title" content="Refinance Debt vs Stay and Pay Extra" />
+  <meta property="og:description" content="A lower APR is not free. Price the fee against interest you actually avoid." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/refinance-vs-payoff.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="debt-consolidation-vs-payoff.html" class="text-slate-500 hover:underline">Consolidation</a>
+      <a href="balance-transfer-vs-payoff.html" class="text-slate-500 hover:underline">Balance transfer</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">Rate cut, real fee</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">When refinancing beats staying</h1>
+      <p class="text-slate-600 dark:text-slate-300">A 24% card rolled into an 8% loan looks like a win until the origination fee lands on the principal. Price stay vs refinance with the same extra payment.</p>
+    </header>
+    <article class="prose card">
+      <h2>What this compare actually does</h2>
+      <ul>
+        <li>Stay: current balances, APRs, mins, extra.</li>
+        <li>Refinance: one new balance = old principal + percent fee + flat fee, at the new APR, same extra.</li>
+        <li>Net saved = interest avoided minus the fee you paid up front.</li>
+      </ul>
+      <p>If net is negative, the cut is marketing. Keep throwing extra at the original stack.</p>
+      <h2>Where people get this wrong</h2>
+      <p>They compare the new monthly payment to the old minimums and call the difference “savings.” That ignores term stretch. A 60-month loan can drop the payment and raise lifetime interest. The calculator keeps your extra so the calendar is honest.</p>
+      <h2>Why this card holds people</h2>
+      <p>Three live fields — new APR, fee percent, flat fee — invite tapping. The worth-it line is screenshot bait for a partner or a lender quote. That is time-on-site and a reason to reopen the tab when a mailer arrives.</p>
+      <p><a class="text-teal-700 dark:text-teal-300 underline font-medium" href="index.html">Run refinance vs stay on your numbers →</a></p>
+    </article>
+  </div>
+</body>
+</html>
