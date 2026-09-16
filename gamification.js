@@ -45,7 +45,8 @@
     { id: 'freedom_year', name: 'Keep the Habit', desc: 'See the first-year pile after debt-free', xp: 40 },
     { id: 'on_track', name: 'On Track', desc: 'Compare current balances to the saved plan', xp: 40 },
     { id: 'util_glide', name: 'Util Glide', desc: 'See when card utilization crosses 30%', xp: 35 },
-    { id: 'refi_cut', name: 'Rate Cut', desc: 'Compare a refinance fee against staying put', xp: 40 }
+    { id: 'refi_cut', name: 'Rate Cut', desc: 'Compare a refinance fee against staying put', xp: 40 },
+    { id: 'min_trap', name: 'Trap Watch', desc: 'See whether minimums cover this month’s interest', xp: 35 }
   ];
 
   function defaultState() {
