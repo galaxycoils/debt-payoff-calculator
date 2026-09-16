@@ -139,6 +139,8 @@
     loadScriptOnce('app-track.js');
     loadScriptOnce('payoff-engine-refi.js');
     loadScriptOnce('app-refi.js');
+    loadScriptOnce('payoff-engine-trap.js');
+    loadScriptOnce('app-trap.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
