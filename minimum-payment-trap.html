@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimum Payment Trap – Why Your Balance Still Grows</title>
+  <meta name="description" content="If the monthly interest on a card is larger than the minimum payment, the balance grows even when you never miss a due date. See the gap on your numbers." />
+  <meta name="keywords" content="minimum payment trap, credit card minimum vs interest, why balance increases, negative amortization card" />
+  <meta property="og:title" content="Minimum Payment Trap – Why Your Balance Still Grows" />
+  <meta property="og:description" content="Paid on time is not the same as paying down principal. Price the interest gap." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/minimum-payment-trap.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="minimum-payments-vs-extra.html" class="text-slate-500 hover:underline">Minimums vs extra</a>
+      <a href="how-much-interest-per-day.html" class="text-slate-500 hover:underline">Daily interest</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">The quiet trap</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">When the minimum does not cover interest</h1>
+      <p class="text-slate-600 dark:text-slate-300">A $1,000 card at 24% APR costs $20 in interest this month. A $15 minimum means the balance is $5 higher after you “paid on time.” That is the trap.</p>
+    </header>
+    <article class="prose card">
+      <h2>The one-month test</h2>
+      <ul>
+        <li>Monthly interest ≈ balance × APR ÷ 12.</li>
+        <li>If the minimum is smaller than that number, principal goes up.</li>
+        <li>The extra that stops the bleed is exactly the gap: interest minus minimum.</li>
+      </ul>
+      <p>You do not need a 30-year projection to see this. One month of arithmetic is enough to know whether the account is shrinking.</p>
+      <h2>Why issuers like small minimums</h2>
+      <p>A 1–3% of-balance minimum looks affordable. On a high APR it can sit under the interest line for years. The statement still says current. The balance does not.</p>
+      <h2>What to do with the number</h2>
+      <p>Add the gap to extra this month. That is not a payoff plan yet — it is the floor that keeps the hole from getting deeper. Then use snowball or avalanche to actually finish.</p>
+      <p><a class="text-teal-700 dark:text-teal-300 underline font-medium" href="index.html">Check the trap on your debts →</a></p>
+    </article>
+  </div>
+</body>
+</html>
