@@ -11,6 +11,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-track.js` / `app-track.js` — on-track check-in + utilization path
 - `payoff-engine-refi.js` / `app-refi.js` — refinance vs stay (APR + fee, net after fee)
 - `payoff-engine-trap.js` / `app-trap.js` — minimum vs monthly interest (trap / extra to stop bleed)
+- `payoff-engine-paycheck.js` / `app-paycheck.js` — percent of take-home as extra + leftover living money
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -84,6 +85,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Minimum-payment trap** (interest this month vs mins; extra to stop the bleed; apply-to-slider)
 - SEO page: minimum-payment-trap.html
 - Achievement: Trap Watch
+- **Paycheck share** (percent of take-home → extra principal; leftover after mins; apply to slider)
+- SEO page: paycheck-percent-to-debt.html
+- Achievement: Pay Day Cut
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -93,4 +97,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The trap card is why someone stays after the first calc: “paid on time” can still grow the balance. Extra-to-stop-bleed is the slider hook. Everything stays client-side.
+The paycheck-share slider is why someone stays after the first calc: a dollar extra is abstract; a percent of take-home is a payday rule they can defend. Tight leftover flags unlivable plans. Apply-to-slider is the hook. Everything stays client-side.
