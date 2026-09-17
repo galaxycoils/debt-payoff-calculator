@@ -141,6 +141,8 @@
     loadScriptOnce('app-refi.js');
     loadScriptOnce('payoff-engine-trap.js');
     loadScriptOnce('app-trap.js');
+    loadScriptOnce('payoff-engine-paycheck.js');
+    loadScriptOnce('app-paycheck.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }

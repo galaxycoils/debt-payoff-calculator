@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Much of Your Paycheck Should Go to Debt?</title>
+  <meta name="description" content="Turn a percent of take-home pay into extra principal. See leftover living money, months saved, and interest avoided — privately in the calculator." />
+  <meta name="keywords" content="percent of paycheck to debt, how much extra payment, take-home debt payoff, 10 percent to debt" />
+  <meta property="og:title" content="How Much of Your Paycheck Should Go to Debt?" />
+  <meta property="og:description" content="Price 5%, 10%, or 20% of take-home as extra principal and keep a livable leftover." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/paycheck-percent-to-debt.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 hover:underline">Extra payments</a>
+      <a href="minimum-payments-vs-extra.html" class="text-slate-500 hover:underline">Minimums vs extra</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">Paycheck math</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">How much of a paycheck should go to debt?</h1>
+      <p class="text-slate-600 dark:text-slate-300">A dollar amount on a slider is abstract. A percent of take-home is something you can defend on payday. The leftover after minimums plus that extra is the real budget test.</p>
+    </header>
+    <article class="prose card">
+      <h2>The three numbers</h2>
+      <ul>
+        <li>Take-home for the month (after tax, not gross).</li>
+        <li>Minimums you already have to send.</li>
+        <li>The share you choose — 5%, 10%, 15% — turned into extra principal.</li>
+      </ul>
+      <p>Leftover = take-home − minimums − extra. If leftover is negative, the percent is a fantasy. Drop it until rent and food still fit.</p>
+      <h2>Why percent beats a round number</h2>
+      <p>A $200 extra is easy to type and easy to abandon when a paycheck is thin. A 10% rule scales when hours drop or a raise lands. You can still override it with a snowflake in a flush month.</p>
+      <h2>What “aggressive” actually means</h2>
+      <p>20–30% of take-home on top of minimums is a sprint. It only works if leftover still covers housing and a small cash buffer. The calculator flags a tight leftover so you do not plan a collapse.</p>
+      <p><a class="text-teal-700 dark:text-teal-300 underline font-medium" href="index.html">Set a paycheck share on your debts →</a></p>
+    </article>
+  </div>
+</body>
+</html>
