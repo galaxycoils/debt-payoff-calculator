@@ -12,6 +12,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-refi.js` / `app-refi.js` — refinance vs stay (APR + fee, net after fee)
 - `payoff-engine-trap.js` / `app-trap.js` — minimum vs monthly interest (trap / extra to stop bleed)
 - `payoff-engine-paycheck.js` / `app-paycheck.js` — percent of take-home as extra + leftover living money
+- `payoff-engine-hybrid.js` / `app-hybrid.js` — snowball first kill then avalanche
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -88,6 +89,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Paycheck share** (percent of take-home → extra principal; leftover after mins; apply to slider)
 - SEO page: paycheck-percent-to-debt.html
 - Achievement: Pay Day Cut
+- **Hybrid snowball-then-avalanche** (first kill by balance, then extra to highest APR)
+- SEO page: hybrid-snowball-avalanche.html
+- Achievement: First Then APR
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -97,4 +101,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The paycheck-share slider is why someone stays after the first calc: a dollar extra is abstract; a percent of take-home is a payday rule they can defend. Tight leftover flags unlivable plans. Apply-to-slider is the hook. Everything stays client-side.
+Hybrid is the argument people screenshot: keep the first paid-off account, then switch extra to the highest APR. Three-way months and interest on one card is why they stay for a second calc. Everything stays client-side.
