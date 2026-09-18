@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hybrid Debt Payoff — Snowball First, Then Avalanche</title>
+  <meta name="description" content="Use snowball for the first paid-off debt, then switch extra payments to the highest APR. See how close hybrid stays to avalanche." />
+  <meta name="keywords" content="hybrid snowball avalanche, snowball then avalanche, debt payoff hybrid strategy" />
+  <meta property="og:title" content="Hybrid Debt Payoff — First Win, Then Highest APR" />
+  <meta property="og:description" content="Keep the motivation of a first paid-off balance without leaving high-APR interest on the table." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/hybrid-snowball-avalanche.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="snowball-vs-avalanche.html" class="text-slate-500 hover:underline">Snowball vs avalanche</a>
+      <a href="dont-stop-after-first-debt.html" class="text-slate-500 hover:underline">Keep rolling</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">Motivation then math</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Hybrid: snowball the first win, avalanche the rest</h1>
+      <p class="text-slate-600 dark:text-slate-300">The fight is rarely “which method is theoretically cheapest.” It is whether you will still be sending extra after month four. Hybrid is the compromise people actually keep.</p>
+    </header>
+    <article class="prose card">
+      <h2>What hybrid means here</h2>
+      <p>Sort by smallest balance first. The month that first debt hits zero, re-sort whatever is left by APR. Extra payment then behaves like avalanche until you are done.</p>
+      <h2>Why it sticks</h2>
+      <ul>
+        <li>You still get a paid-off account early — the screenshot that keeps the streak alive.</li>
+        <li>You do not spend the next two years extra-paying a 7% loan while a 24% card compounds.</li>
+        <li>Interest usually lands closer to avalanche than to a full snowball run.</li>
+      </ul>
+      <h2>When not to bother</h2>
+      <p>If every balance is similar size and APR, hybrid, snowball, and avalanche finish within a month of each other. If one tiny 0% promo sits next to a huge 29% card, skip the first-win theater and avalanche from day one.</p>
+      <p>The calculator card runs all three plans on the same debts so you can see the dollar gap before you pick a story to tell yourself.</p>
+      <p><a class="text-teal-700 dark:text-teal-300 underline font-medium" href="index.html">Compare hybrid on your numbers →</a></p>
+    </article>
+  </div>
+</body>
+</html>
