@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credit Card Annual Fee vs Paying Off Debt</title>
+  <meta name="description" content="See how a $95–$695 annual fee stretches a payoff plan. Fees bill on still-open balances and compound with interest." />
+  <meta name="keywords" content="credit card annual fee payoff, keep fee card while in debt, annual fee vs interest" />
+  <meta property="og:title" content="Annual Fee Drag — What a Club Card Costs During Payoff" />
+  <meta property="og:description" content="Model $95, $250, or $695 fees on every still-open card and see extra months plus extra interest." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/credit-card-annual-fee-vs-payoff.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="credit-card-payoff-tips.html" class="text-slate-500 hover:underline">Card tips</a>
+      <a href="minimum-payment-trap.html" class="text-slate-500 hover:underline">Minimum trap</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">Hidden leak</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Keep the points card, or kill the fee first?</h1>
+      <p class="text-slate-600 dark:text-slate-300">An annual fee is a scheduled snowflake in reverse. If the balance is still open on the anniversary, the issuer adds $95–$695 that then accrues interest like any other purchase.</p>
+    </header>
+    <article class="prose card">
+      <h2>How the calculator models it</h2>
+      <p>Every 12th month, each debt that still has a balance is charged the fee you set. The fee is added to principal before that month’s interest. Debts that die before month 12 never pay it.</p>
+      <h2>When the fee is noise</h2>
+      <ul>
+        <li>You finish in under a year.</li>
+        <li>The card’s credits (travel credit, lounge, insurance) cash-flow more than the fee this year.</li>
+        <li>You can product-change to a no-fee sibling and keep the credit line for utilization.</li>
+      </ul>
+      <h2>When the fee is the plan</h2>
+      <p>A $695 premium card on a three-year payoff is two extra months for a lot of households. That is a screenshot people send a partner. Run the slider on your balances before you defend the lounge access.</p>
+      <p><a class="text-teal-700 dark:text-teal-300 underline font-medium" href="index.html">Price the fee against your debts →</a></p>
+    </article>
+  </div>
+</body>
+</html>
