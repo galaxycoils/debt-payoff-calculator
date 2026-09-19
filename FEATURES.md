@@ -13,6 +13,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-trap.js` / `app-trap.js` — minimum vs monthly interest (trap / extra to stop bleed)
 - `payoff-engine-paycheck.js` / `app-paycheck.js` — percent of take-home as extra + leftover living money
 - `payoff-engine-hybrid.js` / `app-hybrid.js` — snowball first kill then avalanche
+- `payoff-engine-fee.js` / `app-fee.js` — annual-fee drag vs no-fee plan
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -92,6 +93,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Hybrid snowball-then-avalanche** (first kill by balance, then extra to highest APR)
 - SEO page: hybrid-snowball-avalanche.html
 - Achievement: First Then APR
+- **Annual-fee drag** (fee billed each year a debt is still open; live slider)
+- SEO page: credit-card-annual-fee-vs-payoff.html
+- Achievement: Fee Leak
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -101,4 +105,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Hybrid is the argument people screenshot: keep the first paid-off account, then switch extra to the highest APR. Three-way months and interest on one card is why they stay for a second calc. Everything stays client-side.
+Annual-fee drag is the argument people screenshot at a partner: lounge access vs two extra months. The live slider keeps them on the results card. Everything stays client-side.
