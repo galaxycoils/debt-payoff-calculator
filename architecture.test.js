@@ -170,5 +170,13 @@ test('unlock freedom_year achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'freedom_year' } });
   assert.ok(r.state.achievements.freedom_year);
 });
+test('unlock hybrid_switch achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'hybrid_switch' } });
+  assert.ok(r.state.achievements.hybrid_switch);
+});
+test('unlock fee_drag achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'fee_drag' } });
+  assert.ok(r.state.achievements.fee_drag);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
