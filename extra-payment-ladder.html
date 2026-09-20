@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Extra Payment Ladder — What $25 More Buys</title>
+  <meta name="description" content="See debt-free dates at $0, $25, $50, $100, $200 extra. A partner chip-in slider shows what splitting extras is worth." />
+  <meta name="keywords" content="extra payment ladder, what if I paid more on debt, partner help pay off debt" />
+  <meta property="og:title" content="Extra Payment Ladder — Months You Buy With $25 More" />
+  <meta property="og:description" content="Same debts, six extras. Compare dates and interest, then apply one tap to the calculator." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/extra-payment-ladder.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 hover:underline">How extras work</a>
+      <a href="minimum-payments-vs-extra.html" class="text-slate-500 hover:underline">Minimum vs extra</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">What-if table</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">What does $25 more actually buy?</h1>
+      <p class="text-slate-600 dark:text-slate-300">People stall on extras because $25 feels symbolic. The ladder puts six debt-free dates on one card so the next increment is a date, not a lecture.</p>
+    </header>
+    <article class="prose card">
+      <h2>How the ladder works</h2>
+      <p>After you calculate, the tool reruns the same debts at $0 extra, your current extra, and four steps above it. Each row is a full amortization. Tap a row to put that extra on the live slider.</p>
+      <h2>Partner chip-in</h2>
+      <p>If someone else can add $50–$200 a month, the second slider stacks that amount on your extra and reports months saved plus interest avoided. Apply it when the screenshot is enough to start the conversation.</p>
+      <h2>Why this keeps people on the page</h2>
+      <ul>
+        <li>Comparing six dates is faster than dragging the main slider blindly.</li>
+        <li>The “now” row anchors the table so the next step feels small.</li>
+        <li>Partner math is the shareable artifact for couples and roommates.</li>
+      </ul>
+      <p><a class="text-teal-700 dark:text-teal-300 underline font-medium" href="index.html">Run the extra ladder on your debts →</a></p>
+    </article>
+  </div>
+</body>
+</html>

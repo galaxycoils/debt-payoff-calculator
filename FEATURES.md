@@ -14,6 +14,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-paycheck.js` / `app-paycheck.js` — percent of take-home as extra + leftover living money
 - `payoff-engine-hybrid.js` / `app-hybrid.js` — snowball first kill then avalanche
 - `payoff-engine-fee.js` / `app-fee.js` — annual-fee drag vs no-fee plan
+- `payoff-engine-ladder.js` / `app-ladder.js` — extra-payment ladder + partner chip-in
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -96,6 +97,10 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Annual-fee drag** (fee billed each year a debt is still open; live slider)
 - SEO page: credit-card-annual-fee-vs-payoff.html
 - Achievement: Fee Leak
+- **Extra-payment ladder** (same debts at $0 / current / +$25–$500; tap a row to apply)
+- **Partner chip-in slider** (stack a second extra; months + interest saved)
+- SEO page: extra-payment-ladder.html
+- Achievement: Step Up
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -105,4 +110,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Annual-fee drag is the argument people screenshot at a partner: lounge access vs two extra months. The live slider keeps them on the results card. Everything stays client-side.
+The extra ladder is the screenshot people send a partner: six dates, one table. The chip-in slider turns “could you throw in $50?” into months saved. Everything stays client-side.
