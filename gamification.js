@@ -49,7 +49,8 @@
     { id: 'min_trap', name: 'Trap Watch', desc: 'See whether minimums cover this month’s interest', xp: 35 },
     { id: 'paycheck_share', name: 'Pay Day Cut', desc: 'Model a percent of take-home as extra principal', xp: 35 },
     { id: 'hybrid_switch', name: 'First Then APR', desc: 'Compare hybrid snowball-then-avalanche to both poles', xp: 40 },
-    { id: 'fee_drag', name: 'Fee Leak', desc: 'See how an annual fee stretches payoff', xp: 35 }
+    { id: 'fee_drag', name: 'Fee Leak', desc: 'See how an annual fee stretches payoff', xp: 35 },
+    { id: 'extra_ladder', name: 'Step Up', desc: 'Compare extras on the payment ladder', xp: 35 }
   ];
 
   function defaultState() {
