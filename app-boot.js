@@ -147,6 +147,8 @@
     loadScriptOnce('app-hybrid.js');
     loadScriptOnce('payoff-engine-fee.js');
     loadScriptOnce('app-fee.js');
+    loadScriptOnce('payoff-engine-ladder.js');
+    loadScriptOnce('app-ladder.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
