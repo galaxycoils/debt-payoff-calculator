@@ -15,6 +15,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-hybrid.js` / `app-hybrid.js` — snowball first kill then avalanche
 - `payoff-engine-fee.js` / `app-fee.js` — annual-fee drag vs no-fee plan
 - `payoff-engine-ladder.js` / `app-ladder.js` — extra-payment ladder + partner chip-in
+- `payoff-engine-focus.js` / `app-focus.js` — focus extra vs split extra + first-kill timing
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -101,6 +102,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Partner chip-in slider** (stack a second extra; months + interest saved)
 - SEO page: extra-payment-ladder.html
 - Achievement: Step Up
+- **Focus extra vs split extra** (pile extra on one debt vs sprinkle across all open balances; first-kill timing)
+- SEO page: focus-vs-split-extra.html
+- Achievement: One Target
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -110,4 +114,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The extra ladder is the screenshot people send a partner: six dates, one table. The chip-in slider turns “could you throw in $50?” into months saved. Everything stays client-side.
+The extra ladder is the screenshot people send a partner: six dates, one table. The chip-in slider turns “could you throw in $50?” into months saved. Focus vs split settles the “be fair to every card” argument with a first-kill date. Everything stays client-side.
