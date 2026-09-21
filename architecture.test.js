@@ -178,5 +178,9 @@ test('unlock fee_drag achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'fee_drag' } });
   assert.ok(r.state.achievements.fee_drag);
 });
+test('unlock focus_split achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'focus_split' } });
+  assert.ok(r.state.achievements.focus_split);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
