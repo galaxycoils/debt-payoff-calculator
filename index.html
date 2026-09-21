@@ -1,2 +1,276 @@
 <!DOCTYPE html>
-<!-- see repo for full file; minimal script wiring if truncated -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debt Payoff Calculator – Free Snowball vs Avalanche (Private)</title>
+  <meta name="description" content="Free private debt payoff calculator. Compare snowball vs avalanche, drag extra payments, schedule snowflakes, export PDF. All data stays in your browser." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://debt-payoff-calculator-six.vercel.app/" />
+  <meta property="og:title" content="Debt Payoff Calculator – Free Snowball vs Avalanche" />
+  <meta property="og:description" content="Private debt payoff planner. Live extra-payment slider, snowflakes, kill order, charts, PDF. Your data never leaves the browser." />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Debt Payoff Calculator – Snowball vs Avalanche" />
+  <meta name="twitter:description" content="Private debt payoff planner with live charts, snowflakes, and PDF export." />
+  <meta name="twitter:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="color-scheme" content="light dark" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Debt Payoff Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Private snowball vs avalanche debt payoff calculator with live extra-payment slider, snowflakes, and minimums comparison.",
+    "url": "https://debt-payoff-calculator-six.vercel.app/"
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('debtPayoffTheme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <script src="payoff-engine.js"></script>
+  <script src="persistence.js"></script>
+  <script src="gamification.js"></script>
+  <script src="confetti.js"></script>
+  <style>
+    :root {
+      --paper: #f7f5f0; --ink: #1a1f2e; --muted: #5c6578;
+      --accent: #0d6e6e; --accent-soft: #e6f3f3; --success: #1b7f4e;
+      --warn: #b45309; --card: #ffffff; --line: #e5e2da;
+    }
+    .dark {
+      --paper: #0f1419; --ink: #e8eaed; --muted: #9aa3b2;
+      --accent: #3dbdbd; --accent-soft: #143232; --success: #34d399;
+      --warn: #fbbf24; --card: #1a222d; --line: #2a3340;
+    }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--paper); color: var(--ink); }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,.04); padding: 1.25rem; }
+    @media (min-width: 768px) { .card { padding: 1.5rem; } }
+    input:focus, select:focus, button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(13, 110, 110, 0.35); }
+    input[type=range] { accent-color: var(--accent); }
+    .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
+    .badge-earned { @apply bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200; }
+    .badge-locked { background: var(--accent-soft); color: var(--muted); }
+    .history-chip { font-size: 0.75rem; padding: 0.375rem 0.625rem; border-radius: 0.5rem; background: var(--accent-soft); color: var(--ink); cursor: pointer; transition: opacity .15s; }
+    .history-chip:hover { opacity: 0.85; }
+    #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
+    .skip-link { position: absolute; left: -9999px; top: auto; }
+    .skip-link:focus { left: 1rem; top: 1rem; z-index: 200; background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; }
+    .hero-date { letter-spacing: -0.03em; font-weight: 800; color: var(--accent); line-height: 1.1; }
+    .text-accent { color: var(--accent); }
+    .bg-accent-soft { background: var(--accent-soft); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { filter: brightness(1.08); }
+    details summary { list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+  </style>
+</head>
+<body class="min-h-screen transition-colors duration-200">
+  <a class="skip-link" href="#main">Skip to calculator</a>
+  <div class="max-w-6xl mx-auto px-4 py-6 md:py-10" id="main">
+    <div class="flex justify-end mb-4">
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="inline-flex items-center gap-2 px-3 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm">
+        <span id="theme-icon">🌙</span><span id="theme-label">Dark</span>
+      </button>
+    </div>
+    <header class="mb-8 text-center md:text-left">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-2">Debt Payoff Calculator</h1>
+      <p class="text-slate-600 dark:text-slate-300 max-w-2xl">
+        Enter your debts. Drag extra payments. Compare <strong>Snowball</strong> vs <strong>Avalanche</strong>.
+        <span class="block mt-1 text-sm text-accent font-medium">Everything runs privately in your browser.</span>
+      </p>
+    </header>
+    <div id="game-bar" class="card mb-6 flex flex-wrap items-center justify-between gap-4 bg-accent-soft border-[var(--line)]">
+      <div class="flex items-center gap-4">
+        <div class="text-center"><div class="text-2xl font-bold text-accent" id="streak-count">0</div><div class="text-xs text-slate-500 dark:text-slate-400">Day streak</div></div>
+        <div class="h-8 w-px bg-[var(--line)]"></div>
+        <div class="text-center"><div class="text-2xl font-bold text-accent" id="level-display">1</div><div class="text-xs text-slate-500 dark:text-slate-400">Level</div></div>
+        <div class="h-8 w-px bg-[var(--line)]"></div>
+        <div class="text-center"><div class="text-2xl font-bold text-accent" id="xp-display">0</div><div class="text-xs text-slate-500 dark:text-slate-400">XP</div></div>
+      </div>
+      <div class="flex-1 min-w-[140px] max-w-xs">
+        <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 mb-1"><span>Level progress</span><span id="xp-next">100 XP to next</span></div>
+        <div class="w-full bg-white dark:bg-slate-700 rounded-full h-2.5 border border-[var(--line)]"><div id="xp-bar" class="bg-[#0d6e6e] dark:bg-[#3dbdbd] h-2.5 rounded-full transition-all duration-500" style="width:0%"></div></div>
+      </div>
+      <button id="checkin-btn" type="button" class="btn-accent px-4 py-2 min-h-[44px] rounded-xl text-sm font-semibold transition shadow-sm">Daily check-in</button>
+    </div>
+    <div id="achievements-row" class="flex flex-wrap gap-2 mb-6"></div>
+    <section class="card mb-6" aria-labelledby="debts-heading">
+      <div class="flex items-center justify-between mb-4">
+        <h2 id="debts-heading" class="text-xl font-semibold text-accent">Your Debts</h2>
+        <span class="text-xs text-slate-400">Add as many as you need</span>
+      </div>
+      <div id="debts-container" class="space-y-3 mb-4"></div>
+      <button id="add-debt" type="button" class="inline-flex items-center gap-1.5 bg-accent-soft text-accent px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium hover:opacity-90 transition">+ Add Debt</button>
+      <div class="mt-6">
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="extra-slider">Extra Monthly Payment: <span id="extra-display" class="font-bold text-accent">$100</span></label>
+        <input type="range" id="extra-slider" min="0" max="1000" step="10" value="100" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer" />
+        <div class="flex justify-between text-xs text-slate-400 mt-1"><span>$0</span><span>$500</span><span>$1000</span></div>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:opacity-90" data-amount="25">+$25</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:opacity-90" data-amount="50">+$50</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:opacity-90" data-amount="100">+$100</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:opacity-90" data-amount="200">+$200</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:opacity-90" data-amount="500">+$500</button>
+          <button type="button" class="what-if px-3 py-2 min-h-[44px] text-xs rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:opacity-90" data-amount="0">Reset</button>
+        </div>
+      </div>
+      <div class="mt-6" id="snowflake-section">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-sm font-medium text-slate-700 dark:text-slate-300">One-time snowflakes</label>
+          <button id="add-snowflake" type="button" class="text-xs text-accent hover:underline min-h-[44px] px-2">+ Add snowflake</button>
+        </div>
+        <div id="snowflakes-container" class="space-y-2"></div>
+        <p class="text-xs text-slate-400 mt-1">Bonus payments in a future month (tax refund, bonus, side hustle).</p>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3 items-center">
+        <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Strategy</label>
+        <select id="strategy" class="rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 min-h-[44px] text-sm">
+          <option value="compare">Compare both</option>
+          <option value="snowball">Snowball only</option>
+          <option value="avalanche">Avalanche only</option>
+        </select>
+        <button id="calculate-btn" type="button" class="btn-accent px-5 py-2.5 min-h-[44px] rounded-xl text-sm font-semibold transition shadow-sm">Calculate payoff</button>
+      </div>
+      <div class="mt-6 pt-6 border-t border-[var(--line)]" id="target-date-section">
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="target-date">I want to be debt-free by</label>
+        <div class="flex flex-wrap gap-2 items-center">
+          <input type="date" id="target-date" class="rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 min-h-[44px] text-sm" />
+          <button type="button" id="solve-target-date" class="px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-accent-soft text-accent">How much extra?</button>
+          <button type="button" id="apply-target-extra" class="hidden px-4 py-2 min-h-[44px] rounded-xl text-sm font-semibold btn-accent">Apply that extra</button>
+        </div>
+        <p id="target-date-result" class="text-sm text-slate-600 dark:text-slate-300 mt-2">Pick a month. We solve the smallest extra payment that hits it.</p>
+      </div>
+    </section>
+    <div id="results" class="space-y-6 hidden">
+      <div id="hero-card" class="card text-center py-8">
+        <p class="text-sm uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">Debt-free date</p>
+        <p id="hero-date" class="hero-date text-4xl md:text-5xl mb-2">—</p>
+        <p id="hero-sub" class="text-sm text-slate-500 dark:text-slate-400"></p>
+      </div>
+      <div id="celebration-banner" class="card hidden border-l-4 border-amber-400 bg-amber-50 dark:bg-amber-950/30">
+        <p id="celebration-title" class="font-semibold text-amber-800 dark:text-amber-200"></p>
+        <p id="celebration-msg" class="text-sm text-amber-900/80 dark:text-amber-100/80 mt-1"></p>
+      </div>
+      <div id="winner-banner" class="card hidden border-l-4 border-emerald-500"></div>
+      <div id="summary-cards" class="grid md:grid-cols-2 gap-4"></div>
+      <div id="progress-card" class="card hidden">
+        <div class="flex justify-between text-sm mb-2"><span class="font-medium text-slate-600 dark:text-slate-300">Progress toward debt-free</span><span id="progress-pct" class="font-bold text-accent">0%</span></div>
+        <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-3"><div id="progress-bar" class="bg-[#0d6e6e] dark:bg-[#3dbdbd] h-3 rounded-full transition-all duration-500" style="width:0%"></div></div>
+        <p id="progress-msg" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>
+      </div>
+      <div id="charts-wrap" class="card hidden">
+        <h2 class="text-lg font-semibold text-accent mb-4">Balance over time</h2>
+        <canvas id="debt-chart" height="120"></canvas>
+      </div>
+      <div id="kill-order-card" class="card hidden">
+        <h2 class="text-lg font-semibold text-accent mb-1">Debt kill order</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Which debt is paid off in which month</p>
+        <div id="kill-order-timeline" class="space-y-3"></div>
+      </div>
+      <div id="cash-freed-card" class="card hidden">
+        <h2 class="text-lg font-semibold text-accent mb-1">Cash you get back</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Each paid-off debt frees its minimum payment for the rest of the plan</p>
+        <div id="cash-freed-list"></div>
+        <p id="cash-freed-end" class="text-sm font-medium text-accent mt-3"></p>
+      </div>
+      <div id="vs-minimums-card" class="card hidden border-l-4" style="border-left-color: var(--accent);">
+        <p class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">Vs paying only minimums</p>
+        <div class="grid grid-cols-2 gap-4 mb-3">
+          <div>
+            <div id="vs-min-months" class="text-3xl font-extrabold text-accent">0</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">months saved</div>
+          </div>
+          <div>
+            <div id="vs-min-interest" class="text-3xl font-extrabold text-accent">$0</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">interest saved</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300">Plan frees you <span id="vs-plan-date">—</span>. Minimums alone: <span id="vs-min-date">—</span>.</p>
+        <p id="vs-min-note" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>
+      </div>
+      <div id="schedule-card" class="card hidden">
+        <h2 class="text-lg font-semibold text-accent mb-3">Month-by-month schedule</h2>
+        <div class="overflow-x-auto max-h-80 overflow-y-auto">
+          <table class="w-full text-sm" id="schedule-table"><thead></thead><tbody></tbody></table>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button id="copy-summary-btn" type="button" class="px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-slate-100 dark:bg-slate-700 hover:opacity-90">Copy summary</button>
+        <button id="share-btn" type="button" class="px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-slate-100 dark:bg-slate-700 hover:opacity-90">Share link</button>
+        <button id="share-image-btn" type="button" class="px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-slate-100 dark:bg-slate-700 hover:opacity-90">Share image</button>
+        <button id="pdf-btn" type="button" class="px-4 py-2 min-h-[44px] rounded-xl text-sm font-medium bg-slate-100 dark:bg-slate-700 hover:opacity-90">Export PDF</button>
+      </div>
+      <details id="scenarios-panel" class="card">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-3 min-h-[44px]">
+          <span class="text-lg font-semibold text-accent">Explore more scenarios</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400" id="scenarios-count">What-ifs, tools, stress tests</span>
+        </summary>
+        <div id="scenarios-body" class="mt-4 space-y-4"></div>
+      </details>
+      <div id="history-card" class="card">
+        <div class="flex items-center justify-between mb-3"><h2 class="text-lg font-semibold text-accent">Recent Scenarios</h2><button id="clear-history" type="button" class="text-xs text-slate-400 hover:text-red-500 transition min-h-[44px] px-2">Clear</button></div>
+        <div id="history-list" class="flex flex-wrap gap-2"></div>
+        <p id="history-empty" class="text-sm text-slate-400">Run a calculation to save scenarios here.</p>
+      </div>
+      <div class="card bg-accent-soft border-[var(--line)]" id="monetization-card">
+        <h3 class="font-semibold text-accent mb-2">What to do with the money you free up</h3>
+        <p class="text-sm opacity-90 mb-3">After you are debt-free, park emergency cash and invest the payment you used to send to creditors.</p>
+        <ul class="text-sm opacity-90 space-y-1.5 list-disc list-inside mb-4">
+          <li>Build a 3–6 month emergency fund in a high-yield savings account</li>
+          <li>Increase retirement contributions by the amount of your old debt payment</li>
+          <li>Consider balance-transfer or 0% intro offers only if you have a written payoff plan</li>
+        </ul>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2" id="affiliate-slots">
+          <div class="rounded-xl border border-dashed border-[var(--line)] bg-white/60 dark:bg-slate-800/40 p-3 text-center min-h-[88px] flex flex-col justify-center">
+            <div class="text-xs font-medium text-accent">HYSA pick</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Affiliate placeholder</div>
+          </div>
+          <div class="rounded-xl border border-dashed border-[var(--line)] bg-white/60 dark:bg-slate-800/40 p-3 text-center min-h-[88px] flex flex-col justify-center">
+            <div class="text-xs font-medium text-accent">Balance transfer</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Affiliate placeholder</div>
+          </div>
+          <div class="rounded-xl border border-dashed border-[var(--line)] bg-white/60 dark:bg-slate-800/40 p-3 text-center min-h-[88px] flex flex-col justify-center">
+            <div class="text-xs font-medium text-accent">AdSense unit</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Placeholder after approval</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="mt-12 pt-6 border-t border-[var(--line)] text-sm text-slate-500 dark:text-slate-400">
+      <p class="mb-3">Private by design — nothing is uploaded. Guides:</p>
+      <p class="flex flex-wrap gap-x-3 gap-y-1">
+        <a class="underline hover:text-accent" href="snowball-vs-avalanche.html">Snowball vs Avalanche</a>
+        <a class="underline hover:text-accent" href="how-extra-payments-work.html">Extra payments</a>
+        <a class="underline hover:text-accent" href="when-will-i-be-debt-free.html">When will I be debt-free?</a>
+        <a class="underline hover:text-accent" href="credit-card-payoff-tips.html">Credit card tips</a>
+        <a class="underline hover:text-accent" href="minimum-payments-vs-extra.html">Minimum vs extra</a>
+        <a class="underline hover:text-accent" href="debt-payoff-vs-minimums.html">Cost of minimums</a>
+        <a class="underline hover:text-accent" href="set-a-debt-free-date.html">Set a date</a>
+        <a class="underline hover:text-accent" href="student-loan-payoff.html">Student loans</a>
+        <a class="underline hover:text-accent" href="cancel-a-subscription-pay-debt.html">Cancel a subscription</a>
+        <a class="underline hover:text-accent" href="focus-vs-split-extra.html">Focus vs split</a>
+      </p>
+    </footer>
+  </div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <div id="toast" role="status" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-lg text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-50"></div>
+  <script src="app-inline.js"></script>
+  <script src="app-min-compare.js"></script>
+  <script src="app-target-date.js"></script>
+  <script src="app-layout.js"></script>
+  <script src="app-hero-fix.js"></script>
+  <script src="app-boot.js"></script>
+</body>
+</html>
