@@ -151,6 +151,8 @@
     loadScriptOnce('app-ladder.js');
     loadScriptOnce('payoff-engine-focus.js');
     loadScriptOnce('app-focus.js');
+    loadScriptOnce('payoff-engine-cashflow.js');
+    loadScriptOnce('app-cashflow.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
