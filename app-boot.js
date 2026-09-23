@@ -153,6 +153,8 @@
     loadScriptOnce('app-focus.js');
     loadScriptOnce('payoff-engine-cashflow.js');
     loadScriptOnce('app-cashflow.js');
+    loadScriptOnce('payoff-engine-promo.js');
+    loadScriptOnce('app-promo.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
