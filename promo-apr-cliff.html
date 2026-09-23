@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beat a 0% Intro APR Cliff Before It Resets</title>
+  <meta name="description" content="Intro APR offers are a timer, not a gift. See how much extra it takes to wipe a promo balance before the rate jumps." />
+  <meta name="keywords" content="0 percent APR cliff, intro APR payoff, beat promotional rate, balance transfer leftover" />
+  <meta property="og:title" content="Beat the 0% APR Cliff" />
+  <meta property="og:description" content="Aim extras at promotional debts first so the reset never hits a leftover balance." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/promo-apr-cliff.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="balance-transfer-vs-payoff.html" class="text-slate-500 hover:underline">Balance transfer</a>
+      <a href="zero-percent-intro-apr-pitfalls.html" class="text-slate-500 hover:underline">0% pitfalls</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">Promo timer</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Kill the 0% balance before the cliff</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300">A promotional APR is a deadline. Anything left on that card the month after the intro window is priced at the regular rate — often 20%+.</p>
+    </header>
+    <article class="prose card">
+      <h2>What the calculator does</h2>
+      <p>If a debt has promo months set, the planner can aim extra principal at that balance first — even if avalanche would rather attack a higher everyday APR. It also solves the smallest extra that clears every promo balance before its reset month.</p>
+      <h2>When this wins</h2>
+      <ul>
+        <li>You transferred a balance to a 0% card and the clock is under a year.</li>
+        <li>The regular APR after the promo is higher than your other cards.</li>
+        <li>You would rather pay a fee once than interest after the cliff.</li>
+      </ul>
+      <h2>When avalanche still wins</h2>
+      <p>If the promo window is long and another card is already charging 28%, starving that card to hunt a distant cliff can cost more interest. Run both plans on your numbers.</p>
+      <p class="mt-6"><a class="text-teal-700 dark:text-teal-300 font-medium underline" href="index.html">Open the calculator and hunt the cliff →</a></p>
+    </article>
+  </div>
+</body>
+</html>
