@@ -52,7 +52,8 @@
     { id: 'fee_drag', name: 'Fee Leak', desc: 'See how an annual fee stretches payoff', xp: 35 },
     { id: 'extra_ladder', name: 'Step Up', desc: 'Compare extras on the payment ladder', xp: 35 },
     { id: 'focus_split', name: 'One Target', desc: 'Compare focusing extra vs splitting it', xp: 35 },
-    { id: 'cashflow_first', name: 'Biggest Bill', desc: 'Compare highest-minimum-first to snowball and avalanche', xp: 35 }
+    { id: 'cashflow_first', name: 'Biggest Bill', desc: 'Compare highest-minimum-first to snowball and avalanche', xp: 35 },
+    { id: 'promo_cliff', name: 'Cliff Hunter', desc: 'Model wiping a promo APR balance before the rate resets', xp: 35 }
   ];
 
   function defaultState() {
