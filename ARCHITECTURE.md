@@ -9,6 +9,7 @@ payoff-engine-fee.js       annual-fee drag vs no-fee plan
 payoff-engine-ladder.js    extra ladder + partner chip-in
 payoff-engine-cashflow.js  highest-min first vs snowball / avalanche
 payoff-engine-promo.js     promo-first order + extra to clear before cliff
+payoff-engine-thirteenth.js month-one split + yearly 13th payment
 app-consolidation.js  loan vs stay UI
 persistence.js     storage seam (localStorage | memory backend)
 gamification.js    pure reduce(state, event) → { state, effects }
@@ -28,9 +29,10 @@ node payoff-engine-fee.test.js
 node payoff-engine-ladder.test.js
 node payoff-engine-cashflow.test.js
 node payoff-engine-promo.test.js
+node payoff-engine-thirteenth.test.js
 ```
 
-Covers PayoffEngine, Persistence (memory backend), Gamification transitions, round-up extras, payday reminders, daily interest burn, first-year freedom pile, on-track check-in, annual-fee drag, extra ladder, cash-flow first.
+Covers PayoffEngine, Persistence (memory backend), Gamification transitions, round-up extras, payday reminders, daily interest burn, first-year freedom pile, on-track check-in, annual-fee drag, extra ladder, cash-flow first, 13th payment.
 
 ## Design
 See DESIGN.md — operate mode, hero debt-free date, token palette.
@@ -41,6 +43,6 @@ See DESIGN.md — operate mode, hero debt-free date, token palette.
 3. persistence.js
 4. gamification.js
 5. inline UI script
-6. app-boot.js (last; loads app-roundup.js, app-clock.js, app-freedom.js, app-track.js, app-paycheck.js, app-fee.js, app-ladder.js, app-cashflow.js, app-promo.js)
+6. app-boot.js (last; loads scenario modules including app-thirteenth.js)
 
 If script tags are missing from index.html, add them in that order.
