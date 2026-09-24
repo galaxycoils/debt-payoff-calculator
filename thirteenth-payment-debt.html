@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13th Payment Debt Payoff — Extra Paycheck Each Year</title>
+  <meta name="description" content="A 13th payment is one extra full monthly payment each year. See how many months and how much interest it saves versus your current plan." />
+  <meta name="keywords" content="13th payment mortgage, extra paycheck debt payoff, thirteenth payment credit cards, one extra payment a year" />
+  <meta property="og:title" content="What a 13th payment actually saves" />
+  <meta property="og:description" content="One extra full payment a year is the quiet accelerator most calculators skip. Run it on your balances." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/thirteenth-payment-debt.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm font-sans">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="how-extra-payments-work.html" class="text-slate-500 hover:underline">Extra payments</a>
+      <a href="biweekly-vs-monthly-payments.html" class="text-slate-500 hover:underline">Biweekly</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3 font-sans">Yearly accelerator</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">The 13th payment is one extra month, once a year</h1>
+      <p class="text-slate-600 dark:text-slate-300">Mortgage forums treat it as folklore. On revolving debt it is just a scheduled snowflake equal to this month’s total outflow. The calculator prices it against your current extra so you can see the months and interest that disappear.</p>
+    </header>
+    <article class="prose card">
+      <h2>What it is</h2>
+      <p>Take every minimum plus the extra you already send. Pay that same amount a thirteenth time each year. No new product. No refinance. Just one extra full payment, usually from a bonus, tax refund, or a month with no car insurance bill.</p>
+      <h2>Why it works</h2>
+      <ul>
+        <li>The extra hits principal after interest has already been added for that month.</li>
+        <li>It compounds with snowball or avalanche extras you already run.</li>
+        <li>It is easier to commit to than raising the monthly extra forever.</li>
+      </ul>
+      <h2>Month-one split</h2>
+      <p>Before you argue about strategy, look at this month: how many dollars of the payment reduce balance versus how many go to the bank. Drag the extra slider and watch the bank share shrink. That bar is the addiction loop—people stay to make the orange sliver smaller.</p>
+      <h2>Versus biweekly</h2>
+      <p>Twenty-six half-payments also create about one extra monthly payment a year, but they change cash-flow every payday. A 13th payment leaves the monthly budget alone and concentrates the hit. Run both cards if you want the screenshot for a partner conversation.</p>
+      <p class="mt-6 font-sans"><a href="index.html" class="text-teal-700 dark:text-teal-300 underline">Open the calculator and add your balances →</a></p>
+    </article>
+  </div>
+</body>
+</html>
