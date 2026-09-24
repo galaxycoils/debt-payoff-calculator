@@ -186,5 +186,9 @@ test('unlock cashflow_first achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'cashflow_first' } });
   assert.ok(r.state.achievements.cashflow_first);
 });
+test('unlock thirteenth_pay achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'thirteenth_pay' } });
+  assert.ok(r.state.achievements.thirteenth_pay);
+});
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
