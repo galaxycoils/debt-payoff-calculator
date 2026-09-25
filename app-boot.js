@@ -157,6 +157,8 @@
     loadScriptOnce('app-promo.js');
     loadScriptOnce('payoff-engine-thirteenth.js');
     loadScriptOnce('app-thirteenth.js');
+    loadScriptOnce('payoff-engine-yearone.js');
+    loadScriptOnce('app-yearone.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
