@@ -18,6 +18,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-focus.js` / `app-focus.js` — focus extra vs split extra + first-kill timing
 - `payoff-engine-cashflow.js` / `app-cashflow.js` — highest minimum first vs snowball / avalanche
 - `payoff-engine-thirteenth.js` / `app-thirteenth.js` — month-one split + yearly 13th payment
+- `payoff-engine-yearone.js` / `app-yearone.js` — year-one kill count snowball vs avalanche
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -113,6 +114,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **13th payment + month-one split** (principal vs interest this month; extra full payment each year)
 - SEO page: thirteenth-payment-debt.html
 - Achievement: Lucky 13
+- **Year-one wins** (debts closed in the first 12 months, snowball vs avalanche)
+- SEO page: year-one-debt-wins.html
+- Achievement: Year One
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -122,4 +126,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The month-one split bar is the slot machine: drag extra and watch the bank’s slice shrink. The 13th-payment number is the shareable hook (“one extra paycheck a year saves N months”). The SEO page ranks for mortgage-style “13th payment” searches that convert to the calculator. Everything stays client-side.
+The year-one wins card is the screenshot people send a partner: “two accounts closed this year vs one.” Drag extra until a second name appears. The SEO page ranks for snowball-motivation searches. Everything stays client-side.
