@@ -1,6 +1,7 @@
 const assert = require('assert');
 const PayoffEngine = require('./payoff-engine.js');
 require('./payoff-engine-freedom.js');
+require('./payoff-engine-yearone.js');
 const Persistence = require('./persistence.js');
 const Gamification = require('./gamification.js');
 
@@ -189,6 +190,10 @@ test('unlock cashflow_first achievement', () => {
 test('unlock thirteenth_pay achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'thirteenth_pay' } });
   assert.ok(r.state.achievements.thirteenth_pay);
+});
+test('unlock year_one_wins achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'year_one_wins' } });
+  assert.ok(r.state.achievements.year_one_wins);
 });
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
