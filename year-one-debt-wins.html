@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snowball vs Avalanche Year-One Wins — Who Closes Accounts First</title>
+  <meta name="description" content="Count how many debts actually die in the first 12 months under snowball versus avalanche. Early wins are why people stick with a plan." />
+  <meta name="keywords" content="debt snowball first year, avalanche vs snowball wins, pay off small debts first year, debt free year one" />
+  <meta property="og:title" content="Who gets the year-one debt wins?" />
+  <meta property="og:description" content="Snowball is built for closed accounts. Avalanche is built for cheaper interest. See both in the first twelve months." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/year-one-debt-wins.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm font-sans">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="snowball-vs-avalanche.html" class="text-slate-500 hover:underline">Snowball vs avalanche</a>
+      <a href="dont-stop-after-first-debt.html" class="text-slate-500 hover:underline">Keep rolling</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3 font-sans">First twelve months</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Year-one wins are why snowball feels faster</h1>
+      <p class="text-slate-600 dark:text-slate-300">Avalanche usually wins the interest column over the full plan. Snowball often wins the screenshot people send a partner: two accounts closed before next summer. The calculator counts both.</p>
+    </header>
+    <article class="prose card">
+      <h2>What a “win” is</h2>
+      <p>A win is a debt whose balance hits zero on or before month 12. Not a lower statement. Not utilization. An account you can close or park at zero.</p>
+      <h2>Why the count diverges</h2>
+      <ul>
+        <li>Snowball pours extra into the smallest balance, so tiny cards die first.</li>
+        <li>Avalanche pours extra into the highest APR, which is often the large card that will not die this year.</li>
+        <li>On a barbell stack (one tiny bill, one monster APR) snowball can post two kills while avalanche posts one.</li>
+      </ul>
+      <h2>When avalanche still wins year one</h2>
+      <p>If the highest-APR debt is also small, avalanche gets the early win and the cheaper interest. The card will say “tie” or “avalanche” and show the year-one interest gap so you are not guessing.</p>
+      <h2>How to use the card</h2>
+      <p>Run the calculator, then look at the year-one card under the 13th-payment split. Drag extra and watch the kill count jump. That jump is the retention loop: people stay to manufacture a second win before December.</p>
+      <p class="mt-6 font-sans"><a href="index.html" class="text-teal-700 dark:text-teal-300 underline">Open the calculator and count your year-one wins →</a></p>
+    </article>
+  </div>
+</body>
+</html>
