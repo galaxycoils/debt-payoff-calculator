@@ -54,7 +54,8 @@
     { id: 'focus_split', name: 'One Target', desc: 'Compare focusing extra vs splitting it', xp: 35 },
     { id: 'cashflow_first', name: 'Biggest Bill', desc: 'Compare highest-minimum-first to snowball and avalanche', xp: 35 },
     { id: 'promo_cliff', name: 'Cliff Hunter', desc: 'Model wiping a promo APR balance before the rate resets', xp: 35 },
-    { id: 'thirteenth_pay', name: 'Lucky 13', desc: 'Price one extra full payment each year', xp: 35 }
+    { id: 'thirteenth_pay', name: 'Lucky 13', desc: 'Price one extra full payment each year', xp: 35 },
+    { id: 'year_one_wins', name: 'Year One', desc: 'Count debts that die in the first twelve months', xp: 35 }
   ];
 
   function defaultState() {
