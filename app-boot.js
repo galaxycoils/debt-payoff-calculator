@@ -159,6 +159,8 @@
     loadScriptOnce('app-thirteenth.js');
     loadScriptOnce('payoff-engine-yearone.js');
     loadScriptOnce('app-yearone.js');
+    loadScriptOnce('payoff-engine-holiday.js');
+    loadScriptOnce('app-holiday.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
