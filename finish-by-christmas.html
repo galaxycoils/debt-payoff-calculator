@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finish Debt by Christmas — Extra Payment Deadline Calculator</title>
+  <meta name="description" content="See the extra monthly payment that makes you debt-free by Christmas, tax day, or New Year. Holiday deadlines convert vague payoff dates into a number you can apply." />
+  <meta name="keywords" content="debt free by christmas, pay off debt before tax day, new year debt free, extra payment deadline" />
+  <meta property="og:title" content="Finish by Christmas — the extra that hits a real date" />
+  <meta property="og:description" content="Christmas, tax day, and New Year are the three dates people actually screenshot. Solve the extra that hits each one." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/finish-by-christmas.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('debtPayoffTheme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <style>
+    body { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+    .card { @apply bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 md:p-6; }
+    .prose h2 { @apply text-xl font-semibold text-teal-800 dark:text-teal-300 mt-8 mb-3; }
+    .prose p, .prose li { @apply text-slate-700 dark:text-slate-300 leading-relaxed; }
+    .prose ul { @apply list-disc list-inside space-y-1.5 my-3; }
+  </style>
+</head>
+<body class="bg-stone-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+    <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm font-sans">
+      <a href="index.html" class="font-medium text-teal-700 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="set-a-debt-free-date.html" class="text-slate-500 hover:underline">Target date</a>
+      <a href="year-one-debt-wins.html" class="text-slate-500 hover:underline">Year-one wins</a>
+    </nav>
+    <header class="mb-10">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3 font-sans">Calendar pressure</p>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">Debt-free by Christmas is a number, not a vibe</h1>
+      <p class="text-slate-600 dark:text-slate-300">A debt-free date in “sometime 2028” does not move anyone. Christmas, tax day, and New Year do. The calculator binary-searches the smallest extra that lands each one.</p>
+    </header>
+    <article class="prose card">
+      <h2>Why these three dates</h2>
+      <ul>
+        <li>Christmas is the screenshot date. People want the card paid before they buy gifts on it.</li>
+        <li>Tax day is when a refund can become a snowflake — or when you want the balance gone first.</li>
+        <li>New Year is the resolution window. Arriving already free beats promising to start.</li>
+      </ul>
+      <h2>How the solver works</h2>
+      <p>It takes your debts, current extra, and strategy, then asks: what extra would make payoff month ≤ months until that holiday? If you are already on track, the card says so. If not, one tap applies the solved extra to the live slider.</p>
+      <h2>How to use the loop</h2>
+      <p>Run the calculator after results load. Drag extra until a holiday flips to “On track.” That flip is the retention mechanic — people stay to manufacture a date they can text a partner.</p>
+      <p class="mt-6 font-sans"><a href="index.html" class="text-teal-700 dark:text-teal-300 underline">Open the calculator and pick a holiday →</a></p>
+    </article>
+  </div>
+</body>
+</html>
