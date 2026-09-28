@@ -19,6 +19,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-cashflow.js` / `app-cashflow.js` — highest minimum first vs snowball / avalanche
 - `payoff-engine-thirteenth.js` / `app-thirteenth.js` — month-one split + yearly 13th payment
 - `payoff-engine-yearone.js` / `app-yearone.js` — year-one kill count snowball vs avalanche
+- `payoff-engine-holiday.js` / `app-holiday.js` — extra needed for Christmas, tax day, New Year
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -117,6 +118,9 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Year-one wins** (debts closed in the first 12 months, snowball vs avalanche)
 - SEO page: year-one-debt-wins.html
 - Achievement: Year One
+- **Holiday deadlines** (Christmas / tax day / New Year extra solver + apply-to-slider)
+- SEO page: finish-by-christmas.html
+- Achievement: Date That Matters
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -126,4 +130,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The year-one wins card is the screenshot people send a partner: “two accounts closed this year vs one.” Drag extra until a second name appears. The SEO page ranks for snowball-motivation searches. Everything stays client-side.
+The holiday card is the screenshot people send in Q4: “on track for Christmas if I add $80.” Apply the solved extra in one tap. The SEO page ranks for debt-free-by-Christmas searches. Everything stays client-side.
