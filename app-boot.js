@@ -161,6 +161,8 @@
     loadScriptOnce('app-yearone.js');
     loadScriptOnce('payoff-engine-holiday.js');
     loadScriptOnce('app-holiday.js');
+    loadScriptOnce('payoff-engine-ratecut.js');
+    loadScriptOnce('app-ratecut.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }

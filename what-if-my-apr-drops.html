@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What If My APR Drops? Rate-Cut Debt Payoff Calculator</title>
+  <meta name="description" content="See how many months and how much interest a 0.25 to 6 point APR cut saves. Autopay discount preset. Private, client-side debt payoff calculator." />
+  <link rel="canonical" href="https://debt-payoff-calculator-six.vercel.app/what-if-my-apr-drops.html" />
+  <meta property="og:title" content="What If My APR Drops?" />
+  <meta property="og:description" content="Drag an APR cut and see the months and interest you get back. Includes the 0.25 point autopay discount." />
+  <meta property="og:image" content="https://debt-payoff-calculator-six.vercel.app/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif; }
+  </style>
+</head>
+<body class="bg-[#f7f5f0] dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-[100dvh]">
+  <div class="max-w-3xl mx-auto px-4 py-16 md:py-24">
+    <nav class="mb-10 flex flex-wrap items-center gap-3 text-sm">
+      <a href="index.html" class="font-medium text-teal-800 dark:text-teal-300 hover:underline">← Calculator</a>
+      <a href="what-if-my-apr-goes-up.html" class="text-slate-500 hover:underline">APR shock</a>
+      <a href="refinance-vs-payoff.html" class="text-slate-500 hover:underline">Refinance</a>
+    </nav>
+    <header class="mb-12">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-teal-800 dark:text-teal-300 mb-3">Rate daydream</p>
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">A rate cut is the slider people will not stop dragging</h1>
+      <p class="text-slate-600 dark:text-slate-300 text-lg">APR shock shows the scare. This page is the fantasy: every rate falls, and the debt-free date jumps forward.</p>
+    </header>
+    <article class="rounded-[2rem] bg-black/5 p-2">
+      <div class="rounded-[1.6rem] bg-white dark:bg-slate-800 p-6 md:p-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
+        <h2 class="text-xl font-semibold mb-3">What the card actually computes</h2>
+        <ul class="list-disc list-inside space-y-2 mb-6">
+          <li>Same debts, same extra, same strategy — only APR drops by the slider amount.</li>
+          <li>Rates floor at 0%. A 4-point cut on a 1% loan does not go negative.</li>
+          <li>Autopay is the 0.25-point preset many cards advertise for enrolling.</li>
+          <li>Apply writes the new rates into the debt rows so snowball, charts, and kill order follow.</li>
+        </ul>
+        <h2 class="text-xl font-semibold mb-3">A worked card</h2>
+        <p class="mb-4">A $2,400 balance at 24% with a $50 minimum and no extra takes 163 months and about $5,728 in interest. Cut 6 points to 18% and it is 86 months and about $1,875. That gap is the share line.</p>
+        <p class="mb-6">The 0.25 autopay discount on that same card is quieter: 153 months and about $485 saved. Small enough to ignore, large enough to screenshot.</p>
+        <p><a href="index.html" class="text-teal-800 dark:text-teal-300 underline">Open the calculator and drag the rate cut →</a></p>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

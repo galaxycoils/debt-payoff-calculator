@@ -55,7 +55,9 @@
     { id: 'cashflow_first', name: 'Biggest Bill', desc: 'Compare highest-minimum-first to snowball and avalanche', xp: 35 },
     { id: 'promo_cliff', name: 'Cliff Hunter', desc: 'Model wiping a promo APR balance before the rate resets', xp: 35 },
     { id: 'thirteenth_pay', name: 'Lucky 13', desc: 'Price one extra full payment each year', xp: 35 },
-    { id: 'year_one_wins', name: 'Year One', desc: 'Count debts that die in the first twelve months', xp: 35 }
+    { id: 'year_one_wins', name: 'Year One', desc: 'Count debts that die in the first twelve months', xp: 35 },
+    { id: 'holiday_deadline', name: 'Date That Matters', desc: 'Solve extra for Christmas, tax day, or New Year', xp: 40 },
+    { id: 'rate_daydream', name: 'Rate Daydream', desc: 'Drag an APR cut and see months and interest saved', xp: 40 }
   ];
 
   function defaultState() {

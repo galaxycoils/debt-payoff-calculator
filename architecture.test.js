@@ -2,6 +2,7 @@ const assert = require('assert');
 const PayoffEngine = require('./payoff-engine.js');
 require('./payoff-engine-freedom.js');
 require('./payoff-engine-yearone.js');
+require('./payoff-engine-ratecut.js');
 const Persistence = require('./persistence.js');
 const Gamification = require('./gamification.js');
 
@@ -194,6 +195,23 @@ test('unlock thirteenth_pay achievement', () => {
 test('unlock year_one_wins achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'year_one_wins' } });
   assert.ok(r.state.achievements.year_one_wins);
+});
+test('unlock holiday_deadline achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'holiday_deadline' } });
+  assert.ok(r.state.achievements.holiday_deadline);
+});
+test('unlock rate_daydream achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'rate_daydream' } });
+  assert.ok(r.state.achievements.rate_daydream);
+});
+test('rate cut six points matches worked example', () => {
+  const r = PayoffEngine.compareRateCut({
+    debts: [{ name: 'Card', balance: 2400, apr: 24, minPayment: 50 }],
+    extra: 0,
+    strategy: 'snowball'
+  }, 6);
+  assert.strictEqual(r.monthsSaved, 77);
+  assert.strictEqual(r.interestSaved, 3852.46);
 });
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
