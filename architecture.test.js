@@ -3,6 +3,7 @@ const PayoffEngine = require('./payoff-engine.js');
 require('./payoff-engine-freedom.js');
 require('./payoff-engine-yearone.js');
 require('./payoff-engine-ratecut.js');
+require('./payoff-engine-life.js');
 const Persistence = require('./persistence.js');
 const Gamification = require('./gamification.js');
 
@@ -203,6 +204,26 @@ test('unlock holiday_deadline achievement', () => {
 test('unlock rate_daydream achievement', () => {
   const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'rate_daydream' } });
   assert.ok(r.state.achievements.rate_daydream);
+});
+test('unlock life_stack achievement', () => {
+  const r = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'life_stack' } });
+  assert.ok(r.state.achievements.life_stack);
+});
+test('life equivalents use independent unit prices', () => {
+  const eq = PayoffEngine.lifeEquivalents(2400, { rent: 1500, groceryWeek: 150, flight: 400 });
+  assert.strictEqual(eq.rentMonths, 1.6);
+  assert.strictEqual(eq.groceryWeeks, 16);
+  assert.strictEqual(eq.flights, 6);
+  assert.strictEqual(eq.headline, '1.6 months of rent');
+});
+test('beat pin reports months and interest gained', () => {
+  const b = PayoffEngine.beatPin(
+    { months: 20, totalInterest: 800 },
+    { months: 28, totalInterest: 1400 }
+  );
+  assert.strictEqual(b.monthsBeaten, 8);
+  assert.strictEqual(b.interestBeaten, 600);
+  assert.strictEqual(b.won, true);
 });
 test('rate cut six points matches worked example', () => {
   const r = PayoffEngine.compareRateCut({

@@ -21,6 +21,7 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `payoff-engine-yearone.js` / `app-yearone.js` — year-one kill count snowball vs avalanche
 - `payoff-engine-holiday.js` / `app-holiday.js` — extra needed for Christmas, tax day, New Year
 - `payoff-engine-ratecut.js` / `app-ratecut.js` — live APR-cut daydream + 0.25 autopay preset
+- `payoff-engine-life.js` / `app-life.js` — interest saved as rent, groceries, flights + pinned-plan duel
 - `app-boot.js` — adapter wiring modules into UI
 - `architecture.test.js` — Node seam tests
 
@@ -126,6 +127,10 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Autopay 0.25 preset** (the discount cards advertise for enrolling)
 - SEO page: what-if-my-apr-drops.html
 - Achievement: Rate Daydream
+- **Life stack** (interest avoided vs minimums as rent months, grocery weeks, flights; rent slider)
+- **Pinned-plan duel** (localStorage pin; toast when a later run beats months or interest)
+- SEO page: interest-saved-in-real-life.html
+- Achievement: Life Stack
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -135,4 +140,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The rate-cut slider is the drag people will not release: every tenth of a point moves the debt-free date. Autopay is the realistic 0.25 preset. Copy line is the share. The SEO page ranks for APR-drop and autopay-discount searches. Everything stays client-side.
+The life stack is the share line people paste: interest avoided as rent, groceries, and flights. The pin is the return visit — beat last session after a raise or a snowflake. The SEO page ranks for “interest saved in real life” and debt-free framing searches. Everything stays client-side.
