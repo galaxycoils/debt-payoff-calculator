@@ -165,6 +165,10 @@
     loadScriptOnce('app-ratecut.js');
     loadScriptOnce('payoff-engine-life.js');
     loadScriptOnce('app-life.js');
+    loadScriptOnce('payoff-engine-marginal.js');
+    loadScriptOnce('app-marginal.js');
+    loadScriptOnce('payoff-engine-nudge.js');
+    loadScriptOnce('app-nudge.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
