@@ -90,7 +90,19 @@
     });
   }
 
+  function registerAchievements() {
+    if (!window.Gamification || !Gamification.ACHIEVEMENTS) return;
+    var ids = Gamification.ACHIEVEMENTS.map(function (a) { return a.id; });
+    if (ids.indexOf('next_dollar') === -1) {
+      Gamification.ACHIEVEMENTS.push({ id: 'next_dollar', name: 'Next Dollar', desc: 'See what the next $25 of extra buys', xp: 35 });
+    }
+    if (ids.indexOf('comeback') === -1) {
+      Gamification.ACHIEVEMENTS.push({ id: 'comeback', name: 'Came Back', desc: 'Return for a 7-day plan check', xp: 45 });
+    }
+  }
+
   function boot() {
+    registerAchievements();
     ensureFont();
     paint();
   }
