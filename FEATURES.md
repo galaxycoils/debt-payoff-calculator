@@ -131,6 +131,13 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Pinned-plan duel** (localStorage pin; toast when a later run beats months or interest)
 - SEO page: interest-saved-in-real-life.html
 - Achievement: Life Stack
+- **Next-dollar curve** (what +$25 / +$50 / +$100 buys on top of the current extra)
+- **7-day comeback nudge** (local plan check so a return visit starts on the same debts)
+- SEO page: next-dollar-of-extra.html
+- **Days bought back** (months saved vs minimums as days, weekends, and birthdays; copy line)
+- **Missed-payment shock** (1–2 skipped months on the highest APR plus a late fee)
+- SEO pages: days-bought-back.html, what-a-missed-payment-costs.html
+- Achievements: Calendar Thief, Don't Skip
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -140,4 +147,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-The life stack is the share line people paste: interest avoided as rent, groceries, and flights. The pin is the return visit — beat last session after a raise or a snowflake. The SEO page ranks for “interest saved in real life” and debt-free framing searches. Everything stays client-side.
+Days bought back is the share sentence: a plan becomes weekends and a birthday, not a month count. The missed-payment shock is the reason to stay on the page and drag the fee — one skip is rarely one month. Both pages rank for calendar and late-fee searches. Everything stays client-side.
