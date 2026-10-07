@@ -60,7 +60,9 @@
     { id: 'rate_daydream', name: 'Rate Daydream', desc: 'Drag an APR cut and see months and interest saved', xp: 40 },
     { id: 'life_stack', name: 'Life Stack', desc: 'Turn interest saved into rent, groceries, and flights', xp: 40 },
     { id: 'days_back', name: 'Calendar Thief', desc: 'Copy the days this plan buys back', xp: 40 },
-    { id: 'missed_shock', name: 'Don\'t Skip', desc: 'Price a missed payment plus a late fee', xp: 35 }
+    { id: 'missed_shock', name: 'Don\'t Skip', desc: 'Price a missed payment plus a late fee', xp: 35 },
+    { id: 'gift_month', name: 'Gift Month', desc: 'Price a month where the extra payment shrinks', xp: 40 },
+    { id: 'balance_cliff', name: 'Awkward Cliff', desc: 'Knock the smallest balance to the next round step', xp: 35 }
   ];
 
   function defaultState() {

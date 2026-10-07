@@ -138,6 +138,10 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Missed-payment shock** (1–2 skipped months on the highest APR plus a late fee)
 - SEO pages: days-bought-back.html, what-a-missed-payment-costs.html
 - Achievements: Calendar Thief, Don't Skip
+- **Gift-month dip** (one month a year the extra shrinks; months + interest added; copy line)
+- **Awkward balance cliff** (smallest debt to the next $100 or $500; drop it as a month-1 snowflake)
+- SEO pages: december-gift-month-debt.html, awkward-balance-payoff.html
+- Achievements: Gift Month, Awkward Cliff
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -147,4 +151,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Days bought back is the share sentence: a plan becomes weekends and a birthday, not a month count. The missed-payment shock is the reason to stay on the page and drag the fee — one skip is rarely one month. Both pages rank for calendar and late-fee searches. Everything stays client-side.
+Days bought back is the share sentence: a plan becomes weekends and a birthday, not a month count. The missed-payment shock is the reason to stay on the page and drag the fee — one skip is rarely one month. The gift-month dip is the December argument people paste. The awkward cliff is the $37 that makes them come back and knock the next round number. Everything stays client-side.

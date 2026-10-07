@@ -4,6 +4,7 @@ require('./payoff-engine-freedom.js');
 require('./payoff-engine-yearone.js');
 require('./payoff-engine-ratecut.js');
 require('./payoff-engine-life.js');
+require('./payoff-engine-season.js');
 const Persistence = require('./persistence.js');
 const Gamification = require('./gamification.js');
 
@@ -233,6 +234,42 @@ test('rate cut six points matches worked example', () => {
   }, 6);
   assert.strictEqual(r.monthsSaved, 77);
   assert.strictEqual(r.interestSaved, 3852.46);
+});
+
+test('gift month dip on 0% plan adds one month', () => {
+  const r = PayoffEngine.giftMonthCost(
+    [{ name: 'Card', balance: 2400, apr: 0, minPayment: 100 }],
+    100,
+    'snowball',
+    { monthOfYear: 12, dip: 100, asOf: new Date(2026, 0, 1) }
+  );
+  assert.strictEqual(r.baselineMonths, 12);
+  assert.strictEqual(r.dippedMonths, 13);
+  assert.strictEqual(r.monthsAdded, 1);
+  assert.strictEqual(r.interestAdded, 0);
+  assert.strictEqual(r.dip, 100);
+});
+test('cliff to next hundred is independent of the engine path', () => {
+  assert.strictEqual(PayoffEngine.cliffAmount(250, 100).cliff, 50);
+  assert.strictEqual(PayoffEngine.cliffAmount(250, 100).target, 200);
+  assert.strictEqual(PayoffEngine.cliffAmount(200, 100).cliff, 100);
+  const r = PayoffEngine.balanceCliff(
+    [{ name: 'Store', balance: 250, apr: 0, minPayment: 50 }],
+    0,
+    'snowball',
+    { step: 100 }
+  );
+  assert.strictEqual(r.cliff, 50);
+  assert.strictEqual(r.baselineMonths, 5);
+  assert.strictEqual(r.rushedMonths, 4);
+  assert.strictEqual(r.monthsSaved, 1);
+  assert.strictEqual(r.interestSaved, 0);
+});
+test('unlock gift_month and balance_cliff', () => {
+  const g = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'gift_month' } });
+  assert.ok(g.state.achievements.gift_month);
+  const c = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'balance_cliff' } });
+  assert.ok(c.state.achievements.balance_cliff);
 });
 
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');

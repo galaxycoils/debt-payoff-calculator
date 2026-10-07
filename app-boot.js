@@ -171,6 +171,8 @@
     loadScriptOnce('app-nudge.js');
     loadScriptOnce('payoff-engine-calendar.js');
     loadScriptOnce('app-calendar.js');
+    loadScriptOnce('payoff-engine-season.js');
+    loadScriptOnce('app-season.js');
 
     console.info('app-boot: Persistence + Gamification adapter active');
   }
