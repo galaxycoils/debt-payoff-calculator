@@ -142,6 +142,11 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - **Awkward balance cliff** (smallest debt to the next $100 or $500; drop it as a month-1 snowflake)
 - SEO pages: december-gift-month-debt.html, awkward-balance-payoff.html
 - Achievements: Gift Month, Awkward Cliff
+- **Snowball fuel** (freed minimum rolls into extra at each kill; month the extra doubles; copy line)
+- **Named debt-free date** (weekday + early/mid/late season; copy line)
+- SEO pages: snowball-fuel.html, name-your-debt-free-date.html
+- Achievements: Snowball Fuel, Named Friday
+
 
 ## High-Priority Next
 1. Real AdSense units + live affiliate links after approval
@@ -151,4 +156,4 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 5. Soft-launch copy for r/personalfinance once custom domain is live
 
 ## Why these features
-Days bought back is the share sentence: a plan becomes weekends and a birthday, not a month count. The missed-payment shock is the reason to stay on the page and drag the fee — one skip is rarely one month. The gift-month dip is the December argument people paste. The awkward cliff is the $37 that makes them come back and knock the next round number. Everything stays client-side.
+Snowball fuel is the scroll: each kill shows the minimum that becomes extra, and the month the extra doubles. The named date is the share sentence — a Friday in mid spring, not a month count. Days bought back is the share sentence: a plan becomes weekends and a birthday, not a month count. The missed-payment shock is the reason to stay on the page and drag the fee — one skip is rarely one month. The gift-month dip is the December argument people paste. The awkward cliff is the $37 that makes them come back and knock the next round number. Everything stays client-side.

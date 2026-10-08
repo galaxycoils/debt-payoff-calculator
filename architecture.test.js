@@ -5,6 +5,7 @@ require('./payoff-engine-yearone.js');
 require('./payoff-engine-ratecut.js');
 require('./payoff-engine-life.js');
 require('./payoff-engine-season.js');
+require('./payoff-engine-fuel.js');
 const Persistence = require('./persistence.js');
 const Gamification = require('./gamification.js');
 
@@ -272,4 +273,35 @@ test('unlock gift_month and balance_cliff', () => {
   assert.ok(c.state.achievements.balance_cliff);
 });
 
+
+test('snowball fuel frees the killed minimum into extra', () => {
+  const r = PayoffEngine.snowballFuel(
+    [{ name: 'Store', balance: 200, apr: 0, minPayment: 50 }, { name: 'Card', balance: 1000, apr: 0, minPayment: 50 }],
+    50,
+    'snowball'
+  );
+  assert.strictEqual(r.kills[0].name, 'Store');
+  assert.strictEqual(r.kills[0].month, 2);
+  assert.strictEqual(r.kills[0].freed, 50);
+  assert.strictEqual(r.kills[0].extraAfter, 100);
+  assert.strictEqual(r.kills[1].name, 'Card');
+  assert.strictEqual(r.kills[1].month, 11);
+  assert.strictEqual(r.doubleAtMonth, 2);
+  assert.strictEqual(r.freedTotal, 100);
+});
+test('freedom name is weekday plus season band', () => {
+  const n = PayoffEngine.freedomName(new Date(2026, 4, 15));
+  assert.strictEqual(n.weekday, 'Friday');
+  assert.strictEqual(n.band, 'mid');
+  assert.strictEqual(n.season, 'spring');
+  assert.strictEqual(n.phrase, 'Friday in mid spring');
+});
+test('unlock snowball_fuel and freedom_name', () => {
+  const f = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'snowball_fuel' } });
+  assert.ok(f.state.achievements.snowball_fuel);
+  const n = Gamification.reduce(Gamification.defaultState(), { type: 'unlock', payload: { id: 'freedom_name' } });
+  assert.ok(n.state.achievements.freedom_name);
+});
+
 console.log(process.exitCode ? 'Done with failures' : 'All architecture tests passed');
+

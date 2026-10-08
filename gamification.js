@@ -62,7 +62,9 @@
     { id: 'days_back', name: 'Calendar Thief', desc: 'Copy the days this plan buys back', xp: 40 },
     { id: 'missed_shock', name: 'Don\'t Skip', desc: 'Price a missed payment plus a late fee', xp: 35 },
     { id: 'gift_month', name: 'Gift Month', desc: 'Price a month where the extra payment shrinks', xp: 40 },
-    { id: 'balance_cliff', name: 'Awkward Cliff', desc: 'Knock the smallest balance to the next round step', xp: 35 }
+    { id: 'balance_cliff', name: 'Awkward Cliff', desc: 'Knock the smallest balance to the next round step', xp: 35 },
+    { id: 'snowball_fuel', name: 'Snowball Fuel', desc: 'See the minimum that rolls into extra when a debt dies', xp: 40 },
+    { id: 'freedom_name', name: 'Named Friday', desc: 'Name the debt-free date by weekday and season', xp: 35 }
   ];
 
   function defaultState() {
