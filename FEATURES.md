@@ -1,1 +1,159 @@
-PLACEHOLDER
+# Addictive & Viral Feature Roadmap
+
+Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows. Everything stays client-side.
+
+## Architecture (2026-08-22+)
+- `payoff-engine.js` — calculate, compareToMinimums, extraNeededForDate, cashFreedTimeline, compareConsolidation, cadence, compareAprShock, comparePaymentHoliday, compareRaise, compareIrregularIncome, compareDelay
+- `payoff-engine-invest.js` / `app-invest.js` — pay extra vs invest extra + milestone map
+- `payoff-engine-clock.js` / `app-clock.js` — daily interest burn + debt-free age
+- `app-delay.js` — cost of waiting 1/2/3/6 months to start extras
+- `payoff-engine-freedom.js` / `app-freedom.js` — first-year pile after debt-free
+- `payoff-engine-track.js` / `app-track.js` — on-track check-in + utilization path
+- `payoff-engine-refi.js` / `app-refi.js` — refinance vs stay (APR + fee, net after fee)
+- `payoff-engine-trap.js` / `app-trap.js` — minimum vs monthly interest (trap / extra to stop bleed)
+- `payoff-engine-paycheck.js` / `app-paycheck.js` — percent of take-home as extra + leftover living money
+- `payoff-engine-hybrid.js` / `app-hybrid.js` — snowball first kill then avalanche
+- `payoff-engine-fee.js` / `app-fee.js` — annual-fee drag vs no-fee plan
+- `payoff-engine-ladder.js` / `app-ladder.js` — extra-payment ladder + partner chip-in
+- `payoff-engine-focus.js` / `app-focus.js` — focus extra vs split extra + first-kill timing
+- `payoff-engine-cashflow.js` / `app-cashflow.js` — highest minimum first vs snowball / avalanche
+- `payoff-engine-thirteenth.js` / `app-thirteenth.js` — month-one split + yearly 13th payment
+- `payoff-engine-yearone.js` / `app-yearone.js` — year-one kill count snowball vs avalanche
+- `payoff-engine-holiday.js` / `app-holiday.js` — extra needed for Christmas, tax day, New Year
+- `payoff-engine-ratecut.js` / `app-ratecut.js` — live APR-cut daydream + 0.25 autopay preset
+- `payoff-engine-life.js` / `app-life.js` — interest saved as rent, groceries, flights + pinned-plan duel
+- `app-boot.js` — adapter wiring modules into UI
+- `architecture.test.js` — Node seam tests
+
+## Implemented
+- Side-by-side Snowball vs Avalanche comparison with winner banner and interest savings
+- Dual-line charts (Chart.js) plus dashed minimums-only series
+- Live extra-payment slider with real-time recalculation
+- What-if +$25 / +$50 / +$100 / +$200 / +$500 buttons
+- Progress % bar toward debt-free
+- Month-by-month schedule
+- Copy result summary + Share link + PDF export
+- Shareable result image (canvas card 1200x630)
+- LocalStorage for debts + extra payment (via Persistence when loaded)
+- Dark mode with system preference + toggle
+- Gamification: daily check-in streak, XP, levels, achievements
+- Debt Kill Order timeline
+- Near-debt-free celebration + confetti
+- Local calculation history (last 8, one-tap restore)
+- Snowflake payments
+- SEO supporting pages including debt-payoff-vs-minimums.html
+- **Vs minimums-only** comparison (months + interest saved)
+- JSON-LD WebApplication markup on the calculator
+- Post-results affiliate + AdSense placeholder grid
+- Hero debt-free date as signature element (DESIGN.md)
+- **Target debt-free date solver** (smallest extra that hits a chosen month)
+- **Cash-freed timeline** (minimums that roll off as each debt dies)
+- **Balance-transfer compare** (fee + promo APR + post-promo APR vs stay)
+- **Repeating annual snowflakes** (bonus / tax-refund every 12 months)
+- **Biweekly cadence** (26 half-payments = one extra monthly payment, live toggle)
+- **Consolidation-loan compare** (APR + term + origination/flat fee, keep-budget default)
+- **APR shock stress test** (live slider: extra months + interest if every rate rises)
+- **Payment-holiday cost** (skip extras 1-3 months)
+- **Debt-free .ics calendar download**
+- **Annual raise slider** (put each year's raise into extras; live recalc)
+- **Shareable scenario links** (`#p=` encoded plan)
+- `sitemap.xml` + `robots.txt` for crawlers
+- **Irregular / gig paycheck planner** (lean extra vs flush extra every N months)
+- **Overtime vs side-hustle hour-value** (interest saved per hour worked)
+- **First-win fade** (cost of dropping extras after the first debt dies)
+- **Kill-order calendar download** (.ics of each payoff date + debt-free day)
+- SEO page: dont-stop-after-first-debt.html
+- Achievements: Keep Rolling, Date on the Wall, Bonus Drop, Cut the Cord
+- **Windfall allocator** (lump bonus this month vs drip over N months)
+- SEO page: use-a-windfall-on-debt.html
+- **Subscription cut** (redirect a monthly bill into extras; presets + apply)
+- SEO page: cancel-a-subscription-pay-debt.html
+- **Emergency-fund vs extra** (divert part of extra into a HYSA; months delayed vs cash on hand)
+- **Daily leak redirect** ($/day habit → extra principal, apply to slider)
+- SEO page: emergency-fund-vs-debt.html
+- Achievements: Cash Cushion, Plug the Leak
+- **Pay extra vs invest extra** (interest avoided vs future value of the extra at an assumed return)
+- **Milestone map** (25% / halfway / 75% / debt-free dates on the results card)
+- SEO page: pay-debt-vs-invest.html
+- Achievement: Rate vs Market
+- **Interest burn clock** (daily / hourly cost of waiting + debt-free age)
+- SEO page: how-much-interest-per-day.html
+- Achievement: Meter Watcher
+- **Cost of waiting** (extras start in 1 / 2 / 3 / 6 months; extra interest + months + coffee framing)
+- SEO page: start-now-vs-wait.html
+- Achievement: Do It Today
+- **First year after debt-free** (mins + extra → monthly cash, year-one pile, five-year stack)
+- SEO page: life-after-debt-free.html
+- Achievement: Keep the Habit
+- **On-track check-in** (saved plan curve vs current remaining; ahead / behind / done)
+- **Credit utilization glide** (month under 30% / 10% for card-like debts)
+- SEO page: stay-on-track.html
+- Achievements: On Track, Util Glide
+- **Refinance vs stay** (lower APR + percent/flat fee vs current stack; net after fee)
+- SEO page: refinance-vs-payoff.html
+- Achievement: Rate Cut
+- **Minimum-payment trap** (interest this month vs mins; extra to stop the bleed; apply-to-slider)
+- SEO page: minimum-payment-trap.html
+- Achievement: Trap Watch
+- **Paycheck share** (percent of take-home → extra principal; leftover after mins; apply to slider)
+- SEO page: paycheck-percent-to-debt.html
+- Achievement: Pay Day Cut
+- **Hybrid snowball-then-avalanche** (first kill by balance, then extra to highest APR)
+- SEO page: hybrid-snowball-avalanche.html
+- Achievement: First Then APR
+- **Annual-fee drag** (fee billed each year a debt is still open; live slider)
+- SEO page: credit-card-annual-fee-vs-payoff.html
+- Achievement: Fee Leak
+- **Extra-payment ladder** (same debts at $0 / current / +$25–$500; tap a row to apply)
+- **Partner chip-in slider** (stack a second extra; months + interest saved)
+- SEO page: extra-payment-ladder.html
+- Achievement: Step Up
+- **Focus extra vs split extra** (pile extra on one debt vs sprinkle across all open balances; first-kill timing)
+- SEO page: focus-vs-split-extra.html
+- Achievement: One Target
+- **Highest-minimum-first** (cash-flow order vs snowball vs avalanche; first-kill cash freed)
+- SEO page: highest-minimum-first.html
+- Achievement: Biggest Bill
+- **13th payment + month-one split** (principal vs interest this month; extra full payment each year)
+- SEO page: thirteenth-payment-debt.html
+- Achievement: Lucky 13
+- **Year-one wins** (debts closed in the first 12 months, snowball vs avalanche)
+- SEO page: year-one-debt-wins.html
+- Achievement: Year One
+- **Holiday deadlines** (Christmas / tax day / New Year extra solver + apply-to-slider)
+- SEO page: finish-by-christmas.html
+- Achievement: Date That Matters
+- **Rate-cut daydream** (live slider: every APR drops 0–6 points; months + interest saved; apply writes rates back)
+- **Autopay 0.25 preset** (the discount cards advertise for enrolling)
+- SEO page: what-if-my-apr-drops.html
+- Achievement: Rate Daydream
+- **Life stack** (interest avoided vs minimums as rent months, grocery weeks, flights; rent slider)
+- **Pinned-plan duel** (localStorage pin; toast when a later run beats months or interest)
+- SEO page: interest-saved-in-real-life.html
+- Achievement: Life Stack
+- **Next-dollar curve** (what +$25 / +$50 / +$100 buys on top of the current extra)
+- **7-day comeback nudge** (local plan check so a return visit starts on the same debts)
+- SEO page: next-dollar-of-extra.html
+- **Days bought back** (months saved vs minimums as days, weekends, and birthdays; copy line)
+- **Missed-payment shock** (1–2 skipped months on the highest APR plus a late fee)
+- SEO pages: days-bought-back.html, what-a-missed-payment-costs.html
+- Achievements: Calendar Thief, Don't Skip
+- **Gift-month dip** (one month a year the extra shrinks; months + interest added; copy line)
+- **Awkward balance cliff** (smallest debt to the next $100 or $500; drop it as a month-1 snowflake)
+- SEO pages: december-gift-month-debt.html, awkward-balance-payoff.html
+- Achievements: Gift Month, Awkward Cliff
+- **Snowball fuel** (freed minimum rolls into extra at each kill; month the extra doubles; copy line)
+- **Named debt-free date** (weekday + early/mid/late season; copy line)
+- SEO pages: snowball-fuel.html, name-your-debt-free-date.html
+- Achievements: Snowball Fuel, Named Friday
+- **Freedom countdown ring** (circular SVG progress + live days remaining; achievement: Countdown Watcher)
+
+## High-Priority Next
+1. Real AdSense units + live affiliate links after approval
+2. Google Search Console + Analytics once custom domain is live
+3. Soft launch posts for initial backlinks
+4. Binary og-card.png generated from the SVG for Twitter/Facebook crawlers
+5. Soft-launch copy for r/personalfinance once custom domain is live
+
+## Why these features
+Snowball fuel is the scroll: each kill shows the minimum that becomes extra, and the month the extra doubles. The named date is the share sentence — a Friday in mid spring, not a month count. Days bought back is the share sentence: a plan becomes weekends and a birthday, not a month count. The missed-payment shock is the reason to stay on the page and drag the fee — one skip is rarely one month. The gift-month dip is the December argument people paste. The awkward cliff is the $37 that makes them come back and knock the next round number. The freedom countdown ring is the daily visual that brings people back. Everything stays client-side.
