@@ -46,6 +46,8 @@
   <script src="persistence.js"></script>
   <script src="gamification.js"></script>
   <script src="confetti.js"></script>
+  <script src="payoff-engine-velocity.js"></script>
+  <script src="app-velocity.js"></script>
   <style>
     :root {
       --paper: #f7f5f0; --ink: #1a1f2e; --muted: #5c6578;
@@ -78,6 +80,12 @@
     .btn-accent:hover { filter: brightness(1.08); }
     details summary { list-style: none; }
     details summary::-webkit-details-marker { display: none; }
+
+    .double-bezel { background: rgba(0,0,0,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2rem; padding: 0.375rem; }
+    .dark .double-bezel { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.06); }
+    .double-bezel-inner { background: var(--card); border-radius: calc(2rem - 0.375rem); padding: 1.25rem; box-shadow: inset 0 1px 1px rgba(255,255,255,.15); }
+    .dark .double-bezel-inner { box-shadow: inset 0 1px 1px rgba(255,255,255,.06); }
+    .island-btn { border-radius: 9999px; padding: 0.625rem 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; }
   </style>
 </head>
 <body class="min-h-screen transition-colors duration-200">
@@ -145,7 +153,7 @@
           <option value="snowball">Snowball only</option>
           <option value="avalanche">Avalanche only</option>
         </select>
-        <button id="calculate-btn" type="button" class="btn-accent px-5 py-2.5 min-h-[44px] rounded-xl text-sm font-semibold transition shadow-sm">Calculate payoff</button>
+        <button id="calculate-btn" type="button" class="island-btn btn-accent text-sm font-semibold transition shadow-sm min-h-[44px]">Calculate payoff</button>
       </div>
       <div class="mt-6 pt-6 border-t border-[var(--line)]" id="target-date-section">
         <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="target-date">I want to be debt-free by</label>
