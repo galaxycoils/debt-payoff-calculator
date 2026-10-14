@@ -536,6 +536,7 @@
   function renderSingle(result, label, colorClass) {
     if (!result) return '';
     var freeDate = fmtDate(result.debtFreeDate);
+    var hero = document.getElementById("hero-date-display"); if (hero) hero.textContent = freeDate;
     return (
       '<div class="card border-l-4 ' + (colorClass || 'border-indigo-500') + '">' +
       '<div class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">' + label + '</div>' +
@@ -584,6 +585,7 @@
 
     var primary = (mode === 'avalanche' ? aval : snow) || snow || aval;
     if (primary) {
+      if (typeof window.startLiveCountdown === "function" && primary.debtFreeDate) window.startLiveCountdown(primary.debtFreeDate);
       updateProgress(primary);
       renderKillOrder(primary);
       renderSchedule(primary);
@@ -592,6 +594,7 @@
 
     // History entry
     if (primary) {
+      if (typeof window.startLiveCountdown === "function" && primary.debtFreeDate) window.startLiveCountdown(primary.debtFreeDate);
       saveHistoryEntry({
         strategy: primary.strategy,
         mode: mode,
@@ -714,17 +717,17 @@
       var primary = (mode === 'avalanche' ? aval : snow) || snow || aval;
       if (!primary) { showToast('Run a calculation first'); return; }
       var lines = [
-        'Debt Payoff Plan',
-        'Debt-free date: ' + fmtDate(primary.debtFreeDate),
-        'Months: ' + primary.months,
-        'Total interest: ' + fmtMoney(primary.totalInterest),
-        'Strategy: ' + (primary.strategy || mode)
+        '🚀 I can be debt-free by ' + fmtDate(primary.debtFreeDate) + '!',
+        'Months: ' + primary.months + ' · Interest: ' + fmtMoney(primary.totalInterest),
+        'Strategy: ' + (primary.strategy || mode),
+        'Extra payment: $' + (extraSlider ? extraSlider.value : '0')
       ];
       if (mode === 'compare' && snow && aval) {
         var better = aval.totalInterest <= snow.totalInterest ? 'Avalanche' : 'Snowball';
-        lines.push('Winner: ' + better);
+        lines.push('Winner: ' + better + ' (saves interest)');
       }
-      lines.push('Calculated privately at debt-payoff-calculator');
+      lines.push('Can you beat my date? Try the free private calculator:');
+      lines.push(window.location.href.split('#')[0]);
       var text = lines.join('\n');
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(function () { showToast('Summary copied'); }).catch(function () {

@@ -166,6 +166,74 @@
         <p id="target-date-result" class="text-sm text-slate-600 dark:text-slate-300 mt-2">Pick a month. We solve the smallest extra payment that hits it.</p>
       </div>
     </section>
-    <!-- rest of file truncated in this example for brevity; in real call use full content -->
+  <script src="app-inline.js"></script>
+  <script src="app-boot.js"></script>
+  <script src="app-countdown.js"></script>
+  <script src="app-velocity.js"></script>
+    <!-- Results -->
+    <section id="results" class="hidden space-y-6 mt-8">
+      <div class="double-bezel">
+        <div class="double-bezel-inner text-center">
+          <p class="text-xs uppercase tracking-[0.2em] text-muted mb-2">Your debt-free date</p>
+          <div id="hero-date-display" class="hero-date text-4xl md:text-5xl mb-4">—</div>
+          <div id="live-countdown" class="text-lg font-semibold text-accent">Calculating…</div>
+          <p class="text-sm text-muted mt-2">Watch the clock — every extra dollar moves it closer.</p>
+        </div>
+      </div>
+
+      <div id="comparison-summary" class="grid md:grid-cols-2 gap-4"></div>
+      <div id="winner-banner" class="hidden card bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800"></div>
+
+      <div id="progress-card" class="hidden card">
+        <div class="flex justify-between text-sm mb-2"><span>Progress to debt-free</span><span id="progress-pct">0%</span></div>
+        <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3"><div id="progress-bar" class="bg-accent h-3 rounded-full transition-all duration-700" style="width:0%"></div></div>
+        <p id="progress-msg" class="text-sm text-muted mt-2"></p>
+      </div>
+
+      <div id="celebration-banner" class="hidden card text-center bg-amber-50 dark:bg-amber-900/20">
+        <h3 id="celebration-title" class="text-xl font-bold text-accent"></h3>
+        <p id="celebration-msg" class="text-sm mt-1"></p>
+      </div>
+
+      <div id="kill-order-card" class="hidden card">
+        <h3 class="text-lg font-semibold mb-3">Debt Kill Order</h3>
+        <div id="kill-order-timeline" class="space-y-3"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="text-lg font-semibold mb-3">Balance Chart</h3>
+        <canvas id="debt-chart" height="180"></canvas>
+      </div>
+
+      <details class="card">
+        <summary class="cursor-pointer font-medium">Month-by-month schedule</summary>
+        <div id="schedule" class="mt-4 overflow-x-auto"></div>
+      </details>
+
+      <div class="flex flex-wrap gap-3">
+        <button id="share-image-btn" type="button" class="island-btn btn-accent">Share image</button>
+        <button id="copy-summary" type="button" class="px-4 py-2 rounded-xl bg-accent-soft text-accent">Copy summary</button>
+        <button id="share-btn" type="button" class="px-4 py-2 rounded-xl bg-accent-soft text-accent">Share link</button>
+        <button id="pdf-btn" type="button" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-700">Export PDF</button>
+      </div>
+
+      <div class="card">
+        <div class="flex justify-between items-center mb-2">
+          <h3 class="text-lg font-semibold">Recent scenarios</h3>
+          <button id="clear-history" type="button" class="text-xs text-muted hover:underline">Clear</button>
+        </div>
+        <div id="history-list" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- AdSense / affiliate placeholders after results -->
+      <div id="monetization" class="grid md:grid-cols-2 gap-4 text-sm text-muted">
+        <div class="card">Affiliate: Best high-yield savings for your freed cash</div>
+        <div class="card">AdSense placeholder (loads after results)</div>
+      </div>
+    </section>
+
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-full text-sm opacity-0 pointer-events-none transition-opacity z-50"></div>
+    <canvas id="confetti-canvas"></canvas>
+
 </body>
 </html>

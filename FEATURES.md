@@ -162,3 +162,6 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 
 ## Why these features
 Snowball fuel is the scroll: each kill shows the minimum that becomes extra, and the month the extra doubles. The named date is the share sentence — a Friday in mid spring, not a month count. Days bought back is the share sentence: a plan becomes weekends and a birthday, not a month count. The missed-payment shock is the reason to stay on the page and drag the fee — one skip is rarely one month. The gift-month dip is the December argument people paste. The awkward cliff is the $37 that makes them come back and knock the next round number. The freedom countdown ring is the daily visual that brings people back. The payoff velocity meter turns every slider drag into a concrete “this $100 buys X months” reward. The live debt-free date preview makes the slider feel instant and addictive — people drag it just to watch the date move. The premium share image is designed for social posts (clean, high-contrast, scannable). Everything stays client-side.
+
+- **Live ticking debt-free countdown** (days/hours/mins/secs updating every second after calculation — addictive “watch the clock” retention)
+- **Viral challenge copy** (one-click summary now includes “Can you beat my date?” + link for easy Reddit/X shares)

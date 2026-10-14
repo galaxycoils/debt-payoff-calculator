@@ -111,3 +111,36 @@
     module.exports = { daysUntil: daysUntil };
   }
 })();
+
+  // Live ticking clock (addictive retention)
+  var _tickTimer = null;
+  function startLiveTick(targetDate) {
+    if (_tickTimer) clearInterval(_tickTimer);
+    function tick() {
+      var el = document.getElementById('live-countdown');
+      if (!el || !targetDate) return;
+      var ms = new Date(targetDate).getTime() - Date.now();
+      if (ms <= 0) {
+        el.textContent = 'Debt-free now!';
+        clearInterval(_tickTimer);
+        return;
+      }
+      var s = Math.floor(ms / 1000);
+      var days = Math.floor(s / 86400);
+      s %= 86400;
+      var hours = Math.floor(s / 3600);
+      s %= 3600;
+      var mins = Math.floor(s / 60);
+      var secs = s % 60;
+      el.textContent = days + 'd ' + hours + 'h ' + mins + 'm ' + secs + 's remaining';
+    }
+    tick();
+    _tickTimer = setInterval(tick, 1000);
+  }
+
+  // Hook into results if possible
+  var _origUpdate = window.updateProgress;
+  if (typeof _origUpdate === 'function') {
+    // we'll call from render
+  }
+  window.startLiveCountdown = startLiveTick;
