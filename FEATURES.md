@@ -26,6 +26,8 @@ Goal: Maximize time-on-site, return visits, and shares so AdSense revenue grows.
 - `architecture.test.js` — Node seam tests
 
 ## Implemented
+- **Live session interest burn ticker** (cents climb every second while the page is open — high time-on-site)
+- **Challenge a friend** one-click viral copy (short debt-free date challenge for social/Reddit)
 - Side-by-side Snowball vs Avalanche comparison with winner banner and interest savings
 - Dual-line charts (Chart.js) plus dashed minimums-only series
 - Live extra-payment slider with real-time recalculation
