@@ -167,3 +167,8 @@ Snowball fuel is the scroll: each kill shows the minimum that becomes extra, and
 
 - **Live ticking debt-free countdown** (days/hours/mins/secs updating every second after calculation — addictive “watch the clock” retention)
 - **Viral challenge copy** (one-click summary now includes “Can you beat my date?” + link for easy Reddit/X shares)
+
+- **Premium double-bezel hero card** (high-end visual hierarchy for the debt-free date)
+- **Viral share text generator** (ViralShare module + days-bought-back integration in copy + share image)
+- **Upgraded shareable canvas** (gradient background, large date, challenge hook, days bought back)
+- Restored full functional index.html and app-inline.js after placeholder breakage
